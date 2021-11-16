@@ -5,7 +5,8 @@ const { query } = require("../db");
 const { updateTableRow } = require("../db/utils");
 const auth = require("../middleware/auth")();
 const connection = require("database.js");
-
+var cors = require('cors');
+router.use(cors());
 const router = express.Router();
 
 const getPublicUser = (user) => {

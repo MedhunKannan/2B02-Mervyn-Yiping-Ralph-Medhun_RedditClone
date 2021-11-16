@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const connection = require("../database.js");
-
+var cors = require('cors');
+router.use(cors());
 router.post("/createpost", (req, res) => {
   var type = req.body.type;
   var title = req.body.title;
