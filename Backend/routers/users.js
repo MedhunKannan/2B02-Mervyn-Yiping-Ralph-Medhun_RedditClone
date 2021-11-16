@@ -1,31 +1,3 @@
-const router = require("express").Router();
-const connection = require("../database.js");
-
-router.post('/createuser', (req, res) => {
-    
-    var email = req.body.email;
-    var username = req.body.username;
-    var password = req.body.password;
-    const createUserQuery = `
-    INSERT INTO users(username, email, password)
-    VALUES ($1, $2, $3);
-        `;
-  
-    connection.query(createUserQuery, [username, email, password], (error, results) => {
-      if (error) {
-        console.log(error);
-        res.status(500).json({ error: 'Error while creating user' });
-      } else {
-        console.log(results);
-        if (results.rowCount === 1) {
-          res.status(200).json({ message: 'Successfully created user' });
-        } else {
-          res.status(404).json({ error: `Unable to create user ${username}` });
-        }
-      }
-    });
-  });
-
 const express = require('express')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
