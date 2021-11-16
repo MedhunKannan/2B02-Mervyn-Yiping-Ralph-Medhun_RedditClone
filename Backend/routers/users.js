@@ -35,23 +35,7 @@ router.get('/', async (req, res) => {
   }
 })
 
-router.get('/:id', async (req, res) => {
-  try {
-    const { id } = req.params
-
-    const selectUserStatement = `select * from users where id = $1`
-
-    const { rows: [user] } = await query(selectUserStatement, [id])
-
-    if (!user) {
-      return res.status(404).send({ error: 'Could not find user with that id' })
-    }
-    res.send(getPublicUser(user))
-  } catch (e) {
-    res.status(500).send({ error: e.message })
-  }
-})
-
+//Register for account
 router.post('/', async (req, res) => {
   try {
     const { username, password } = req.body
@@ -86,6 +70,7 @@ router.post('/', async (req, res) => {
   }
 })
 
+//Login
 router.post('/login', async (req, res) => {
   try {
     const { username, password } = req.body
@@ -119,6 +104,7 @@ router.post('/login', async (req, res) => {
   }
 })
 
+//Logout
 router.post('/logout', auth, async (req, res) => {
   const tokens = req.user.tokens.filter((token) => token !== req.token)
   const setUserTokensStatement = `
@@ -144,6 +130,7 @@ router.post('/logoutAll', auth, async (req, res) => {
   res.send(user)
 })
 
+//Update user information
 router.put('/', auth, async (req, res) => {
   try {
     const allowedUpdates = ['username', 'password']
@@ -166,6 +153,7 @@ router.put('/', auth, async (req, res) => {
   }
 })
 
+//Delete user
 router.delete('/', auth, async (req, res) => {
   try {
     const deleteUserStatement = `delete from users where id = $1 returning *`
