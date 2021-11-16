@@ -6,7 +6,7 @@ const postVotesRouter = require("./post");
 const usersRouter = require("./comments");
 
 router.use("/comments", commentsRouter);
-router.use("/communities", subredditRouter);
+router.use("/subreddits", subredditRouter);
 router.use("/postvotes", likesRouter);
 router.use("/post", postVotesRouter);
 router.use("/users", usersRouter);
