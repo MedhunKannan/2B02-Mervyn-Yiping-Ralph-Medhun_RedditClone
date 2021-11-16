@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const { query } = require("../db");
 const { updateTableRow } = require("../db/utils");
 const auth = require("../middleware/auth")();
-const connection = require("../database.js");
+const connection = require("database.js");
 
 const router = express.Router();
 
