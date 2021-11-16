@@ -4,6 +4,8 @@ const ApiRouter = require("./routers/api");
 
 // The web server
 const app = express();
+var port = 8000;
+var hostname = "localhost";
 
 // To handle body
 app.use(express.json());
