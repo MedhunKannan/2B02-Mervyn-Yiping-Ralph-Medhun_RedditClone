@@ -1,6 +1,6 @@
 var jwt=require('jsonwebtoken');
 
-var config=require('../config');
+var config=require('/config');
 
 function verifyToken(req,res,next){
     console.log(req.headers);
