@@ -3,7 +3,7 @@ const commentsRouter = require("./comments");
 const subredditRouter = require("./subreddits");
 const likesRouter = require("./post_votes");
 const postVotesRouter = require("./post");
-const usersRouter = require("./comments");
+const usersRouter = require("./users");
 
 router.use("/comments", commentsRouter);
 router.use("/subreddits", subredditRouter);
