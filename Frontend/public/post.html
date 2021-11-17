@@ -5,6 +5,7 @@
     <title>Reddit clone</title>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <link href="css/post.css" rel="stylesheet" />
 
     <script>
       var url = "http://localhost:8000/api/post";
@@ -21,7 +22,7 @@
             body: postContent,
             author_id: authorid,
             subreddit_id: subredditid,
-          }
+          };
           const data = JSON.stringify(obj);
           $.ajax({
             url: url + "/createpost",
@@ -41,33 +42,48 @@
 
   <body>
     <!-- Retrieve user by username -->
-    <form>
-      <h3>Create Post</h3>
-      <select
-        id="type"
-        name="type"
-        style="
-          width: 200px;
-          border: 1px solid;
-          border-radius: 5px;
-          margin-bottom: 20px;
-          height: 40px;
-        "
-      >
-        <option value="Type" selected>Post type</option>
-        <option value="text">Text</option>
-        <option value="link">Link</option>
-      </select>
-      <br />
-      <label for="title">Posts Title </label>
-      <input type="text" id="title" name="title" /><br /><br />
-      <label for="body">Post Content </label>
-      <input type="text" id="body" name="body" /><br /><br />
-      <label for="author_id">Author ID </label>
-      <input type="text" id="author_id" name="author_id" /><br /><br />
-      <label for="subredditid">Sub-reddit ID</label>
-      <input type="text" id="subreddit_id" name="subreddit_id" /><br /><br />
-      <input type="submit" id="post" value="Post" />
-    </form>
+    <div id="createPost">
+      <form>
+        <h3>Create Post</h3>
+        <select id="type" name="type">
+          <option value="Type" selected>Post type</option>
+          <option value="text">Text</option>
+          <option value="link">Link</option>
+        </select>
+        <br />
+
+        <!-- <label for="title">Posts Title </label> -->
+        <input
+          type="text"
+          id="title"
+          name="title"
+          placeholder="Post title"
+        /><br /><br />
+        <!-- <label for="body">Post Content </label> -->
+        <textarea
+          id="body"
+          name="body"
+          rows="15"
+          cols="80"
+          placeholder="Post Content"
+        ></textarea>
+        <br /><br />
+        <!-- <label for="author_id">Author ID </label> -->
+        <input
+          type="text"
+          id="author_id"
+          name="author_id"
+          placeholder="Author id"
+        /><br /><br />
+        <!-- <label for="subredditid">Sub-reddit ID</label> -->
+        <input
+          type="text"
+          id="subreddit_id"
+          name="subreddit_id"
+          placeholder="Sub-reddit id"
+        /><br /><br />
+        <input type="submit" id="post" value="Post" />
+      </form>
+    </div>
   </body>
 </html>
