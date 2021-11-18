@@ -15,7 +15,7 @@
           var postTitle = $("#title").val();
           var postContent = $("#body").val();
           var authorid = $("#author_id").val();
-          var subredditid = $("#subreddit_id").val();
+          var subredditid = $("#subreddit").val();
           const obj = {
             type: type,
             title: postTitle,
@@ -64,8 +64,6 @@
             console.log(data);
             console.log(textStatus);
             if (data != null) {
-              alert(data.subreddit.length); //Undefined
-              // error: code doesnt go inside the for loop
               for (var i = 0; i < data.subreddit.length; i++) {
                 // Display records top down
                 // alert("Hello world");
@@ -129,12 +127,12 @@
           placeholder="Author id"
         /><br /><br />
         <!-- <label for="subredditid">Sub-reddit ID</label> -->
-        <input
+        <!-- <input
           type="text"
           id="subreddit_id"
           name="subreddit_id"
           placeholder="Sub-reddit id"
-        /><br /><br />
+        /><br /><br /> -->
         <input type="submit" id="post" value="Post" />
       </form>
     </div>
