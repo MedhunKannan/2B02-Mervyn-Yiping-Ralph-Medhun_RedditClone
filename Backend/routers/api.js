@@ -9,7 +9,7 @@ const likesRouter = require("./post_votes");
 const postVotesRouter = require("./post");
 const usersRouter = require("./users");
 
-const port = process.env.PORT
+// const port = process.env.PORT
 
 const app = express()
 
@@ -23,6 +23,6 @@ router.use("/post", postVotesRouter);
 router.use("/users", usersRouter);
 module.exports = router;
 
-app.listen(port, () => {
-    console.log(`App is listening on port ${port}`)
-  })
+// app.listen(port, () => {
+//     console.log(`App is listening on port ${port}`)
+//   })

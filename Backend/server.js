@@ -1,20 +1,20 @@
-const express = require("express");
-const path = require("path");
-const ApiRouter = require("./routers/api");
+const express = require('express')
+const path = require('path')
+const ApiRouter = require('./routers/api')
 
 // The web server
-const app = express();
-var port = 8000;
-var hostname = "localhost";
+const app = express()
+var port = 8000
+var hostname = 'localhost'
 
 // To handle body
-app.use(express.json());
+app.use(express.json())
 
 // Web Server
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, 'public')))
 
 // APIs
-app.use("/api", ApiRouter);
+app.use('/api', ApiRouter)
 
 // TODO: 404 Handler
 
@@ -22,6 +22,6 @@ app.use("/api", ApiRouter);
 
 // Listen to port
 app.listen(port, hostname, function (error) {
-  console.log(error);
-  console.log(`BackEnd Server hosted at http://${hostname}:${port}`);
-});
+  console.log(error)
+  console.log(`BackEnd Server hosted at http://${hostname}:${port}`)
+})
