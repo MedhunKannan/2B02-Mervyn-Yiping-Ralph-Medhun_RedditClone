@@ -8,7 +8,7 @@
     <link href="css/post.css" rel="stylesheet" />
 
     <script>
-      var url = "http://localhost:8000/api/post";
+      var url = "http://localhost:8000/api";
       $(document).ready(function () {
         $("#post").click(function () {
           var type = $("#type").val();
@@ -25,7 +25,7 @@
           };
           const data = JSON.stringify(obj);
           $.ajax({
-            url: url + "/createpost",
+            url: url + "/post/createpost",
             type: "POST",
             data: data,
             contentType: "application/json; charset=utf-8",
@@ -35,6 +35,55 @@
             },
           });
           return false;
+        });
+
+        // var data = "";
+        // $.ajax({
+        //   url: url + "/subreddits/subreddit",
+        //   type: "GET",
+        //   data: data,
+        //   contentType: "application/json; charset=utf-8",
+        //   dataType: "json",
+        //   success: function (data) {
+        //     var subredditdropdown = "";
+        //     alert(data);
+        //     // for (i = 0; i, data.length; i++) {
+        //     //   subredditdropdown += `<option value="${data[i].id}">${data[i].name}</option>`;
+        //     //   alert(data[i].id);
+        //     // }
+        //     $("#subreddit").append(subredditdropdown);
+        //   },
+        // });
+
+        $.ajax({
+          url: url + "/subreddits/subreddit",
+          type: "GET",
+          contentType: "application/json",
+          dataType: "json",
+          success: function (data, textStatus, xhr) {
+            console.log(data);
+            console.log(textStatus);
+            if (data != null) {
+              alert(data.subreddit.length); //Undefined
+              // error: code doesnt go inside the for loop
+              for (var i = 0; i < data.subreddit.length; i++) {
+                // Display records top down
+                // alert("Hello world");
+                $("#subreddit").append(
+                  $("<option>", {
+                    value: data.subreddit[i].id,
+                    text: data.subreddit[i].name,
+                  })
+                );
+                // $("#Category").append(new Option(data[i].catname, data[i].category_id));
+              }
+            } else {
+              console.log("Issue in retrieving...");
+            }
+          },
+          error: function (xhr, textStatus, err) {
+            console.log(err);
+          },
         });
       }); //End of document.ready
     </script>
@@ -58,6 +107,11 @@
           name="title"
           placeholder="Post title"
         /><br /><br />
+
+        <select id="subreddit" name="subreddit">
+          <option value="Sub-reddit" selected>Sub-reddit</option>
+        </select>
+        <br />
         <!-- <label for="body">Post Content </label> -->
         <textarea
           id="body"
