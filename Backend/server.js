@@ -21,6 +21,7 @@ app.use("/api", ApiRouter);
 // TODO: Error Handler
 
 // Listen to port
-app.listen(port, hostname, function () {
+app.listen(port, hostname, function (error) {
+  console.log(error);
   console.log(`BackEnd Server hosted at http://${hostname}:${port}`);
 });
