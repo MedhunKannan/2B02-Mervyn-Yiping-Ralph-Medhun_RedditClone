@@ -5,7 +5,24 @@
     <title>Reddit clone</title>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <link href="css/post.css" rel="stylesheet" />
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="css/post.css" />
 
     <script>
       var url = "http://localhost:8000/api";
@@ -65,7 +82,7 @@
             console.log(err);
           },
         });
-        // delete post dropdown list
+        // edit post dropdown list
         $.ajax({
           url: url + "/post/post",
           type: "GET",
@@ -75,10 +92,16 @@
             console.log(data);
             console.log(textStatus);
             if (data != null) {
-              alert(data.post.length);
               for (var i = 0; i < data.post.length; i++) {
                 // Display records top down
                 // alert("Hello world");
+                $("#editpostid").append(
+                  $("<option>", {
+                    value: data.post[i].id,
+                    text: data.post[i].title,
+                  })
+                );
+
                 $("#deletepostid").append(
                   $("<option>", {
                     value: data.post[i].id,
@@ -116,68 +139,149 @@
           });
           return false;
         });
+
+        $("#edit").click(function () {
+          var id = $("#editpostid").val();
+          var data = "";
+          $.ajax({
+            url: url + `/post/post/${id}`,
+            type: "GET",
+            data: data,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data, textStatus, xhr) {
+              if (data != null) {
+                var editHtml = "";
+                editHtml += `
+          <div id = "editformdiv">
+          <form id = "editform">
+          <input
+            type="text"
+            id="edittitle"
+            name="title"
+            placeholder="Post title"
+            value = "${data.post[0].title}"
+          /><br /><br />
+
+          <!-- <label for="body">Post Content </label> -->
+          <textarea
+            id="editbody"
+            name="body"
+            rows="15"
+            cols="80"
+            placeholder="Post Content"
+          >${data.post[0].body}</textarea>
+          <br /><br />
+          <input type="submit" id="editform" value="Edit" />
+          </form>
+          </div>
+                        `;
+
+                document.getElementById("editpost").innerHTML = editHtml;
+              } else {
+                console.log("Issue in retrieving...");
+              }
+            },
+            error: function (xhr, textStatus, errorThrown) {
+              console.log("Error in Operation");
+            },
+          });
+          return false;
+        });
+
+        // $("#editform").click(function () {
+        //   var edittitle = $("#edittitle").val();
+        //   var editbody = $("#editbody").val();
+        //   var id = $("#editpostid").val();
+        //   alert(edittitle + " " + editbody + " " + id);
+        //   const obj = { title: edittitle, body: editbody };
+        //   const data = JSON.stringify(obj);
+        //   alert(id);
+        //   $.ajax({
+        //     url: url + `/post/editPost/${id}`,
+        //     type: "PUT",
+        //     data: data,
+        //     contentType: "application/json; charset=utf-8",
+        //     dataType: "json",
+        //     success: function (data, textStatus, xhr) {
+        //       alert("Edited successfully!");
+        //     },
+        //     error: function (xhr, textStatus, errorThrown) {
+        //       console.log("Error in Operation");
+        //     },
+        //   });
+        //   return false;
+        // });
       }); //End of document.ready
     </script>
   </head>
 
   <body>
-    <!-- Retrieve user by username -->
-    <div id="createPost">
-      <form>
-        <h3>Create Post</h3>
-        <select id="type" name="type">
-          <option value="Type" selected>Post type</option>
-          <option value="text">Text</option>
-          <option value="link">Link</option>
-        </select>
-        <br />
-        <!-- <label for="title">Posts Title </label> -->
-        <input
-          type="text"
-          id="title"
-          name="title"
-          placeholder="Post title"
-        /><br /><br />
+    <div class="row">
+      <div id="createPost" class="col-6">
+        <form>
+          <h3>Create Post</h3>
+          <select id="type" name="type">
+            <option value="Type" selected>Post type</option>
+            <option value="text">Text</option>
+            <option value="link">Link</option>
+          </select>
+          <br />
+          <!-- <label for="title">Posts Title </label> -->
+          <input
+            type="text"
+            id="title"
+            name="title"
+            placeholder="Post title"
+          /><br /><br />
 
-        <select id="subreddit" name="subreddit">
-          <option value="Sub-reddit" selected>Sub-reddit</option>
-        </select>
-        <br />
-        <!-- <label for="body">Post Content </label> -->
-        <textarea
-          id="body"
-          name="body"
-          rows="15"
-          cols="80"
-          placeholder="Post Content"
-        ></textarea>
-        <br /><br />
-        <!-- <label for="author_id">Author ID </label> -->
-        <input
-          type="text"
-          id="author_id"
-          name="author_id"
-          placeholder="Author id"
-        /><br /><br />
-        <!-- <label for="subredditid">Sub-reddit ID</label> -->
-        <!-- <input
-          type="text"
-          id="subreddit_id"
-          name="subreddit_id"
-          placeholder="Sub-reddit id"
-        /><br /><br /> -->
-        <input type="submit" id="post" value="Post" />
-      </form>
-    </div>
+          <select id="subreddit" name="subreddit">
+            <option value="Sub-reddit" selected>Sub-reddit</option>
+          </select>
+          <br />
+          <!-- <label for="body">Post Content </label> -->
+          <textarea
+            id="body"
+            name="body"
+            rows="15"
+            cols="80"
+            placeholder="Post Content"
+          ></textarea>
+          <br /><br />
+          <!-- <label for="author_id">Author ID </label> -->
+          <input
+            type="text"
+            id="author_id"
+            name="author_id"
+            placeholder="Author id"
+          /><br /><br />
 
-    <div>
-      <h3>Delete post</h3>
-      <form>
-        <select id="deletepostid" name="postid">
-          <option value="Post id" selected>Post id</option>
-        </select>
-        <input type="submit" id="delete" value="Delete" />
-      </form>
+          <input type="submit" id="post" value="Post" />
+        </form>
+      </div>
+      <div class="col-6">
+        <h3>Edit post</h3>
+        <form>
+          <select id="editpostid" name="postid">
+            <option value="Post id" selected>Post</option>
+          </select>
+          <input type="submit" id="edit" value="Edit" />
+        </form>
+        <div id="editpost"></div>
+      </div>
     </div>
+    <!-- End of div class row  -->
+    <div class="row" id="DeleteandEdit">
+      <div class="col-4">
+        <h3>Delete post</h3>
+        <form>
+          <select id="deletepostid" name="postid">
+            <option value="Post" selected>Post id</option>
+          </select>
+          <input type="submit" id="delete" value="Delete" />
+        </form>
+      </div>
+    </div>
+    <!-- End of div class row  -->
   </body>
 </html>

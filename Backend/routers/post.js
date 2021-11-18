@@ -45,39 +45,32 @@ router.delete('/deletepost/:id', function (req, res, next) {
 })
 
 router.put('/editPost/:id', (req, res) => {
-  var type = req.body.type
   var title = req.body.title
   var body = req.body.body
-  var authorid = req.body.author_id
-  var subredditid = req.body.subreddit_id
   var id = req.params.id
-  const updatePostQuery = `
-      UPDATE posts
-      SET type = $1, 
-      title = $2, 
-      body = $3, 
-      subreddit_id = $4,
-      updated_at = NOW() at time zone 'SGT'
-      WHERE id = $5;
+  const editPostQuery = `
+       UPDATE posts 
+       SET title = $1, 
+       body = $2, 
+       updated_at = NOW() at time zone 'SGT' 
+       WHERE id = $3;
       `
 
-  connection.query(
-    updatePostQuery,
-    [type, title, body, subredditid, id],
-    (error, results) => {
-      if (error) {
-        console.log(error)
-        res.status(500).json({ error: 'Error while editing post' })
+  connection.query(editPostQuery, [title, body, id], (error, results) => {
+    if (error) {
+      console.log(error)
+      res.status(500).json({ error: 'Error while editing post' })
+    } else {
+      console.log(results)
+      if (results.rowCount === 1) {
+        res.status(200).json({ message: 'Updated post successfully' })
       } else {
-        console.log(results)
-        if (results.rowCount === 1) {
-          res.status(200).json({ message: 'Edited post successfully' })
-        } else {
-          res.status(404).json({ error: `Unable to edit post` })
-        }
+        res.status(404).json({
+          error: `Unable to edit post. Make sure that all input fields are filled.`,
+        })
       }
     }
-  )
+  })
 })
 
 router.get('/post', function (req, res, next) {
@@ -103,4 +96,30 @@ router.get('/post', function (req, res, next) {
     }
   })
 })
+
+router.get('/post/:id', function (req, res, next) {
+  var id = req.params.id
+  const getpost = {
+    text: 'SELECT * FROM posts WHERE id = $1',
+  }
+  connection.query(getpost, [id], (error, results) => {
+    if (error) {
+      console.log(error)
+      res.status(500).json({
+        Error: 'Something went wrong while retrieving post',
+      })
+    } else {
+      if (results.rows.length === 0) {
+        res.status(404).json({
+          error: `unable to find post`,
+        })
+      } else {
+        res.json({
+          post: results.rows,
+        })
+      }
+    }
+  })
+})
+
 module.exports = router
