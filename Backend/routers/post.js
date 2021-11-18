@@ -80,4 +80,27 @@ router.put('/editPost/:id', (req, res) => {
   )
 })
 
+router.get('/post', function (req, res, next) {
+  const getpost = {
+    text: 'SELECT * FROM posts',
+  }
+  connection.query(getpost, (error, results) => {
+    if (error) {
+      console.log(error)
+      res.status(500).json({
+        Error: 'Something went wrong while retrieving post',
+      })
+    } else {
+      if (results.rows.length === 0) {
+        res.status(404).json({
+          error: `unable to retrieve post`,
+        })
+      } else {
+        res.json({
+          post: results.rows,
+        })
+      }
+    }
+  })
+})
 module.exports = router

@@ -37,24 +37,6 @@
           return false;
         });
 
-        // var data = "";
-        // $.ajax({
-        //   url: url + "/subreddits/subreddit",
-        //   type: "GET",
-        //   data: data,
-        //   contentType: "application/json; charset=utf-8",
-        //   dataType: "json",
-        //   success: function (data) {
-        //     var subredditdropdown = "";
-        //     alert(data);
-        //     // for (i = 0; i, data.length; i++) {
-        //     //   subredditdropdown += `<option value="${data[i].id}">${data[i].name}</option>`;
-        //     //   alert(data[i].id);
-        //     // }
-        //     $("#subreddit").append(subredditdropdown);
-        //   },
-        // });
-
         $.ajax({
           url: url + "/subreddits/subreddit",
           type: "GET",
@@ -82,6 +64,57 @@
           error: function (xhr, textStatus, err) {
             console.log(err);
           },
+        });
+        // delete post dropdown list
+        $.ajax({
+          url: url + "/post/post",
+          type: "GET",
+          contentType: "application/json",
+          dataType: "json",
+          success: function (data, textStatus, xhr) {
+            console.log(data);
+            console.log(textStatus);
+            if (data != null) {
+              alert(data.post.length);
+              for (var i = 0; i < data.post.length; i++) {
+                // Display records top down
+                // alert("Hello world");
+                $("#deletepostid").append(
+                  $("<option>", {
+                    value: data.post[i].id,
+                    text: data.post[i].title,
+                  })
+                );
+                // $("#Category").append(new Option(data[i].catname, data[i].category_id));
+              }
+            } else {
+              console.log("Issue in retrieving...");
+            }
+          },
+          error: function (xhr, textStatus, err) {
+            console.log(err);
+          },
+        });
+
+        //Delete post ajax
+        $("#delete").click(function () {
+          var deletepostid = $("#deletepostid").val();
+          var data = "";
+
+          $.ajax({
+            url: url + `/post/deletepost/${deletepostid}`,
+            type: "DELETE",
+            data: data,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data, textStatus, xhr) {
+              alert("Deleted successfully!");
+            },
+            error: function (xhr, textStatus, errorThrown) {
+              console.log("Error in Operation");
+            },
+          });
+          return false;
         });
       }); //End of document.ready
     </script>
@@ -134,6 +167,16 @@
           placeholder="Sub-reddit id"
         /><br /><br /> -->
         <input type="submit" id="post" value="Post" />
+      </form>
+    </div>
+
+    <div>
+      <h3>Delete post</h3>
+      <form>
+        <select id="deletepostid" name="postid">
+          <option value="Post id" selected>Post id</option>
+        </select>
+        <input type="submit" id="delete" value="Delete" />
       </form>
     </div>
   </body>
