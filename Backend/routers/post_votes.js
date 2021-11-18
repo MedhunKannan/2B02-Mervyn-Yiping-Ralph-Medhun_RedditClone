@@ -3,16 +3,44 @@ const connection = require("../database.js");
 var cors = require('cors');
 router.use(cors());
 
-// Send Vote
-router.post('/createVote', (req, res) => {
+// Upvoting
+router.put('/upVote/:postid', (req, res) => {
 
-    var vote = req.body.vote;
-    const createVoteQuery = `
-      INSERT INTO post_votes(vote)
-      VALUES ($1);
+    const postid = req.params.post_id;
+    const vote = req.body.vote;
+    const upVoteQuery = `
+    UPDATE post_votes 
+    SET vote_value = vote_value + 1
+    WHERE post_id = $1
           `;
 
-    connection.query(createVoteQuery, [vote], (error, results) => {
+    connection.query(upVoteQuery, [vote, postid], (error, results) => {
+        if (error) {
+            console.log(error);
+            res.status(500).json({ error: 'Error while voting' });
+        } else {
+            console.log(results);
+            if (results.rowCount === 1) {
+                res.status(200).json({ message: 'Successfully voted' });
+            } else {
+                res.status(404).json({ error: `Unable to vote ${vote}` });
+            }
+        }
+    });
+});
+
+// Downvoting
+router.put('/downVote/:postid', (req, res) => {
+
+    const postid = req.params.post_id;
+    const vote = req.body.vote;
+    const downVoteQuery = `
+    UPDATE post_votes 
+    SET vote_value = vote_value - 1
+    WHERE post_id = $1
+          `;
+
+    connection.query(downVoteQuery, [vote, postid], (error, results) => {
         if (error) {
             console.log(error);
             res.status(500).json({ error: 'Error while voting' });
