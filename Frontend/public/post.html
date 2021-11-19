@@ -178,6 +178,28 @@
                         `;
 
                 document.getElementById("editpost").innerHTML = editHtml;
+
+                $("#editformbutton").click(function () {
+                  var edittitle = $("#edittitle").val();
+                  var editbody = $("#editbody").val();
+                  var id = $("#editpostid").val();
+                  const obj = { title: edittitle, body: editbody };
+                  const data = JSON.stringify(obj);
+                  $.ajax({
+                    url: url + `/post/editPost/${id}`,
+                    type: "PUT",
+                    data: data,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (data, textStatus, xhr) {
+                      alert("Edited successfully!");
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                      console.log("Error in Operation");
+                    },
+                  });
+                  return false;
+                });
               } else {
                 console.log("Issue in retrieving...");
               }
@@ -189,29 +211,7 @@
           return false;
         });
 
-        // $("#editformbutton").click(function () {
-        //   var edittitle = $("#edittitle").val();
-        //   var editbody = $("#editbody").val();
-        //   var id = $("#editpostid").val();
-        //   alert(edittitle + " " + editbody + " " + id);
-        //   const obj = { title: edittitle, body: editbody };
-        //   const data = JSON.stringify(obj);
-        //   alert(id);
-        //   $.ajax({
-        //     url: url + `/post/editPost/${id}`,
-        //     type: "PUT",
-        //     data: data,
-        //     contentType: "application/json; charset=utf-8",
-        //     dataType: "json",
-        //     success: function (data, textStatus, xhr) {
-        //       alert("Edited successfully!");
-        //     },
-        //     error: function (xhr, textStatus, errorThrown) {
-        //       console.log("Error in Operation");
-        //     },
-        //   });
-        //   return false;
-        // });
+  
       }); //End of document.ready
     </script>
   </head>
