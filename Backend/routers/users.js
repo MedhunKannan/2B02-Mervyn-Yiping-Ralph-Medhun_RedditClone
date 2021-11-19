@@ -10,11 +10,6 @@ var cors = require('cors')
 const router = express.Router()
 router.use(cors())
 
-// const getPublicUser = (user) => {
-//   delete user.password;
-//   delete user.tokens;
-//   return user;
-// };
 
 const addToken = async (userid) => {
   const token = await jwt.sign({ id: userid }, config.secret)
@@ -31,37 +26,6 @@ const addToken = async (userid) => {
   return { user, token }
 }
 
-// router.get("/", async (req, res) => {
-//   try {
-//     const { rows } = await query("select * from users");
-//     res.send(rows.map((user) => getPublicUser(user)));
-//   } catch (e) {
-//     res.status(500).send({ error: e.message });
-//   }
-// });
-
-// router.get("/:id", async (req, res) => {
-//   try {
-//     const { id } = req.params;
-
-//     const selectUserStatement = `select * from users where id = $1`;
-
-//     const {
-//       rows: [user],
-//     } = await query(selectUserStatement, [id]);
-
-//     if (!user) {
-//       return res
-//         .status(404)
-//         .send({ error: "Could not find user with that id" });
-//     }
-//     res.send(getPublicUser(user));
-//   } catch (e) {
-//     res.status(500).send({ error: e.message });
-//   }
-// });
-
-//
 
 router.post('/register', async (req, res) => {
   try {
@@ -150,78 +114,5 @@ router.put('/password/:id', async (req, res) => {
   // }
 })
 
-// router.post("/logout", auth.verifyToken, async (req, res) => {
-//   const tokens = req.user.tokens.filter((token) => token !== req.token);
-//   const setUserTokensStatement = `
-//     update users
-//     set tokens = $1
-//     where id = $2
-//   `;
-//   const {
-//     rows: [user],
-//   } = await query(setUserTokensStatement, [tokens, req.user.id]);
-//   delete req.user;
-//   delete req.token; //Self directed -- Vulnerabilites all that
-//   res.send(user);
-// });
 
-// router.post("/logoutAll", auth.verifyToken, async (req, res) => {
-//   const clearUserTokensStatement = `
-//     update users
-//     set tokens = '{}'
-//     where id = $1
-//   `;
-//   const {
-//     rows: [user],
-//   } = await query(clearUserTokensStatement, [req.user.id]);
-//   delete req.user;
-//   delete req.token;
-//   res.send(user);
-// });
-
-// router.put("/", auth.verifyToken, async (req, res) => {
-//   try {
-//     const allowedUpdates = ["username", "password"];
-//     if (req.body.username !== undefined) {
-//       const { rows } = await query(`select * from users where username = $1`, [
-//         req.body.username,
-//       ]);
-//       if (rows.length > 0) {
-//         return res.status(409).send({ error: "Username is already taken" });
-//       }
-//     }
-//     if (req.body.password !== undefined) {
-//       req.body.password = await bcrypt.hash(req.body.password, 10);
-//     }
-//     const user = await updateTableRow(
-//       "users",
-//       req.user.id,
-//       allowedUpdates,
-//       req.body
-//     );
-
-//     res.send(getPublicUser(user));
-//   } catch (e) {
-//     res.status(400).send({ error: e.message });
-//   }
-// });
-
-// router.delete("/", auth.verifyToken, async (req, res) => {
-//   try {
-//     const deleteUserStatement = `delete from users where id = $1 returning *`;
-
-//     const {
-//       rows: [user],
-//     } = await query(deleteUserStatement, [req.user.id]);
-
-//     if (!user) {
-//       return res
-//         .status(404)
-//         .send({ error: "Could not find user with that id" });
-//     }
-//     res.send(getPublicUser(user));
-//   } catch (e) {
-//     res.status(400).send({ error: e.message });
-//   }
-// });
 module.exports = router
