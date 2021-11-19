@@ -11,20 +11,20 @@ const router = express.Router()
 router.use(cors())
 
 
-const addToken = async (userid) => {
-  const token = await jwt.sign({ id: userid }, config.secret)
+// const addToken = async (userid) => {
+//   const token = await jwt.sign({ id: userid }, config.secret)
 
-  const updateUserTokensStatement = `
-    update users
-    set tokens = tokens || $1
-    where id = $2
-    returning *
-  `
-  const {
-    rows: [user],
-  } = await query(updateUserTokensStatement, [[token], userid])
-  return { user, token }
-}
+//   const updateUserTokensStatement = `
+//     update users
+//     set tokens = tokens || $1
+//     where id = $2
+//     returning *
+//   `
+//   const {
+//     rows: [user],
+//   } = await query(updateUserTokensStatement, [[token], userid])
+//   return { user, token }
+// }
 
 
 router.post('/register', async (req, res) => {
@@ -113,6 +113,20 @@ router.put('/password/:id', async (req, res) => {
   //     console.log('Please enter a new password');
   // }
 })
+
+//delete account
+router.delete('/users/:id', async (req, res) => {
+    try {
+        var id = req.params.id;
+        const deleteAcc = await connection.query(`DELETE FROM users WHERE id = $1`,
+        [id])
+        res.send(deleteAcc.rows)
+    } catch (err) {
+        console.log(err.message)
+    }
+
+});
+
 
 
 module.exports = router

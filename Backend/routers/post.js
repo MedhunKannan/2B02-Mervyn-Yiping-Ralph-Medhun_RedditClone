@@ -2,6 +2,8 @@ const router = require('express').Router()
 const connection = require('../database.js')
 var cors = require('cors')
 router.use(cors())
+
+
 router.post('/createpost', (req, res) => {
   var type = req.body.type
   var title = req.body.title
@@ -29,7 +31,33 @@ router.post('/createpost', (req, res) => {
       }
     }
   )
-})
+});
+
+router.get("/viewPost/:id", function (req, res, next) {
+  const postid2 = req.params.id;
+  const findPost = {
+    text: "SELECT * FROM posts WHERE id = $1",
+  };
+  console.log(postid2);
+  connection.query(findPost, [postid2], (error, results) => {
+    if (error) {
+      console.log(error);
+      res.status(500).json({
+        Error: "Something went wrong while finding post",
+      });
+    } else {
+      if (results.rows.length === 0) {
+        res.status(404).json({
+          error: `Post does not exist`,
+        });
+      } else {
+        res.status(200).json({
+          comment: results.rows,
+        });
+      }
+    }
+  });
+});
 
 router.delete('/deletepost/:id', function (req, res, next) {
   const postid = req.params.id
