@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken')
 const auth = require('../middleware/auth')
 const config = require('../config/config')
 // const validInfo = require('../middleware/validInfo')
-const jwtGen = require('../utils/jwtGen')
+const createJWT = require('../utils/createJWT')
 const connection = require('../database.js')
 var cors = require('cors')
 const router = express.Router()
@@ -78,7 +78,7 @@ router.post('/register', async (req, res) => {
     )
 
     //res.json(newUser.rows)
-    const token = jwtGen(newUser.rows[0].id)
+    const token = createJWT(newUser.rows[0].id)
     res.json({ token })
   } catch (err) {
     console.log(err.message)
@@ -106,7 +106,7 @@ router.post('/login', async (req, res) => {
   if (!validPassword) {
     return res.status(401).json('Invalid Credential')
   }
-  const jwtToken = jwtGen(user.rows[0].user_id)
+  const jwtToken = createJWT(user.rows[0].user_id)
   return res.json({ jwtToken })
 })
 
