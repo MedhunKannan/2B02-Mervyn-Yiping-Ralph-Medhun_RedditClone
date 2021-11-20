@@ -104,12 +104,12 @@ router.delete('/deleteSubreddit', function (req, res, next) {
     })
 })
 
-router.get('/subreddit', function (req, res, next) {
-  const findsubredditQuery = {
-    text: 'SELECT * FROM subreddits',
-  }
-  console.log(findsubredditQuery)
-  connection.query(findsubredditQuery, (error, results) => {
+router.get('/sortSubredditByDateAsc', function (req, res, next) {
+    const sortSubredditByDateAsc = `
+    SELECT * FROM subreddits ORDER BY id 
+    `
+  console.log(sortSubredditByDateAsc)
+  connection.query(sortSubredditByDateAsc, (error, results) => {
     if (error) {
       console.log(error)
       res.status(500).json({
