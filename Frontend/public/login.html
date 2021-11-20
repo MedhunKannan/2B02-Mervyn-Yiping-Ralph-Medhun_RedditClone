@@ -16,7 +16,9 @@
             $("#Login").click(function() {
                 var id = $('#username').val();
                 var pwd = $('#pwd').val();
-                var data = "{\"username\":\"" + id + "\", \"password\":\"" + pwd + "\"}";
+                // var data = "{\"username\":\"" + id + "\", \"password\":\"" + pwd + "\"}";
+                const obj = { username: id, password: pwd };
+                  const data = JSON.stringify(obj);
                 console.log(data);
                 $.ajax({
                     type: 'POST',
