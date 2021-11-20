@@ -1,0 +1,71 @@
+html {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+input#titleName {
+    border-right: none;
+    border-left: none;
+    border-top: none;
+    border-bottom: groove;
+}
+
+header {
+    margin-bottom: 10px;
+}
+body {
+    align-items: center;
+    text-align: center;
+    align-self: center;
+    align-content: center;
+}
+
+h1 {
+    text-align: left;
+}
+
+p.details {
+    text-align: left;
+}
+#topNav {
+    background-color: black;
+}
+
+#logo {
+    margin-left: 25px;
+    height: 34.3px;
+    width: 120px;
+    align-self: center;
+}
+
+#link {
+    margin-left: 20px;
+    align-items: center;
+    padding-top: 5px;
+    font-size: 18px;
+    color: white;
+}
+
+.Links {
+    margin-right: 25px;
+    color: white;
+}
+
+p.title {
+    color: black;
+}
+
+a {
+    text-decoration: none;
+
+}
+
+div#ReviewBox {
+    text-align: left;
+}
+
+textarea#comment {
+    width: 400px;
+    height: 200px;
+}

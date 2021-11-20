@@ -1,0 +1,19 @@
+#title {
+    text-align: center;
+}
+
+#search {
+    text-align: center;
+}
+
+#username {
+    align-items: center;
+    padding-top: 5px;
+    font-size: 18px;
+    color: white;
+}
+
+#Logout {
+    margin-top: 5px;
+    margin-left: 3px;
+}
