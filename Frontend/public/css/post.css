@@ -47,6 +47,16 @@
   float: right;
 }
 
+#body,
+#title,
+#type,
+#subreddit,
+#author_id,
+#post {
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+}
+
 #header {
   font-family: Georgia, "Times New Roman", Times, serif;
   margin-top: 2%;
