@@ -81,7 +81,8 @@ router.put('/users/:id', async (req, res) => {
     const username = req.body.username
     const user2 = await connection.query(
       `UPDATE users
-        SET username = $1
+        SET username = $1, 
+        updated_at = NOW() at time zone 'SGT'
         WHERE id = $2`,
       [username, id]
     )
