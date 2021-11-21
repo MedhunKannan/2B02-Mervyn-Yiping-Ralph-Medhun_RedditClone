@@ -32,27 +32,59 @@ router.get("/viewComment/:post_id", function (req, res, next) {
 
 // Create Comment
 router.post('/createComment', (req, res) => {
-
-  var comment = req.body.comment;
+  var body = req.body.body
+  var authorid = req.body.author_id
+  var post_id = req.body.post_id
   const createCommentQuery = `
-    INSERT INTO comments(comment)
-    VALUES ($1);
-        `;
-
-  connection.query(createCommentQuery, [comment], (error, results) => {
-    if (error) {
-      console.log(error);
-      res.status(500).json({ error: 'Error while creating comment' });
-    } else {
-      console.log(results);
-      if (results.rowCount === 1) {
-        res.status(200).json({ message: 'Successfully created comment' });
+  INSERT INTO comments(body, author_id, post_id, created_at, updated_at)
+  VALUES ($1, $2, $3, NOW() at time zone 'SGT', NOW() at time zone 'SGT');
+      `
+  connection.query(
+    createCommentQuery,
+    [body, author_id, post_id],
+    (error, results) => {
+      if (error) {
+        console.log(error)
+        res.status(500).json({ error: 'Error while commenting' })
       } else {
-        res.status(404).json({ error: `Unable to create comment ${comment}` });
+        console.log(results)
+        if (results.rowCount === 1) {
+          res.status(200).json({ message: 'Successfully commented' })
+        } else {
+          res.status(404).json({ error: `Unable to create comment` })
+        }
       }
     }
-  });
+  )
 });
+
+// Edit Comment
+router.put('/editComment/:id', (req, res) => {
+  var body = req.body.body
+  var id = req.params.id
+  const editCommentQuery = `
+       UPDATE posts 
+       SET body = $1, 
+       updated_at = NOW() at time zone 'SGT' 
+       WHERE id = $2;
+      `
+
+  connection.query(editCommentQuery, [body, id], (error, results) => {
+    if (error) {
+      console.log(error)
+      res.status(500).json({ error: 'Error while editing post' })
+    } else {
+      console.log(results)
+      if (results.rowCount === 1) {
+        res.status(200).json({ message: 'Updated comment successfully' })
+      } else {
+        res.status(404).json({
+          error: `Unable to edit comment. Make sure that all input fields are filled.`,
+        })
+      }
+    }
+  })
+})
 
 // Delete Comment
 router.delete("/deleteComment/:commentid", function (req, res, next) {
