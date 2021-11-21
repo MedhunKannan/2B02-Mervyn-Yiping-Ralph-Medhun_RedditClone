@@ -81,7 +81,8 @@ router.put('/users/:id', async (req, res) => {
     const username = req.body.username
     const user2 = await connection.query(
       `UPDATE users
-        SET username = $1
+        SET username = $1,
+        updated_at = NOW() at time zone 'SGT'
         WHERE id = $2`,
       [username, id]
     )
@@ -99,7 +100,8 @@ router.put('/password/:id', async (req, res) => {
     const password = req.body.password
     const newPassword = await connection.query(
       `UPDATE users
-        SET password = $1
+        SET password = $1,
+        updated_at = NOW() at time zone 'SGT'
         WHERE id = $2`,
       [password, id]
     )
@@ -121,6 +123,7 @@ router.delete('/users/:id', async (req, res) => {
         const deleteAcc = await connection.query(`DELETE FROM users WHERE id = $1`,
         [id])
         res.send(deleteAcc.rows)
+        res.status(200).json({ message: 'Successfully deleted' })
     } catch (err) {
         console.log(err.message)
     }
