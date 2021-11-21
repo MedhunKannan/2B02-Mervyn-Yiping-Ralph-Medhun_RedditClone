@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Reddit clone</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="css/post.css" />
+
+    <script>
+      var url = "http://localhost:8000/api";
+      $(document).ready(function () {
+        // edit post dropdown list
+        $.ajax({
+          url: url + "/post/post",
+          type: "GET",
+          contentType: "application/json",
+          dataType: "json",
+          success: function (data, textStatus, xhr) {
+            console.log(data);
+            console.log(textStatus);
+            if (data != null) {
+              for (var i = 0; i < data.post.length; i++) {
+                // Display records top down
+
+                $("#deletepostid").append(
+                  $("<option>", {
+                    value: data.post[i].id,
+                    text: data.post[i].title,
+                  })
+                );
+                // $("#Category").append(new Option(data[i].catname, data[i].category_id));
+              }
+            } else {
+              console.log("Issue in retrieving...");
+            }
+          },
+          error: function (xhr, textStatus, err) {
+            console.log(err);
+          },
+        });
+
+        //Delete post ajax
+        $("#delete").click(function () {
+          var deletepostid = $("#deletepostid").val();
+          var data = "";
+
+          $.ajax({
+            url: url + `/post/deletepost/${deletepostid}`,
+            type: "DELETE",
+            data: data,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data, textStatus, xhr) {
+              alert("Deleted successfully!");
+            },
+            error: function (xhr, textStatus, errorThrown) {
+              console.log("Error in Operation");
+            },
+          });
+          return false;
+        });
+      }); //End of document.ready
+    </script>
+  </head>
+
+  <body>
+    <div class="row" id="DeleteandEdit">
+      <div class="col-4">
+        <h3>Delete post</h3>
+        <form>
+          <select id="deletepostid" name="postid">
+            <option value="Post" selected>Post</option>
+          </select>
+          <input type="submit" id="delete" value="Delete" />
+        </form>
+      </div>
+    </div>
+    <!-- End of div class row  -->
+  </body>
+</html>
