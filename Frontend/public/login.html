@@ -28,9 +28,9 @@
                     dataType: "json",
                     success: function(data, textStatus, xhr) {
                         if (data != null) {
-                            localStorage.setItem('token', data.token);
-                            localStorage.setItem('userInfo', data.UserData);
-                            //window.location.assign("http://localhost:3001/home.html");
+                            // localStorage.setItem('token', data.token);
+                            // localStorage.setItem('userInfo', data.UserData);
+                            window.location.assign("http://localhost:3001/post.html");
                         } else {
                             console.log("Error");
 

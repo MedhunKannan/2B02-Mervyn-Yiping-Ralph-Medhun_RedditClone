@@ -105,7 +105,7 @@ router.delete('/deleteSubreddit', function (req, res, next) {
 })
 
 router.get('/sortSubredditByDateAsc', function (req, res, next) {
-    const sortSubredditByDateAsc = `
+  const sortSubredditByDateAsc = `
     SELECT * FROM subreddits ORDER BY id 
     `
   console.log(sortSubredditByDateAsc)
@@ -114,6 +114,33 @@ router.get('/sortSubredditByDateAsc', function (req, res, next) {
       console.log(error)
       res.status(500).json({
         Error: 'Something went wrong while retrieving subreddits',
+      })
+    } else {
+      if (results.rows.length === 0) {
+        res.status(404).json({
+          error: `unable to retrieve subreddits`,
+        })
+      } else {
+        res.json({
+          subreddit: results.rows,
+        })
+      }
+    }
+  })
+})
+
+router.get('/subreddit', function (req, res, next) {
+  const username = req.body.username
+  // const course = req.params.course;
+  const findsubredditQuery = {
+    text: 'SELECT * FROM subreddits',
+  }
+  console.log(findsubredditQuery)
+  connection.query(findsubredditQuery, (error, results) => {
+    if (error) {
+      console.log(error)
+      res.status(500).json({
+        Error: 'Something went wrong while retrieving subreddit',
       })
     } else {
       if (results.rows.length === 0) {
