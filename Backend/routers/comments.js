@@ -33,7 +33,7 @@ router.get("/viewComment/:post_id", function (req, res, next) {
 // Create Comment
 router.post('/createComment', (req, res) => {
   var body = req.body.body
-  var authorid = req.body.author_id
+  var author_id = req.body.author_id
   var post_id = req.body.post_id
   const createCommentQuery = `
   INSERT INTO comments(body, author_id, post_id, created_at, updated_at)
