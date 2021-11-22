@@ -27,35 +27,6 @@
     <script>
       var url = "http://localhost:8000/api";
       $(document).ready(function () {
-        // edit post dropdown list
-        $.ajax({
-          url: url + "/post/post",
-          type: "GET",
-          contentType: "application/json",
-          dataType: "json",
-          success: function (data, textStatus, xhr) {
-            console.log(data);
-            console.log(textStatus);
-            if (data != null) {
-              for (var i = 0; i < data.post.length; i++) {
-                // Display records top down
-                // alert("Hello world");
-                $("#editpostid").append(
-                  $("<option>", {
-                    value: data.post[i].id,
-                    text: data.post[i].title,
-                  })
-                );
-              }
-            } else {
-              console.log("Issue in retrieving...");
-            }
-          },
-          error: function (xhr, textStatus, err) {
-            console.log(err);
-          },
-        });
-
         $("#edit").click(function () {
           var id = $("#editpostid").val();
           var data = "";
