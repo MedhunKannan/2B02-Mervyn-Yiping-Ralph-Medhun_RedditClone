@@ -6,42 +6,61 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <link rel="stylesheet" href="./css/post.css">
     <title>Posts</title>
 </head>
 
 <body>
     <script>
         $.ajax({
-            url: url + "/post",
-            type: "GET",
-            contentType: "application/json",
-            dataType: "json",
+            //headers: {
+            //   'authorization': 'Bearer ' + tmpToken
+            //},
+            url: 'http://localhost:8000/api/posts',
+            type: 'GET',
+            data: data,
+            contentType: "application/json; charset=utf-8",
+            dataType: 'json',
             success: function (data, textStatus, xhr) {
-                console.log(data);
-                console.log(textStatus);
                 if (data != null) {
-                    for (var i = 0; i < data.post.length; i++) {
-                        // Display records top down
-                        // alert("Hello world");
-                        $("#subreddit").append(
-                            $("<option>", {
-                                value: data.subreddit[i].id,
-                                text: data.subreddit[i].name,
-                            })
-                        );
-                        // $("#Category").append(new Option(data[i].catname, data[i].category_id));
+                    var html = "";
+
+                    for (i = 0; i < data.length; i++) {
+                        html += `<div class="col-3">
+                                <a href="selected.html?gameid=${data[i].id}" >                                        
+                                            <p>${data[i].title}</p>
+                                            <p class="title"><input type="button" id=${data[i].title} value="View" /> 
+                                                </a>                                                                             
+                                    </div>`
+                        tmpTitleArray.push(data[i].title);
                     }
+                    localStorage.setItem('userInfo', data);
+                    $("#title").html(html);
+                    // document.getElementById("title").innerHTML = html;
+
+                    console.log(html)
+                    console.log(data)
                 } else {
-                    console.log("Issue in retrieving...");
+                    console.log("Error");
+                    console.log(data)
                 }
             },
-            error: function (xhr, textStatus, err) {
-                console.log(err);
-            },
+            error: function (xhr, textStatus, errorThrown) {
+                console.log('Error in Operation');
+            }
         });
     </script>
-        <form>
-            <h3>View and Get all Posts</h3>
-            <input type="submit" value="Sort by Earliest Date First" id="sortPostsAscending">
-        </form>
-    </body>
+
+    <nav class="col-3"></nav>
+
+    <nav class="col-3" id="name">
+        <div class="row">
+            <div class="col" style="padding: 0;">
+                <p id="username" style="margin-bottom: 0; margin-top: 0;"></p>
+                <p id="userrole" style="font-size: 10; color: grey; margin-top: 0; margin-bottom: 0;"></p>
+            </div>
+            <p class="col"><input type="button" id="Logout" value="Log Out" /></p>
+        </div>
+    </nav>
+    </nav>
+</body>
