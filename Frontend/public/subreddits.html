@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <link rel="stylesheet" href="./css/subreddits.css">
     <title>Subreddits</title>
 </head>
 
@@ -167,8 +168,8 @@
             //     return false;
             // });
 
-            $('#viewSubreddits').click(function () {
-                $.ajax({
+            
+                $.ajax({    
                     url: `http://localhost:8000/api/subreddits/subreddit/`,
                     type: "GET",
                     contentType: "application/json",
@@ -177,17 +178,36 @@
             console.log(data);
             console.log(textStatus);
             if (data != null) {
-              for (var i = 0; i < data.subreddit.length; i++) {
-                // Display records top down
-                // alert("Hello world");
-                $("#viewSubredditHtml").append(
-                  $({
-                    value: data.subreddit[i].id,
-                    text: data.subreddit[i].name,
-                  })
+                data.subreddit.map(d => {
+                    $("#subTable").append(
+                //   $("<td>", {
+                //     text: data.subreddit[i].name,
+                //   })
+                `<tr>
+                    <a href="subreddit.html?id=${data.id}"><td>${d.name}</td></a>
+                    <td>${d.description}</td>
+                    </tr>`
                 );
-                // $("#Category").append(new Option(data[i].catname, data[i].category_id));
-              }
+                })
+            //   for (var i = 0; i < data.subreddit.length; i++) {
+            //     // Display records top down
+            //     // alert("Hello world");
+            //     $("#subTable").append(
+            //     //   $("<td>", {
+            //     //     text: data.subreddit[i].name,
+            //     //   })
+            //     `<tr>
+            //         <td>${data.subreddit[i].name}</td>
+            //         <td>${data.subreddit[i]}
+            //         </tr>`
+            //     );
+            //     // $("#subTable").append(
+            //     //   $("<td>", {
+            //     //     text: data.subreddit[i].description,
+            //     //   })
+            //     // );
+            //     // $("#Category").append(new Option(data[i].catname, data[i].category_id));
+            //   }
             } else {
               console.log("Issue in retrieving...");
             }
@@ -197,7 +217,7 @@
                     },
                 });
             });
-        });
+        
 
     </script>
     <!-- Create new Subreddit -->
@@ -241,10 +261,16 @@
 
     <form>
         <h3>View and Get all subreddit</h3>
-        <input type="submit" value="View Subreddits" id="viewSubreddits">
     </form>
     <div id="viewSubredditHtml">
-
+        <table id="subTable">
+            <tr>
+              <th>SubredditName</th>
+              <th>Description</th>
+            </tr>
+           
+            
+          </table>
     </div>
 
     
