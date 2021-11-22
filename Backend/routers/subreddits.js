@@ -35,12 +35,12 @@ router.post('/createSubreddit', (req, res) => {
 
 router.get('/searchSubreddit/:name', function (req, res, next) {
   const subredditName = req.params.name
-  const findBookQuery = {
+  const searchBookQuery = {
     text: 'SELECT * FROM subreddits WHERE name = $1;',
     values: [subredditName],
   }
-  console.log(findBookQuery)
-  connection.query(findBookQuery, (error, results) => {
+  console.log(searchBookQuery)
+  connection.query(searchBookQuery, (error, results) => {
     if (error) {
       console.log(error)
       res.status(500).json({
@@ -130,7 +130,6 @@ router.get('/sortSubredditByDateAsc', function (req, res, next) {
 })
 
 router.get('/subreddit', function (req, res, next) {
-  const username = req.body.username
   // const course = req.params.course;
   const findsubredditQuery = {
     text: 'SELECT * FROM subreddits',
@@ -155,5 +154,31 @@ router.get('/subreddit', function (req, res, next) {
     }
   })
 })
+
+// router.get('/subreddit', function (req, res, next) {
+//     const findSubredditQuery = {
+//       text: 'SELECT * FROM subreddits',
+//     }
+//     console.log(findSubredditQuery)
+//     connection.query(findSubredditQuery, (error, results) => {
+//       if (error) {
+//         console.log(error)
+//         res.status(500).json({
+//           Error: 'Something went wrong while looking for the subreddit',
+//         })
+//       } else {
+//         if (results.rows.length === 0) {
+//           res.status(404).json({
+//             error: `Subreddit ${subreddit} not found`,
+//           })
+//         } else {
+//           res.json({
+//             name: results.rows[0].name,
+//             description: results.rows[0].description,
+//           })
+//         }
+//       }
+//     })
+//   })
 
 module.exports = router
