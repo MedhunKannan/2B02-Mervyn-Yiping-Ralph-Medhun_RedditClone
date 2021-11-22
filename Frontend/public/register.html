@@ -1,71 +1,76 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <title>Reddit clone</title>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-    <script>
-      var url = "http://localhost:8000/api";
-      $(document).ready(function () {
-        $("#register").click(function () {
-          //var type = $("#type").val();
-          var username = $("#username").val();
-          var password = $("#pwd").val();
-          const obj = {
-            username: username,
-            password: password,
-          };
-          const data = JSON.stringify(obj);
-          $.ajax({
-            url: url + "/users/register",
-            type: "POST",
-            data: data,
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (data) {
-              alert("Successfully registered!");
-            },
-          });
-          return false;
+<head>
+  <meta charset="utf-8" />
+  <title>Reddit clone</title>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link href="css/default.css" rel="stylesheet" />
+  <link href="css/LogInOne.css" rel="stylesheet" />
+
+  <script>
+    var url = "http://localhost:8000/api";
+    $(document).ready(function () {
+      $("#register").click(function () {
+        //var type = $("#type").val();
+        var username = $("#username").val();
+        var password = $("#pwd").val();
+        const obj = {
+          username: username,
+          password: password,
+        };
+        const data = JSON.stringify(obj);
+        $.ajax({
+          url: url + "/users/register",
+          type: "POST",
+          data: data,
+          contentType: "application/json; charset=utf-8",
+          dataType: "json",
+          success: function (data) {
+            alert("Successfully registered!");
+          },
         });
+        return false;
+      });
 
-        //Delete post ajax
-        $("#delete").click(function () {
-          var deletepostid = $("#deletepostid").val();
-          var data = "";
+      //Delete post ajax
+      $("#delete").click(function () {
+        var deletepostid = $("#deletepostid").val();
+        var data = "";
 
-          $.ajax({
-            url: url + `/post/deletepost/${deletepostid}`,
-            type: "DELETE",
-            data: data,
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (data, textStatus, xhr) {
-              alert("Deleted successfully!");
-            },
-            error: function (xhr, textStatus, errorThrown) {
-              console.log("Error in Operation");
-            },
-          });
-          return false;
+        $.ajax({
+          url: url + `/post/deletepost/${deletepostid}`,
+          type: "DELETE",
+          data: data,
+          contentType: "application/json; charset=utf-8",
+          dataType: "json",
+          success: function (data, textStatus, xhr) {
+            alert("Deleted successfully!");
+          },
+          error: function (xhr, textStatus, errorThrown) {
+            console.log("Error in Operation");
+          },
         });
+        return false;
+      });
 
-        $("#edit").click(function () {
-          var id = $("#editpostid").val();
-          var data = "";
-          $.ajax({
-            url: url + `/post/post/${id}`,
-            type: "GET",
-            data: data,
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (data, textStatus, xhr) {
-              if (data != null) {
-                var editHtml = "";
-                editHtml += `
+      $("#edit").click(function () {
+        var id = $("#editpostid").val();
+        var data = "";
+        $.ajax({
+          url: url + `/post/post/${id}`,
+          type: "GET",
+          data: data,
+          contentType: "application/json; charset=utf-8",
+          dataType: "json",
+          success: function (data, textStatus, xhr) {
+            if (data != null) {
+              var editHtml = "";
+              editHtml += `
           <div id = "editformdiv">
           <form id = "editform">
           <input
@@ -90,67 +95,68 @@
           </div>
                         `;
 
-                document.getElementById("editpost").innerHTML = editHtml;
+              document.getElementById("editpost").innerHTML = editHtml;
 
-                $("#editformbutton").click(function () {
-                  var edittitle = $("#edittitle").val();
-                  var editbody = $("#editbody").val();
-                  var id = $("#editpostid").val();
-                  const obj = { title: edittitle, body: editbody };
-                  const data = JSON.stringify(obj);
-                  $.ajax({
-                    url: url + `/post/editPost/${id}`,
-                    type: "PUT",
-                    data: data,
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    success: function (data, textStatus, xhr) {
-                      alert("Edited successfully!");
-                    },
-                    error: function (xhr, textStatus, errorThrown) {
-                      console.log("Error in Operation");
-                    },
-                  });
-                  return false;
+              $("#editformbutton").click(function () {
+                var edittitle = $("#edittitle").val();
+                var editbody = $("#editbody").val();
+                var id = $("#editpostid").val();
+                const obj = { title: edittitle, body: editbody };
+                const data = JSON.stringify(obj);
+                $.ajax({
+                  url: url + `/post/editPost/${id}`,
+                  type: "PUT",
+                  data: data,
+                  contentType: "application/json; charset=utf-8",
+                  dataType: "json",
+                  success: function (data, textStatus, xhr) {
+                    alert("Edited successfully!");
+                  },
+                  error: function (xhr, textStatus, errorThrown) {
+                    console.log("Error in Operation");
+                  },
                 });
-              } else {
-                console.log("Issue in retrieving...");
-              }
-            },
-            error: function (xhr, textStatus, errorThrown) {
-              console.log("Error in Operation");
-            },
-          });
-          return false;
+                return false;
+              });
+            } else {
+              console.log("Issue in retrieving...");
+            }
+          },
+          error: function (xhr, textStatus, errorThrown) {
+            console.log("Error in Operation");
+          },
         });
-      }); //End of document.ready
-    </script>
-  </head>
+        return false;
+      });
+    }); //End of document.ready
+  </script>
+</head>
 
-  <body>
-    <div class="row" id="box1">
-        <div class="login-form">
-            <form action="">
-                <h2 class="text-center">Register</h2>
-                <div class="form-group">
-                    <label for="username">Username</label>
-                    <input type="text" class="form-control" id="username" placeholder="Username" required="required">
-                </div>
-                <div class="form-group">
-                    <label for="pwd">Password</label>
-                    <input type="password" class="form-control" id="pwd" placeholder="Password" required="required">
-                </div>
-                <p><span id="warning" style="color: red;"></span></p>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-secondary btn-block" id="register">register</button>
-                </div>
-                <div class="clearfix">
-                    <label class="pull-left checkbox-inline"><input type="checkbox"> Remember me</label>
-                </div>
-            </form>
-
+<body>
+  <div class="row" id="box1">
+    <div class="login-form">
+      <form action="">
+        <h2 class="text-center">Register</h2>
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" class="form-control" id="username" placeholder="Username" required="required">
         </div>
+        <div class="form-group">
+          <label for="pwd">Password</label>
+          <input type="password" class="form-control" id="pwd" placeholder="Password" required="required">
+        </div>
+        <p><span id="warning" style="color: red;"></span></p>
+        <div class="form-group">
+          <button type="submit" class="btn btn-secondary btn-block" id="register">Register</button>
+        </div>
+        <div class="clearfix">
+          <label class="pull-left checkbox-inline"><input type="checkbox"> Remember me</label>
+        </div>
+      </form>
+
     </div>
-    <!-- End of div class row  -->
-  </body>
+  </div>
+  <!-- End of div class row  -->
+</body>
+
 </html>
