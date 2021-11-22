@@ -126,50 +126,81 @@
 
 
             //Sort Subreddit Ajax
-            $('#sortSubredditAsc').click(function () {
-                $.ajax({
-                    url: `http://localhost:8000/api/subreddits/sortSubredditByDateAsc/`,
-                    type: 'GET',
-                    data: data,
-                    contentType: 'application/json; charset=utf-8',
-                    dataType: 'json',
-                    success: function (data, textStatus, xhr) {
-                        alert('Searched successfully!!!!');
-                        if (data != null) {
-                            var sortSubredditAscHtml = "";
+            // $('#sortSubredditAsc').click(function () {
+            //     $.ajax({
+            //         url: `http://localhost:8000/api/subreddits/sortSubredditByDateAsc/`,
+            //         type: 'GET',
+            //         data: data,
+            //         contentType: 'application/json; charset=utf-8',
+            //         dataType: 'json',
+            //         success: function (data, textStatus, xhr) {
+            //             alert('Searched successfully!!!!');
+            //             if (data != null) {
+            //                 var sortSubredditAscHtml = "";
 
 
-                            sortSubredditAscHtml =
-                                `
-                        <div class="col-4" style="margin-bottom: 25px;">
-                          <div class="card" style="width: 18rem;">
-                            <div class="card-body">
+            //                 sortSubredditAscHtml =
+            //                     `
+            //             <div class="col-4" style="margin-bottom: 25px;">
+            //               <div class="card" style="width: 18rem;">
+            //                 <div class="card-body">
                           
-                              <p class="card-text">Name: ${data.name}</p>
-                              <p class="card-text">Description: ${data.description}</p>
-                              <p>
+            //                   <p class="card-text">Name: ${data.name}</p>
+            //                   <p class="card-text">Description: ${data.description}</p>
+            //                   <p>
                               
-                            </div>
-                          </div>
-                        </div>
-                        `
+            //                 </div>
+            //               </div>
+            //             </div>
+            //             `
 
-                            console.log(sortSubredditAscHtml);
-                            document.getElementById("searchHtml").innerHTML = sortSubredditAscHtml;
-                        } else {
-                            console.log("Issue in retrieving...");
-                        }
-                    },
-                    error: function (xhr, textStatus, errorThrown) {
-                        console.log('Error in Operation');
+            //                 console.log(sortSubredditAscHtml);
+            //                 document.getElementById("searchHtml").innerHTML = sortSubredditAscHtml;
+            //             } else {
+            //                 console.log("Issue in retrieving...");
+            //             }
+            //         },
+            //         error: function (xhr, textStatus, errorThrown) {
+            //             console.log('Error in Operation');
+            //         },
+            //     });
+            //     return false;
+            // });
+
+            $('#viewSubreddits').click(function () {
+                $.ajax({
+                    url: `http://localhost:8000/api/subreddits/subreddit/`,
+                    type: "GET",
+                    contentType: "application/json",
+                    dataType: "json",
+                    success: function (data, textStatus, xhr) {
+            console.log(data);
+            console.log(textStatus);
+            if (data != null) {
+              for (var i = 0; i < data.subreddit.length; i++) {
+                // Display records top down
+                // alert("Hello world");
+                $("#viewSubredditHtml").append(
+                  $({
+                    value: data.subreddit[i].id,
+                    text: data.subreddit[i].name,
+                  })
+                );
+                // $("#Category").append(new Option(data[i].catname, data[i].category_id));
+              }
+            } else {
+              console.log("Issue in retrieving...");
+            }
+          },
+                    error: function (xhr, textStatus, err) {
+                        console.log(err);
                     },
                 });
-                return false;
             });
-
         });
+
     </script>
-    <!-- Create new SUbreddit -->
+    <!-- Create new Subreddit -->
     <form>
         <h3>Create new subreddit</h3>
         <label for="subredditName">Subreddit Name: </label>
@@ -179,7 +210,7 @@
         <input type="submit" value="create" id="create">
     </form>
 
-    <!-- Search for SUbreddit -->
+    <!-- Search for Subreddit -->
     <form>
         <h3>Search for subreddit</h3>
         <label for="fname">Subreddit Name</label>
@@ -190,7 +221,7 @@
 
     </div>
 
-    <!-- Update SUbreddit -->
+    <!-- Update Subreddit -->
     <form>
         <h3>Update Subreddit</h3>
         <label for="name">Subreddit name: </label>
@@ -200,7 +231,7 @@
         <input type="submit" value="update" id="update">
     </form>
 
-    <!-- Delete SUbreddit -->
+    <!-- Delete Subreddit -->
     <form>
         <h3>Delete Subreddit</h3>
         <label for="name">Subreddit name: </label>
@@ -210,11 +241,13 @@
 
     <form>
         <h3>View and Get all subreddit</h3>
-        <input type="submit" value="Sort by Earliest Date First" id="sortSubredditAsc">
+        <input type="submit" value="View Subreddits" id="viewSubreddits">
     </form>
-    <div id="sortAscHtml">
+    <div id="viewSubredditHtml">
 
     </div>
+
+    
 </body>
 
 </html>
