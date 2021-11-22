@@ -71,7 +71,8 @@ router.post('/login', async (req, res) => {
   if (!validPassword) {
     return res.status(401).json('Invalid Credential')
   }
-  const jwtToken = createJWT(user.rows[0].user_id)
+  console.log("user_id: " + JSON.stringify(user.rows[0]));
+  const jwtToken = createJWT(user.rows[0].id);
   return res.json({ jwtToken })
 })
 
@@ -118,7 +119,7 @@ router.put('/password/:id', async (req, res) => {
 })
 
 //delete account
-router.delete('/users/:id', async (req, res) => {
+router.delete('/deleteusers/:id', async (req, res) => {
     try {
         var id = req.params.id;
         const deleteAcc = await connection.query(`DELETE FROM users WHERE id = $1`,
