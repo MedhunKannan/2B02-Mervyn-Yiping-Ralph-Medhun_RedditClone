@@ -59,33 +59,6 @@ router.post('/createComment', (req, res) => {
 })
 
 // Edit Comment
-// router.put('/editComment/:id', (req, res) => {
-//   var body = req.body.body
-//   var id = req.params.id
-//   const editCommentQuery = `
-//        UPDATE posts
-//        SET body = $1,
-//        updated_at = NOW() at time zone 'SGT'
-//        WHERE id = $2;
-//       `
-
-//   connection.query(editCommentQuery, [body, id], (error, results) => {
-//     if (error) {
-//       console.log(error)
-//       res.status(500).json({ error: 'Error while editing post' })
-//     } else {
-//       console.log(results)
-//       if (results.rowCount === 1) {
-//         res.status(200).json({ message: 'Updated comment successfully' })
-//       } else {
-//         res.status(404).json({
-//           error: `Unable to edit comment. Make sure that all input fields are filled.`,
-//         })
-//       }
-//     }
-//   })
-// })
-
 router.put('/editComment/:id', (req, res) => {
   var body = req.body.body
   var id = req.params.id
