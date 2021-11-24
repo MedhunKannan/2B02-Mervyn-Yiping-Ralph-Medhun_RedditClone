@@ -3,56 +3,62 @@ const connection = require('../database.js')
 var cors = require('cors')
 router.use(cors())
 
-// Upvoting
-router.put('/upVote/:post_id', (req, res) => {
-  const postid = req.params.post_id
-  //   const vote = req.body.vote_
-  const upVoteQuery = `
-    UPDATE post_votes 
-    SET vote_value = vote_value + 1
-    WHERE post_id = $1
-          `
-
-  connection.query(upVoteQuery, [postid], (error, results) => {
-    if (error) {
-      console.log(error)
-      res.status(500).json({ error: 'Error while voting' })
-    } else {
-      console.log(results)
-      if (results.rowCount === 1) {
-        res.status(200).json({ message: 'Successfully voted' })
-      } else {
-        console.log(error)
-        res.status(404).json({ error: `Unable to upvote` })
+// Upvote
+router.post('/createUpvote', (req, res) => {
+    var user_id = req.body.user_id
+    var post_id = req.body.post_id
+    const createUpvoteQuery = `
+    INSERT INTO post_votes(user_id, post_id, vote_value)
+    VALUES ($1, $2, 1);
+        `
+    connection.query(
+      createUpvoteQuery,
+      [user_id, post_id],
+      (error, results) => {
+        if (error) {
+          console.log(error)
+          res.status(500).json({ error: 'Error while upvoting' })
+        } else {
+          console.log(results)
+          if (results.rowCount === 1) {
+            res.status(200).json({ message: 'Successfully upvoted' })
+          } else {
+            res.status(404).json({ error: `Unable to create upvote` })
+          }
+        }
       }
-    }
+    )
   })
-})
 
-// Downvoting
-router.put('/downVote/:postid', (req, res) => {
-  const postid = req.params.post_id
-  const vote = req.body.vote
-  const downVoteQuery = `
-    UPDATE post_votes 
-    SET vote_value = vote_value - 1
-    WHERE post_id = $1
-          `
 
-  connection.query(downVoteQuery, [vote, postid], (error, results) => {
-    if (error) {
-      console.log(error)
-      res.status(500).json({ error: 'Error while voting' })
-    } else {
-      console.log(results)
-      if (results.rowCount === 1) {
-        res.status(200).json({ message: 'Successfully voted' })
-      } else {
-        res.status(404).json({ error: `Unable to vote ${vote}` })
+// Downvote
+router.post('/createDownvote', (req, res) => {
+    var user_id = req.body.user_id
+    var post_id = req.body.post_id
+    const createDownvoteQuery = `
+    INSERT INTO post_votes(user_id, post_id, vote_value)
+    VALUES ($1, $2, -1);
+        `
+    connection.query(
+      createDownvoteQuery,
+      [user_id, post_id],
+      (error, results) => {
+        if (error) {
+          console.log(error)
+          res.status(500).json({ error: 'Error while downvoting' })
+        } else {
+          console.log(results)
+          if (results.rowCount === 1) {
+            res.status(200).json({ message: 'Successfully downvoted' })
+          } else {
+            res.status(404).json({ error: `Unable to create downvote` })
+          }
+        }
       }
-    }
+    )
   })
-})
+
+
 
 // Get Vote
 router.get('/viewVotes/:post_id', function (req, res, next) {

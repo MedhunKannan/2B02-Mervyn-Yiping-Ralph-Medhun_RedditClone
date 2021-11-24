@@ -27,7 +27,11 @@
     <script>
       var url = "http://localhost:8000/api";
       $(document).ready(function () {
+        var decodedToken = localStorage.getItem("userInfo");
+        alert(decodedToken.user);
         $("#post").click(function () {
+          
+          
           var type = $("#type").val();
           var postTitle = $("#title").val();
           var postContent = $("#body").val();
@@ -52,7 +56,7 @@
             },
           });
           return false;
-        });
+        });//
 
         $.ajax({
           url: url + "/subreddits/subreddit",

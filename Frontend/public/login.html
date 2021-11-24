@@ -48,18 +48,21 @@
                                         ).join(''))
 
                                 let parseJwt = jwtToken =>
-                                    JSON.stringify(
+                                    JSON.parse(
                                         b64DecodeUnicode(
                                             jwtToken.split('.')[1].replace('-', '+').replace('_', '/')
                                         )
                                     )
                                 var decodedToken = parseJwt(data.jwtToken);
+                                console.log(decodedToken.user + "decodedTOken")
                             } catch {
                                 console.log("Error decoding")
                             }
+                            
                             localStorage.setItem('token', data.jwtToken);
                             // var decodedToken = jwt_decode(data.jwtToken);
                             localStorage.setItem('userInfo', decodedToken);
+                            console.log(decodedToken)
                             window.location.assign("http://localhost:3001/post.html");
                         } else {
                             console.log("Error");
