@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Reddit clone</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="css/post.css" />
+
+    <script>
+      var url = "http://localhost:8000/api";
+      $(document).ready(function () {
+        var urlParams = new URLSearchParams(window.location.search);
+        var id = urlParams.get("post_id");
+        var data = "";
+        $.ajax({
+          url: url + `/comments/viewComment/${id}`,
+          type: "GET",
+          data: data,
+          contentType: "application/json; charset=utf-8",
+          dataType: "json",
+          success: function (data, textStatus, xhr) {
+            if (data != null) {
+              data.comment.map((d) => {
+                $("#comment").append(
+                  `
+                  <div class = "row">
+                    <div class ="col-4">
+                        ${d.body}
+                    </div>
+                    <div class = "col-4">
+                        ${d.username}
+                    </div>
+                    <div class = "col-4">
+                        ${d.created_at}
+                    </div>
+                  </div>
+                  `
+                );
+              });
+            } else {
+              console.log("Issue in retrieving...");
+            }
+          },
+          error: function (xhr, textStatus, errorThrown) {
+            console.log("Error in Operation");
+          },
+        });
+        return false;
+      }); //End of document.ready
+    </script>
+  </head>
+
+  <body>
+    <div class="col-6">
+      <h3>View Comment</h3>
+
+      <div id="comment"></div>
+    </div>
+    <!-- End of div class row  -->
+  </body>
+</html>

@@ -10,7 +10,6 @@ var cors = require('cors')
 const router = express.Router()
 router.use(cors())
 
-
 // const addToken = async (userid) => {
 //   const token = await jwt.sign({ id: userid }, config.secret)
 
@@ -26,9 +25,8 @@ router.use(cors())
 //   return { user, token }
 // }
 
-
 router.post('/register', async (req, res) => {
-  console.log("Register")
+  console.log('Register')
   try {
     const { username, password } = req.body
     const salt = await bcrypt.genSalt(10)
@@ -71,8 +69,8 @@ router.post('/login', async (req, res) => {
   if (!validPassword) {
     return res.status(401).json('Invalid Credential')
   }
-  console.log("user_id: " + JSON.stringify(user.rows[0]));
-  const jwtToken = createJWT(user.rows[0].id);
+  console.log('user_id: ' + JSON.stringify(user.rows[0]))
+  const jwtToken = createJWT(user.rows[0].id)
   return res.json({ jwtToken })
 })
 
@@ -120,18 +118,44 @@ router.put('/password/:id', async (req, res) => {
 
 //delete account
 router.delete('/deleteusers/:id', async (req, res) => {
-    try {
-        var id = req.params.id;
-        const deleteAcc = await connection.query(`DELETE FROM users WHERE id = $1`,
-        [id])
-        res.send(deleteAcc.rows)
-        res.status(200).json({ message: 'Successfully deleted' })
-    } catch (err) {
-        console.log(err.message)
+  try {
+    var id = req.params.id
+    const deleteAcc = await connection.query(
+      `DELETE FROM users WHERE id = $1`,
+      [id]
+    )
+    res.send(deleteAcc.rows)
+    res.status(200).json({ message: 'Successfully deleted' })
+  } catch (err) {
+    console.log(err.message)
+  }
+})
+
+// get user from userid
+
+router.get('/getusername/:id', function (req, res, next) {
+  const userid = req.params.id
+  const getUsernameQuery = {
+    text: 'SELECT username FROM users WHERE id = $1',
+  }
+  connection.query(getUsernameQuery, [userid], (error, results) => {
+    if (error) {
+      console.log(error)
+      res.status(500).json({
+        Error: 'Something went wrong while finding username',
+      })
+    } else {
+      if (results.rows.length === 0) {
+        res.status(404).json({
+          error: `username not found`,
+        })
+      } else {
+        res.status(200).json({
+          comment: results.rows,
+        })
+      }
     }
-
-});
-
-
+  })
+})
 
 module.exports = router

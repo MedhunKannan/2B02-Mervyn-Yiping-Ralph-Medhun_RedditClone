@@ -7,9 +7,9 @@ router.use(cors())
 router.get('/viewComment/:post_id', function (req, res, next) {
   const postid = req.params.post_id
   const findCommentQuery = {
-    text: 'SELECT * FROM comments WHERE post_id = $1',
+    // text: 'SELECT * FROM comments WHERE post_id = $1'
+    text: 'SELECT comments.*, users.username FROM comments INNER JOIN users ON comments.author_id = users.id WHERE comments.post_id = $1',
   }
-  console.log(postid)
   connection.query(findCommentQuery, [postid], (error, results) => {
     if (error) {
       console.log(error)
