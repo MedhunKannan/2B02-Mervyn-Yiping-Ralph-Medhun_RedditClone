@@ -35,6 +35,7 @@ router.post('/createComment', (req, res) => {
   var body = req.body.body
   var author_id = req.body.author_id
   var post_id = req.body.post_id
+  console.log(req.body)
   const createCommentQuery = `
   INSERT INTO comments(body, author_id, post_id, created_at, updated_at)
   VALUES ($1, $2, $3, NOW() at time zone 'SGT', NOW() at time zone 'SGT');

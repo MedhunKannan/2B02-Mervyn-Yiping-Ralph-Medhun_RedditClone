@@ -10,16 +10,17 @@ const usersRouter = require('./users')
 
 // const port = process.env.PORT
 
-const app = express()
+// const app = express()
 
-app.use(cors())
-app.use(express.json())
-
+// app.use(cors())
+// app.use(express.json())
+// app.use(express.urlencoded({ extended: false }))
 router.use('/comments', commentsRouter)
 router.use('/subreddits', subredditRouter)
 router.use('/post_votes', likesRouter)
 router.use('/post', postVotesRouter)
 router.use('/users', usersRouter)
+
 module.exports = router
 
 // app.listen(port, () => {
