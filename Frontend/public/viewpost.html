@@ -22,7 +22,7 @@
       rel="stylesheet"
       href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
     />
-    <link rel="stylesheet" href="css/post.css" />
+    <link rel="stylesheet" href="css/viewpost.css" />
 
     <script>
       var url = "http://localhost:8000/api";
@@ -41,21 +41,24 @@
               data.post.map((d) => {
                 $("#post").append(
                   `
-                  <div class = "row">
-                    <div class ="col-4">
-                        ${d.title}
+                  <div class = "card">
+                    <div>
+                       Title: ${d.title}
                     </div>
-                    <div class = "col-4">
-                        ${d.username}
+                    <div>
+                        <img src= "${d.cloudinary_url}"/>
+                    <div>
+                    <div>
+                       Created by: ${d.username}
                     </div>
-                    <div class ="col-4">
-                        ${d.body}
+                    <div>
+                       Content: ${d.body}
                     </div>
-                    <div class = "col-4">
-                        ${d.created_at}
+                    <div>
+                       Subreddit: ${d.name}
                     </div>
-                    <div class ="col-4">
-                        ${d.title}
+                    <div>
+                       Created At: ${d.created_at}
                     </div>
                   </div>
                   `
