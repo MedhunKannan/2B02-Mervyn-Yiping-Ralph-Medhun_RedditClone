@@ -1,66 +1,85 @@
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Reddit clone</title>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <link rel="stylesheet" href="./css/post.css">
-    <title>Posts</title>
-</head>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="css/post.css" />
 
-<body>
     <script>
+      var url = "http://localhost:8000/api";
+      $(document).ready(function () {
+        var urlParams = new URLSearchParams(window.location.search);
+        var id = urlParams.get("post_id");
+        var data = "";
         $.ajax({
-            //headers: {
-            //   'authorization': 'Bearer ' + tmpToken
-            //},
-            url: 'http://localhost:8000/api/posts',
-            type: 'GET',
-            data: data,
-            contentType: "application/json; charset=utf-8",
-            dataType: 'json',
-            success: function (data, textStatus, xhr) {
-                if (data != null) {
-                    var html = "";
-
-                    for (i = 0; i < data.length; i++) {
-                        html += `<div class="col-3">
-                                <a href="selected.html?gameid=${data[i].id}" >                                        
-                                            <p>${data[i].title}</p>
-                                            <p class="title"><input type="button" id=${data[i].title} value="View" /> 
-                                                </a>                                                                             
-                                    </div>`
-                        tmpTitleArray.push(data[i].title);
-                    }
-                    localStorage.setItem('userInfo', data);
-                    $("#title").html(html);
-                    // document.getElementById("title").innerHTML = html;
-
-                    console.log(html)
-                    console.log(data)
-                } else {
-                    console.log("Error");
-                    console.log(data)
-                }
-            },
-            error: function (xhr, textStatus, errorThrown) {
-                console.log('Error in Operation');
+          url: url + `/post/post`,
+          type: "GET",
+          data: data,
+          contentType: "application/json; charset=utf-8",
+          dataType: "json",
+          success: function (data, textStatus, xhr) {
+            if (data != null) {
+              data.post.map((d) => {
+                $("#post").append(
+                  `
+                  <div class = "row">
+                    <div class ="col-4">
+                        ${d.title}
+                    </div>
+                    <div class = "col-4">
+                        ${d.username}
+                    </div>
+                    <div class ="col-4">
+                        ${d.body}
+                    </div>
+                    <div class = "col-4">
+                        ${d.created_at}
+                    </div>
+                    <div class ="col-4">
+                        ${d.title}
+                    </div>
+                  </div>
+                  `
+                );
+              });
+            } else {
+              console.log("Issue in retrieving...");
             }
+          },
+          error: function (xhr, textStatus, errorThrown) {
+            console.log("Error in Operation");
+          },
         });
+        return false;
+      }); //End of document.ready
     </script>
+  </head>
 
-    <nav class="col-3"></nav>
+  <body>
+    <div class="col-6">
+      <h3>View post</h3>
 
-    <nav class="col-3" id="name">
-        <div class="row">
-            <div class="col" style="padding: 0;">
-                <p id="username" style="margin-bottom: 0; margin-top: 0;"></p>
-                <p id="userrole" style="font-size: 10; color: grey; margin-top: 0; margin-bottom: 0;"></p>
-            </div>
-            <p class="col"><input type="button" id="Logout" value="Log Out" /></p>
-        </div>
-    </nav>
-    </nav>
-</body>
+      <div id="post"></div>
+    </div>
+    <!-- End of div class row  -->
+  </body>
+</html>
