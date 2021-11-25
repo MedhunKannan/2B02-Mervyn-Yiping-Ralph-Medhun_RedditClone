@@ -147,7 +147,7 @@ router.put('/editPost/:id', (req, res) => {
 
 router.get('/post', function (req, res, next) {
   const getpost = {
-    text:  'SELECT posts.*, users.username FROM posts INNER JOIN users ON posts.author_id = users.id ',
+    text:  'SELECT posts.*, users.username, subreddits.name FROM posts INNER JOIN users ON posts.author_id = users.id INNER JOIN subreddits ON posts.subreddit_id = subreddits.id ',
   }
   connection.query(getpost, (error, results) => {
     if (error) {
