@@ -30,6 +30,7 @@
         var urlParams = new URLSearchParams(window.location.search);
         var id = urlParams.get("post_id");
         var data = "";
+        var posthtml = "";
         $.ajax({
           url: url + `/post/post`,
           type: "GET",
@@ -39,9 +40,12 @@
           success: function (data, textStatus, xhr) {
             if (data != null) {
               data.post.map((d) => {
-                $("#post").append(
+                posthtml +=
                   `
-                  <div class = "card">
+                  `
+                    if(d.cloudinary_url != null){
+                      posthtml +=  `
+                      <div class = "card">
                     <div>
                        Title: ${d.title}
                     </div>
@@ -61,9 +65,27 @@
                        Created At: ${d.created_at}
                     </div>
                   </div>
-                  `
-                );
+                      `
+                    }else{
+                      posthtml += `
+                      <div class = "card">
+                      <div>
+                       Created by: ${d.username}
+                    </div>
+                    <div>
+                       Content: ${d.body}
+                    </div>
+                    <div>
+                       Subreddit: ${d.name}
+                    </div>
+                    <div>
+                       Created At: ${d.created_at}
+                    </div>
+                  </div>`
+                    }
+                
               });
+              $("#post").append(posthtml);
             } else {
               console.log("Issue in retrieving...");
             }
