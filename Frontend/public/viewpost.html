@@ -52,7 +52,7 @@
   </div>
   <div class="card-body">
     <h5 class="card-title">${d.title}</h5>
-    <h5 class="name">Subreddit: ${d.name}</h5>
+    <h5 class="name">Subreddit: <a href="viewSubreddit.html?subreddit_id=${d.subreddit_id}">${d.name}</a></h5>
     <h6>Created by: ${d.username}</h6>
     <p class="card-body"><${d.body}/></p>
     <p class="card-content"><img src= "${d.cloudinary_url}" style= "width:450px; height:450px;"/></p>
@@ -73,7 +73,7 @@
                        Content: ${d.body}
                     </div>
                     <div>
-                       Subreddit: ${d.name}
+                       Subreddit: <a href="viewSubreddit.html?subreddit_id=${d.subreddit_id}">${d.name}</a>
                     </div>
                     <div>
                        Created At: ${d.created_at}
