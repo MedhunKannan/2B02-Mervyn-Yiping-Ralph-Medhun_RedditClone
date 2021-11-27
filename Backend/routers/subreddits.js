@@ -3,7 +3,7 @@ const connection = require('../database.js')
 var cors = require('cors')
 router.use(cors())
 
-//Create Community
+//Create Subreddit
 router.post('/createSubreddit', (req, res) => {
   var subredditName = req.body.name
   var subredditDescription = req.body.description
@@ -33,6 +33,8 @@ router.post('/createSubreddit', (req, res) => {
   )
 })
 
+
+//Search for specific Subreddit
 router.get('/searchSubreddit/:name', function (req, res, next) {
   const subredditName = req.params.name
   const searchBookQuery = {
@@ -62,6 +64,8 @@ router.get('/searchSubreddit/:name', function (req, res, next) {
   })
 })
 
+
+//Update Subreddit description
 router.put('/updateSubreddit', (req, res) => {
   var subredditDescription = req.body.description
   var subredditName = req.body.name
@@ -92,6 +96,8 @@ router.put('/updateSubreddit', (req, res) => {
   )
 })
 
+
+//Delete Subreddit
 router.delete('/deleteSubreddit', function (req, res, next) {
   var subredditName = req.body.name
   connection
@@ -104,31 +110,8 @@ router.delete('/deleteSubreddit', function (req, res, next) {
     })
 })
 
-router.get('/sortSubredditByDateAsc', function (req, res, next) {
-  const sortSubredditByDateAsc = `
-    SELECT * FROM subreddits ORDER BY id 
-    `
-  console.log(sortSubredditByDateAsc)
-  connection.query(sortSubredditByDateAsc, (error, results) => {
-    if (error) {
-      console.log(error)
-      res.status(500).json({
-        Error: 'Something went wrong while retrieving subreddits',
-      })
-    } else {
-      if (results.rows.length === 0) {
-        res.status(404).json({
-          error: `unable to retrieve subreddits`,
-        })
-      } else {
-        res.json({
-          subreddit: results.rows,
-        })
-      }
-    }
-  })
-})
 
+//Retrieve all Subreddits
 router.get('/subreddit', function (req, res, next) {
   // const course = req.params.course;
   const findsubredditQuery = {
@@ -155,30 +138,7 @@ router.get('/subreddit', function (req, res, next) {
   })
 })
 
-// router.get('/subreddit', function (req, res, next) {
-//     const findSubredditQuery = {
-//       text: 'SELECT * FROM subreddits',
-//     }
-//     console.log(findSubredditQuery)
-//     connection.query(findSubredditQuery, (error, results) => {
-//       if (error) {
-//         console.log(error)
-//         res.status(500).json({
-//           Error: 'Something went wrong while looking for the subreddit',
-//         })
-//       } else {
-//         if (results.rows.length === 0) {
-//           res.status(404).json({
-//             error: `Subreddit ${subreddit} not found`,
-//           })
-//         } else {
-//           res.json({
-//             name: results.rows[0].name,
-//             description: results.rows[0].description,
-//           })
-//         }
-//       }
-//     })
-//   })
+
+
 
 module.exports = router

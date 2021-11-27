@@ -94,6 +94,35 @@
             console.log("Error in Operation");
           },
         });
+
+        $.ajax({    
+                    url: `http://localhost:8000/api/subreddits/subreddit/`,
+                    type: "GET",
+                    contentType: "application/json",
+                    dataType: "json",
+                    success: function (data, textStatus, xhr) {
+            console.log(data);
+            console.log(textStatus);
+            if (data != null) {
+                data.subreddit.map(d => {
+                    $("#subTable").append(
+                
+                `<tr>
+                    <td><a href="viewSubreddit.html?subreddit_id=${d.id}">${d.name}</a></td>
+                    
+                    </tr>`
+                );
+                })
+            
+            } else {
+              console.log("Issue in retrieving...");
+            }
+          },
+                    error: function (xhr, textStatus, err) {
+                        console.log(err);
+                    },
+                });
+        
         return false;
       }); //End of document.ready
     </script>
@@ -105,6 +134,16 @@
 
       <div id="post"></div>
     </div>
+
+    <div>
+      <table id="subTable">
+          <tr>
+            <th>SubredditName</th>
+          </tr>
+         
+          
+        </table>
+  </div>
     <!-- End of div class row  -->
   </body>
 </html>
