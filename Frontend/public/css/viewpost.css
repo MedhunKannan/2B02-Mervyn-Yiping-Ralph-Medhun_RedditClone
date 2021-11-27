@@ -19,11 +19,114 @@
   }
   
   td, th {
-    border: 1px solid #dddddd;
+    border: 1px solid black;
+    border-radius: 10px;
     text-align: left;
     padding: 8px;
   }
   
   tr:nth-child(even) {
     background-color: #dddddd;
+  }
+
+  
+h3 {
+  text-align: center;
+}
+
+
+body {
+  margin:0px;
+  font-family:"Open Sans",sans-serif;
+  background:#ddd;
+}
+  
+  .overlay-form {
+    max-width: 500px;
+    max-height: 500px;
+    position:fixed;
+    top:50vh;
+    margin-top: 150px;
+    margin-left: 750px;
+    height:0vh;
+    background:white;
+    z-index:-1;
+    opacity:0;
+    padding:50px 100px;
+    overflow-x:hidden;
+    overflow-y:hidden;
+    box-sizing:border-box;
+    border-style: solid;
+    border-color: #000;
+    border-radius: 5px;
+    transition: top 500ms ease-in-out,
+                opacity 500ms ease-in-out,
+                height 0ms ease-in-out 500ms;  
+  }
+  .overlay-form .close-btn {
+    position:relative;
+    top:10px;
+    margin-left: 300px;
+    color:#000;
+    font-size:40px;
+    font-weight:600;
+    cursor:pointer;
+  }
+  .overlay-form h1 {
+    font-size:32px;
+    color:#000;
+  }
+  .overlay-form p {
+    font-size:16px;
+    color:#000;
+    margin:-15px 0px 30px;
+  }
+  .overlay-form .form-element {
+    margin:20px 0px;
+  }
+  .overlay-form label {
+    display:block;
+    font-size:17px;
+    color:#000;
+    margin-bottom:5px;
+  }
+  .overlay-form input {
+    width:100%;
+    padding:6px;
+    font-size:17px;
+    border:2px solid #000;
+    background:transparent;
+    outline:none;
+    border-radius:10px;
+    color: #000;
+  }
+  
+  
+  .center {
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+  }
+ #createSubreddit {
+    border-radius: 5px;
+    background-color: white;
+
+  }
+
+  #create {
+    border-radius: 5px;
+    margin-left: 85px;
+    background-color: #000;
+    color: white;
+  }
+   
+  body.activeForm .overlay-form {
+    z-index:2;
+    opacity:1;
+    top:0px;
+    height:100vh;
+    transition: top 500ms ease-in-out,
+                opacity 500ms ease-in-out,
+                height 0ms ease-in-out 0ms;
   }

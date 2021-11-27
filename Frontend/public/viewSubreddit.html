@@ -20,6 +20,7 @@
         var urlParams = new URLSearchParams(window.location.search)
         var subredditid = urlParams.get('subreddit_id')
         var postshtml = "";
+        var headerhtml = "";
         $.ajax({
             url: `http://localhost:8000/api/post/subredditPost/${subredditid}`,
             type: "GET",
@@ -28,12 +29,16 @@
             success: function (data, textStatus, xhr) {
                 if (data != null) {
                     data.post.map((d) => {
+                        headerhtml += ` 
+                        <h3>${d.name}</h3>
+                        `
                         postshtml +=
                             `
                   `
                         if (d.cloudinary_url != null) {
                             postshtml += `
                       <div class = "card">
+
                     <div>
                        Title: ${d.title}
                     </div>
@@ -68,6 +73,7 @@
 
                     });
                     $("#posts").append(postshtml);
+                    $("#subredditName").append(headerhtml);
                 } else {
                     console.log("Issue in retrieving...");
                 }
@@ -78,14 +84,12 @@
         });
     });
 </script>
+<header id="subredditName">
 
+</header>
 <body>
-    <div>
-        <table id="posts">
+    <div id="posts">
 
-
-
-        </table>
     </div>
 </body>
 

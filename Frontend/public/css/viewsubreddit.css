@@ -3,27 +3,26 @@
     transition: 0.3s;
     border-radius: 5px; /* 5px rounded corners */
     margin-bottom: 20px;
-    
+    text-align: center;
   }
   
   /* Add rounded corners to the top left and the top right corner of the image */
   img {
     border-radius: 5px 5px 0 0;
+    width:450px; 
+    height:450px;
   }
 
-  table {
+  #posts {
     font-family: arial, sans-serif;
     border-collapse: collapse;
     width: 25%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+  }
 
-  }
-  
-  td, th {
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 8px;
-  }
-  
-  tr:nth-child(even) {
-    background-color: #dddddd;
-  }
+h3 {
+    text-align: center;
+}
+
