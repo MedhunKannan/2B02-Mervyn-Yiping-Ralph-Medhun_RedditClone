@@ -1,91 +1,121 @@
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <title>Comments</title>
-  </head>
+</head>
 
-  <body>
+<body>
     <script>
-      $(document).ready(function () {
-        //Create Upvote Ajax
-        $("#upvote").click(function () {
-          var voteAuthor = $("#upvoteauthor").val();
-          var votePost = $("#upvotepost").val();
-          const obj = {
-            user_id: voteAuthor,
-            post_id: votePost,
-          };
-          const data = JSON.stringify(obj);
-          $.ajax({
-            url: "http://localhost:8000/api/post_votes/createUpvote/",
-            type: "POST",
-            data: data,
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (data, textStatus, xhr) {
-              alert("Created successfully!!!!");
-            },
-            error: function (xhr, textStatus, errorThrown) {
-              console.log("Error in Operation");
-            },
-          });
-          return false;
+        $(document).ready(function () {
+
+            //Create Upvote Ajax
+            $("#upvote").click(function () {
+                var upvoteUser = $("#upvoteuser").val();
+                var upvotePost = $("#upvotepost").val();
+                const obj = {
+                    user_id: upvoteUser
+                };
+                const data = JSON.stringify(obj);
+                $.ajax({
+                    url: `http://localhost:8000/api/post_votes/createUpvote/${upvotePost}`,
+                    type: "POST",
+                    data: data,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (data, textStatus, xhr) {
+                        alert("Upvoted successfully!!!!");
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        console.log("Error in Operation");
+                    },
+                });
+                return false;
+            });
+
+            //Create Downvote Ajax
+            $("#downvote").click(function () {
+                var downvoteUser = $("#downvoteuser").val();
+                var downvotePost = $("#downvotepost").val();
+                const obj = {
+                    user_id: downvoteUser
+                };
+                const data = JSON.stringify(obj);
+                $.ajax({
+                    url: `http://localhost:8000/api/post_votes/createDownvote/${downvotePost}`,
+                    type: "POST",
+                    data: data,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (data, textStatus, xhr) {
+                        alert("Downvote successfully!!!!");
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        console.log("Error in Operation");
+                    },
+                });
+                return false;
+            });
+
+            //Delete Vote Ajax
+            $("#deletevote").click(function () {
+                var deletevoteUser = $("#deletevoteuser").val();
+                var deletevotePost = $("#deletevotepost").val();
+                const data = JSON.stringify(obj);
+                $.ajax({
+                    url: `http://localhost:8000/api/post_votes/deleteVote/${deletevoteUser}/${deletevotePost}`,
+                    type: "DELETE",
+                    data: data,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (data, textStatus, xhr) {
+                        alert("Deleted successfully!!!!");
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        console.log("Error in Operation");
+                    },
+                });
+                return false;
+            });
+
         });
 
-        
-        
-        $("#viewComments").click(function () {
-          $.ajax({
-            url: `http://localhost:8000/api/comments/comment/`,
-            type: "GET",
-            contentType: "application/json",
-            dataType: "json",
-            success: function (data, textStatus, xhr) {
-              console.log(data);
-              console.log(textStatus);
-              if (data != null) {
-                for (var i = 0; i < data.comment.length; i++) {
-                  // Display records top down
-                  $("#viewCommentHtml").append(
-                    $({
-                      value: data.comment[i].id,
-                      text: data.comment[i].body,
-                    })
-                  );
-                }
-              } else {
-                console.log("Issue in retrieving...");
-              }
-            },
-            error: function (xhr, textStatus, err) {
-              console.log(err);
-            },
-          });
-        });
-      });
     </script>
 
-    <!-- Create new Comment -->
+    <!-- Create Upvote -->
     <form>
-      <h3>Create new comment</h3>
-      <label for="commentBody">Comment Content: </label>
-      <input type="text" id="createbody" name="createbody" /><br /><br />
-      <label for="author">Author ID: </label>
-      <input type="number" id="createauthor" name="createauthor" /><br /><br />
-      <label for="post">Post ID: </label>
-      <input type="number" id="createpost" name="createpost" /><br /><br />
-      <input type="submit" value="create" id="create" />
+        <h3>Create Upvote</h3>
+        <label for="author">Author ID: </label>
+        <input type="number" id="upvoteuser" name="upvoteuser" /><br /><br />
+        <label for="post">Post ID: </label>
+        <input type="number" id="upvotepost" name="upvotepost" /><br /><br />
+        <input type="submit" value="Upvote" id="upvote" />
     </form>
 
-
+    <!-- Create Downvote -->
     <form>
-      <h3>View and Get all Comments</h3>
-      <input type="submit" value="View Comments" id="viewComments" />
+        <h3>Create Downvote</h3>
+        <label for="author">Author ID: </label>
+        <input type="number" id="downvoteuser" name="downvoteuser" /><br /><br />
+        <label for="post">Post ID: </label>
+        <input type="number" id="downvotepost" name="downvotepost" /><br /><br />
+        <input type="submit" value="Downvote" id="downvote" />
     </form>
-    <div id="viewCommentHtml"></div>
-  </body>
+
+    <!-- Delete Vote -->
+    <form>
+        <h3>Delete Vote</h3>
+        <label for="author">Author ID: </label>
+        <input type="number" id="deletevoteuser" name="deletevoteuser" /><br /><br />
+        <label for="post">Post ID: </label>
+        <input type="number" id="deletevotepost" name="deletevotepost" /><br /><br />
+        <input type="submit" value="Delete" id="deletevote" />
+    </form>
+
+</body>
+
 </html>
