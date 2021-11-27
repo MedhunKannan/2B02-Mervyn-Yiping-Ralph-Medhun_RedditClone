@@ -19,8 +19,7 @@
   }
   
   td, th {
-    border: 1px solid black;
-    border-radius: 10px;
+    border: 1px solid white;
     text-align: left;
     padding: 8px;
   }
@@ -28,12 +27,6 @@
   tr:nth-child(even) {
     background-color: #dddddd;
   }
-
-  
-h3 {
-  text-align: center;
-}
-
 
 body {
   margin:0px;
@@ -130,3 +123,4 @@ body {
                 opacity 500ms ease-in-out,
                 height 0ms ease-in-out 0ms;
   }
+
