@@ -4,9 +4,9 @@ var cors = require('cors')
 router.use(cors())
 
 // Upvote
-router.post('/createUpvote', (req, res) => {
+router.post('/createUpvote/:post_id', (req, res) => {
     var user_id = req.body.user_id
-    var post_id = req.body.post_id
+    var post_id = req.params.post_id
     const createUpvoteQuery = `
     INSERT INTO post_votes(user_id, post_id, vote_value)
     VALUES ($1, $2, 1);

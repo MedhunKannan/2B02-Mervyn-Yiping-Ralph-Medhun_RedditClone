@@ -12,25 +12,49 @@
 <body>
     <script>
         $(document).ready(function () {
+
             //Create Upvote Ajax
-            $("#create").click(function () {
-                var commentBody = $("#createbody").val();
-                var commentAuthor = $("#createauthor").val();
-                var commentPost = $("#createpost").val();
+            $("#upvote").click(function () {
+                var upvoteUser = $("#upvoteuser").val();
+                var upvotePost = $("#upvotepost").val();
                 const obj = {
-                    body: commentBody,
-                    author_id: commentAuthor,
-                    post_id: commentPost,
+                    author_id: upvoteUser,
+                    post_id: upvotePost,
                 };
                 const data = JSON.stringify(obj);
                 $.ajax({
-                    url: "http://localhost:8000/api/comments/createComment/",
+                    url: "http://localhost:8000/api/post_votes/createUpvote/",
                     type: "POST",
                     data: data,
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function (data, textStatus, xhr) {
-                        alert("Created successfully!!!!");
+                        alert("Upvoted successfully!!!!");
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        console.log("Error in Operation");
+                    },
+                });
+                return false;
+            });
+
+            //Create Downvote Ajax
+            $("#downvote").click(function () {
+                var downvoteUser = $("#downvoteuser").val();
+                var downvotePost = $("#downvotepost").val();
+                const obj = {
+                    author_id: downvoteUser,
+                    post_id: downvotePost,
+                };
+                const data = JSON.stringify(obj);
+                $.ajax({
+                    url: "http://localhost:8000/api/post_votes/createDownvote/",
+                    type: "POST",
+                    data: data,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (data, textStatus, xhr) {
+                        alert("Downvote successfully!!!!");
                     },
                     error: function (xhr, textStatus, errorThrown) {
                         console.log("Error in Operation");
@@ -46,25 +70,21 @@
     <!-- Create Upvote -->
     <form>
         <h3>Create Upvote</h3>
-        <label for="commentBody">Comment Content: </label>
-        <input type="text" id="createbody" name="createbody" /><br /><br />
         <label for="author">Author ID: </label>
-        <input type="number" id="createauthor" name="createauthor" /><br /><br />
+        <input type="number" id="upvoteuser" name="upvoteuser" /><br /><br />
         <label for="post">Post ID: </label>
-        <input type="number" id="createpost" name="createpost" /><br /><br />
-        <input type="submit" value="create" id="create" />
+        <input type="number" id="upvotepost" name="upvotepost" /><br /><br />
+        <input type="submit" value="Upvote" id="upvote" />
     </form>
 
     <!-- Create Downvote -->
     <form>
         <h3>Create Downvote</h3>
-        <label for="commentBody">Comment Content: </label>
-        <input type="text" id="createbody" name="createbody" /><br /><br />
         <label for="author">Author ID: </label>
-        <input type="number" id="createauthor" name="createauthor" /><br /><br />
+        <input type="number" id="downvoteuser" name="downvoteuser" /><br /><br />
         <label for="post">Post ID: </label>
-        <input type="number" id="createpost" name="createpost" /><br /><br />
-        <input type="submit" value="create" id="create" />
+        <input type="number" id="downvotepost" name="downvotepost" /><br /><br />
+        <input type="submit" value="Downvote" id="downvote" />
     </form>
 
 </body>
