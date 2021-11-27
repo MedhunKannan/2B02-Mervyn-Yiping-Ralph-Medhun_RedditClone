@@ -194,4 +194,29 @@ router.get('/post/:id', function (req, res, next) {
   })
 })
 
+router.get('/subredditPost/:subreddit_id', function (req, res, next) {
+  var subredditid = req.params.subreddit_id
+  const getposts = {
+    text: 'SELECT * FROM posts WHERE subreddit_id = $1',
+  }
+  connection.query(getposts, [subredditid], (error, results) => {
+    if (error) {
+      console.log(error)
+      res.status(500).json({
+        Error: 'Something went wrong while retrieving post',
+      })
+    } else {
+      if (results.rows.length === 0) {
+        res.status(404).json({
+          error: `unable to find post`,
+        })
+      } else {
+        res.json({
+          post: results.rows,
+        })
+      }
+    }
+  })
+})
+
 module.exports = router
