@@ -49,7 +49,7 @@
                                 //var decodedToken = parseJwt(data.jwtToken);
                                 console.log(decodedToken.user + "decodedTOken")
                             } catch {
-                                console.log("Error decoding")
+                                console.log("Error decoding token")
                             }
                             
                             localStorage.setItem('token', data.jwtToken);

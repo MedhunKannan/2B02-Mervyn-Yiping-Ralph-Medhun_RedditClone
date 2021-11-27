@@ -158,7 +158,7 @@ router.get('/post', function (req, res, next) {
     } else {
       if (results.rows.length === 0) {
         res.status(404).json({
-          error: `unable to retrieve post`,
+          error: `Unable to retrieve post`,
         })
       } else {
         res.json({
