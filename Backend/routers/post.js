@@ -158,7 +158,7 @@ router.get('/post', function (req, res, next) {
     } else {
       if (results.rows.length === 0) {
         res.status(404).json({
-          error: `unable to retrieve post`,
+          error: `Unable to retrieve post`,
         })
       } else {
         res.json({
@@ -175,6 +175,32 @@ router.get('/post/:id', function (req, res, next) {
     text: 'SELECT * FROM posts WHERE id = $1',
   }
   connection.query(getpost, [id], (error, results) => {
+    if (error) {
+      console.log(error)
+      res.status(500).json({
+        Error: 'Something went wrong while retrieving post',
+      })
+    } else {
+      if (results.rows.length === 0) {
+        res.status(404).json({
+          error: `unable to find post`,
+        })
+      } else {
+        res.json({
+          post: results.rows,
+        })
+      }
+    }
+  })
+})
+
+router.get('/subredditPost/:subreddit_id', function (req, res, next) {
+  var subredditid = req.params.subreddit_id
+  const getposts = {
+    
+    text: 'SELECT posts.*, subreddits.name, subreddits.description FROM posts INNER JOIN subreddits ON posts.subreddit_id = subreddits.id WHERE subreddit_id = $1',
+  }
+  connection.query(getposts, [subredditid], (error, results) => {
     if (error) {
       console.log(error)
       res.status(500).json({
