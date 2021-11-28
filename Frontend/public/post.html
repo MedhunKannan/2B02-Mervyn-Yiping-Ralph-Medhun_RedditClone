@@ -26,7 +26,12 @@
 
     <script>
       var url = "http://localhost:8000/api";
+      
       $(document).ready(function () {
+
+        var urlParams = new URLSearchParams(window.location.search)
+        var subredditid = urlParams.get('subreddit_id')
+
         $("#post").click(function (e) {
           var type = $("#type").val();
           var postTitle = $("#title").val();
@@ -63,7 +68,7 @@
         });
 
         $.ajax({
-          url: url + "/subreddits/subreddit",
+          url: url + "/subreddits/searchSubredditID/" + subredditid,
           type: "GET",
           contentType: "application/json",
           dataType: "json",
@@ -71,17 +76,17 @@
             console.log(data);
             console.log(textStatus);
             if (data != null) {
-              for (var i = 0; i < data.subreddit.length; i++) {
+              
                 // Display records top down
                 // alert("Hello world");
                 $("#subreddit").append(
                   $("<option>", {
-                    value: data.subreddit[i].id,
-                    text: data.subreddit[i].name,
+                    value: subredditid,
+                    text: data.name,
                   })
                 );
                 // $("#Category").append(new Option(data[i].catname, data[i].category_id));
-              }
+              
             } else {
               console.log("Issue in retrieving...");
             }
