@@ -21,6 +21,78 @@
         var subredditid = urlParams.get('subreddit_id')
         var postshtml = "";
         var headerhtml = "";
+        var createhtml = "";
+
+
+        
+
+
+        $.ajax({
+            url: `http://localhost:8000/api/subreddits/searchSubredditID/${subredditid}`,
+            type: "GET",
+            contentType: "application/json",
+            dataType: "json",
+            success: function (data, textStatus, xhr) {
+                if (data != null) {
+
+
+                    headerhtml += ` 
+                        <h3>${data.name}</h3>
+                        <p>${data.description}</p>
+                        
+                        `
+
+                    
+
+                } else {
+                    headerhtml += ` 
+                        <h3>${data.name}</h3>
+                        <p>${data.description}</p>
+                        
+                        `
+                    
+                    console.log("Issue in retrieving...");
+                }$("#subredditName").append(headerhtml);
+            },
+            error: function (xhr, textStatus, err) {
+                console.log(err);
+            },
+        });
+
+        $.ajax({
+            url: `http://localhost:8000/api/subreddits/searchSubredditID/${subredditid}`,
+            type: "GET",
+            contentType: "application/json",
+            dataType: "json",
+            success: function (data, textStatus, xhr) {
+                if (data != null) {
+
+
+                    createhtml += ` 
+                    <a href="post.html?subreddit_id=${subredditid}" class="btn btn-primary" style="background-color: white; color: black; border-color: black;max-width: 100px; margin: auto; display: block;">Create Post</a>
+                        
+                        `
+
+                    
+
+                } else {
+                    createhtml += ` 
+                    <a href="post.html?subreddit_id=${subredditid}" class="btn btn-primary" style="background-color: white; color: black; border-color: black;max-width: 100px; margin: auto; display: block;">Create Post</a>
+                        
+                        `
+                    
+                    console.log("Issue in retrieving...");
+                }$("#createpost").append(createhtml);
+            },
+            error: function (xhr, textStatus, err) {
+                console.log(err);
+            },
+        });
+
+        
+
+
+
         $.ajax({
             url: `http://localhost:8000/api/post/subredditPost/${subredditid}`,
             type: "GET",
@@ -28,13 +100,12 @@
             dataType: "json",
             success: function (data, textStatus, xhr) {
                 if (data != null) {
+
                     data.post.map((d) => {
-                        headerhtml += ` 
-                        <h3>${d.name}</h3>
-                        <p>${d.description}</p>
-                        `
+
                         postshtml +=
                             `
+                            
                   `
                         if (d.cloudinary_url != null) {
                             postshtml += `
@@ -73,8 +144,9 @@
                         }
 
                     });
+
                     $("#posts").append(postshtml);
-                    $("#subredditName").append(headerhtml);
+
                 } else {
                     console.log("Issue in retrieving...");
                 }
@@ -83,12 +155,18 @@
                 console.log(err);
             },
         });
+
+
     });
 </script>
 <header id="subredditName">
 
 </header>
+
 <body>
+    <p id="createpost">
+
+    </p>
     <div id="posts">
 
     </div>
