@@ -17,6 +17,21 @@
   <script>
     var url = "http://localhost:8000/api";
     $(document).ready(function () {
+      var jwt = localStorage.getItem("token");
+      let b64DecodeUnicode = str =>
+        decodeURIComponent(
+          Array.prototype.map.call(atob(str), c =>
+            '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
+          ).join(''))
+
+      let parseJwt = jwtToken =>
+        JSON.parse(
+          b64DecodeUnicode(
+            jwtToken.split('.')[1].replace('-', '+').replace('_', '/')
+          )
+        )
+      var decodedToken = parseJwt(jwt);
+      console.log(decodedToken.user)
       var urlParams = new URLSearchParams(window.location.search);
       var id = urlParams.get("post_id");
       var data = "";
@@ -110,25 +125,25 @@
       });
 
       $('#create').click(function () {
-                var subredditName = $('#createname').val();
-                var subredditDescription = $('#createdescription').val();
-                const obj = { name: subredditName, description: subredditDescription };
-                const data = JSON.stringify(obj);
-                $.ajax({
-                    url: 'http://localhost:8000/api/subreddits/createSubreddit/',
-                    type: 'POST',
-                    data: data,
-                    contentType: 'application/json; charset=utf-8',
-                    dataType: 'json',
-                    success: function (data, textStatus, xhr) {
-                        alert('Created successfully!!!!');
-                    },
-                    error: function (xhr, textStatus, errorThrown) {
-                        console.log('Error in Operation');
-                    },
-                });
-                return false;
-            });
+        var subredditName = $('#createname').val();
+        var subredditDescription = $('#createdescription').val();
+        const obj = { name: subredditName, description: subredditDescription };
+        const data = JSON.stringify(obj);
+        $.ajax({
+          url: 'http://localhost:8000/api/subreddits/createSubreddit/',
+          type: 'POST',
+          data: data,
+          contentType: 'application/json; charset=utf-8',
+          dataType: 'json',
+          success: function (data, textStatus, xhr) {
+            alert('Created successfully!!!!');
+          },
+          error: function (xhr, textStatus, errorThrown) {
+            console.log('Error in Operation');
+          },
+        });
+        return false;
+      });
 
       return false;
     }); //End of document.ready
@@ -172,7 +187,7 @@
       <button type="submit" id="create">Create Subreddit</button>
     </div>
   </div>
-  
+
 </body>
 
 </html>
