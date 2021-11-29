@@ -80,11 +80,9 @@
                   contentType: "application/json; charset=utf-8",
                   dataType: "json",
                   success: function (data, textStatus, xhr) {
-                    alert("Edited successfully!");
                     window.location.assign(
                       "http://localhost:3001/viewpost.html"
                     );
-                    location.reload();
                   },
                   error: function (xhr, textStatus, errorThrown) {
                     console.log("Error in Operation");

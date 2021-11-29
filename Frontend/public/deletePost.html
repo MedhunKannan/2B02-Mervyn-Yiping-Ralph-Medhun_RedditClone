@@ -61,7 +61,7 @@
         $("#delete").click(function () {
           var deletepostid = $("#deletepostid").val();
           var data = "";
-
+              
           $.ajax({
             url: url + `/post/deletepost/${deletepostid}`,
             type: "DELETE",
