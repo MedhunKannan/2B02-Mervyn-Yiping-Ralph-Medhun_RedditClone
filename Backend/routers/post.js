@@ -136,6 +136,31 @@ router.get('/viewPost/:id', function (req, res, next) {
     }
   })
 })
+// view post by author id
+router.get('/viewOwnPost/:author_id', function (req, res, next) {
+  const authorid = req.params.author_id
+  const findPost = {
+    text: 'SELECT posts.*, users.username, subreddits.name FROM posts INNER JOIN users ON posts.author_id = users.id INNER JOIN subreddits ON posts.subreddit_id = subreddits.id WHERE author_id = $1',
+  }
+  connection.query(findPost, [authorid], (error, results) => {
+    if (error) {
+      console.log(error)
+      res.status(500).json({
+        Error: 'Something went wrong while finding post',
+      })
+    } else {
+      if (results.rows.length === 0) {
+        res.status(404).json({
+          error: `Post does not exist`,
+        })
+      } else {
+        res.status(200).json({
+          comment: results.rows,
+        })
+      }
+    }
+  })
+})
 
 router.delete('/deletepost/:id', function (req, res, next) {
   const postid = req.params.id
