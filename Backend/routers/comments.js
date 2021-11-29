@@ -33,7 +33,7 @@ router.get('/viewComment/:post_id', function (req, res, next) {
 router.get('/post/:id', function (req, res, next) {
   var id = req.params.id
   const getpost = {
-    text: 'SELECT * FROM posts WHERE id = $1',
+    text: 'SELECT posts.*, users.username, subreddits.name FROM posts INNER JOIN users ON posts.author_id = users.id INNER JOIN subreddits ON posts.subreddit_id = subreddits.id WHERE posts.id = $1',
   }
   connection.query(getpost, [id], (error, results) => {
     if (error) {
