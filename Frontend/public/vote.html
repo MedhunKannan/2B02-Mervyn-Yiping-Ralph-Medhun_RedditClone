@@ -5,7 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://kit.fontawesome.com/b07a8739ee.js" crossorigin="anonymous"></script>
+    <script
+      src="https://kit.fontawesome.com/b07a8739ee.js"
+      crossorigin="anonymous"
+    ></script>
     <link rel="stylesheet" href="./css/vote.css" />
     <title>Comments</title>
   </head>
@@ -13,6 +16,28 @@
   <body>
     <script>
       $(document).ready(function () {
+        // to decode jwt token
+        var jwt = localStorage.getItem("token");
+        let b64DecodeUnicode = (str) =>
+          decodeURIComponent(
+            Array.prototype.map
+              .call(
+                atob(str),
+                (c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2)
+              )
+              .join("")
+          );
+
+        let parseJwt = (jwtToken) =>
+          JSON.parse(
+            b64DecodeUnicode(
+              jwtToken.split(".")[1].replace("-", "+").replace("_", "/")
+            )
+          );
+        // to retrieve userid from decoded jwt
+        var decodedToken = parseJwt(jwt);
+        var userid = decodedToken.user;
+
         $(".btn").click(function () {
           if ($(this).hasClass("active")) {
             $(this).removeClass("active");
@@ -22,7 +47,7 @@
         });
         //Create Upvote Ajax
         $("#upvote").click(function () {
-          var upvoteUser = $("#upvoteuser").val();
+          var upvoteUser = userid;
           var upvotePost = $("#upvotepost").val();
           const obj = {
             user_id: upvoteUser,
@@ -51,7 +76,7 @@
 
         //Create Downvote Ajax
         $("#downvote").click(function () {
-          var downvoteUser = $("#downvoteuser").val();
+          var downvoteUser = userid;
           var downvotePost = $("#downvotepost").val();
           const obj = {
             user_id: downvoteUser,
@@ -104,8 +129,8 @@
     <!-- Create Upvote -->
     <form>
       <h3>Create Upvote</h3>
-      <label for="user">User ID: </label>
-      <input type="number" id="upvoteuser" name="upvoteuser" /><br /><br />
+      <!-- <label for="user">User ID: </label>
+      <input type="number" id="upvoteuser" name="upvoteuser" /><br /><br /> -->
       <label for="post">Post ID: </label>
       <input type="number" id="upvotepost" name="upvotepost" /><br /><br />
       <input type="submit" value="Upvote" id="upvote" />
@@ -114,8 +139,8 @@
     <!-- Create Downvote -->
     <form>
       <h3>Create Downvote</h3>
-      <label for="user">User ID: </label>
-      <input type="number" id="downvoteuser" name="downvoteuser" /><br /><br />
+      <!-- <label for="user">User ID: </label>
+      <input type="number" id="downvoteuser" name="downvoteuser" /><br /><br /> -->
       <label for="post">Post ID: </label>
       <input type="number" id="downvotepost" name="downvotepost" /><br /><br />
       <input type="submit" value="Downvote" id="downvote" />
@@ -124,12 +149,12 @@
     <!-- Delete Vote -->
     <form>
       <h3>Delete Vote</h3>
-      <label for="user">User ID: </label>
+      <!-- <label for="user">User ID: </label>
       <input
         type="number"
         id="deletevoteuser"
         name="deletevoteuser"
-      /><br /><br />
+      /><br /><br /> -->
       <label for="post">Post ID: </label>
       <input
         type="number"

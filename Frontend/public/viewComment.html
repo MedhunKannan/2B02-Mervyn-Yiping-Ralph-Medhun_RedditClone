@@ -52,7 +52,6 @@
           );
         var decodedToken = parseJwt(jwt);
         var userid = decodedToken.user;
-
         // Store Post ID from URL
         var id = urlParams.get("id");
         if (id == null) {

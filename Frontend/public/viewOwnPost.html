@@ -51,7 +51,6 @@
           );
         var decodedToken = parseJwt(jwt);
         var userid = decodedToken.user;
-        alert(userid);
         var urlParams = new URLSearchParams(window.location.search);
         var id = urlParams.get("post_id");
         var data = "";
