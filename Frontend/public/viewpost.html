@@ -1,40 +1,68 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Reddit clone</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="css/viewpost.css" />
+    <script src="./js/form.js"></script>
+    <script>
+      var url = "http://localhost:8000/api";
+      $(document).ready(function () {
+        var jwt = localStorage.getItem("token");
+        let b64DecodeUnicode = (str) =>
+          decodeURIComponent(
+            Array.prototype.map
+              .call(
+                atob(str),
+                (c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2)
+              )
+              .join("")
+          );
 
-<head>
-  <meta charset="utf-8" />
-  <title>Reddit clone</title>
-  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous" />
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="css/viewpost.css" />
-  <script src="./js/form.js"></script>
-  <script>
-    var url = "http://localhost:8000/api";
-    $(document).ready(function () {
-      var urlParams = new URLSearchParams(window.location.search);
-      var id = urlParams.get("post_id");
-      var data = "";
-      var posthtml = "";
-      $.ajax({
-        url: url + `/post/post`,
-        type: "GET",
-        data: data,
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (data, textStatus, xhr) {
-          if (data != null) {
-            data.post.map((d) => {
-              posthtml +=
-                `
-                  `
-              if (d.cloudinary_url != null) {
+        let parseJwt = (jwtToken) =>
+          JSON.parse(
+            b64DecodeUnicode(
+              jwtToken.split(".")[1].replace("-", "+").replace("_", "/")
+            )
+          );
+        var decodedToken = parseJwt(jwt);
+        console.log(decodedToken.user);
+        var urlParams = new URLSearchParams(window.location.search);
+        var id = urlParams.get("post_id");
+        var data = "";
+        var posthtml = "";
+        $.ajax({
+          url: url + `/post/post`,
+          type: "GET",
+          data: data,
+          contentType: "application/json; charset=utf-8",
+          dataType: "json",
+          success: function (data, textStatus, xhr) {
+            if (data != null) {
+              data.post.map((d) => {
                 posthtml += `
+                  `;
+                if (d.cloudinary_url != null) {
+                  posthtml += `
 
                       <div class="card text-center">
   <div class="card-header">
@@ -51,9 +79,9 @@
     Posted at: ${d.created_at}
   </div>
 </div>
-                      `
-              } else {
-                posthtml += `
+                      `;
+                } else {
+                  posthtml += `
                 <div class="card text-center">
   <div class="card-header">
     Featured
@@ -67,112 +95,107 @@
   <div class="card-footer text-muted">
     Posted at: ${d.created_at}
   </div>
-</div>`
-              }
+</div>`;
+                }
+              });
+              $("#post").append(posthtml);
+            } else {
+              console.log("Issue in retrieving...");
+            }
+          },
+          error: function (xhr, textStatus, errorThrown) {
+            console.log("Error in Operation");
+          },
+        });
 
-            });
-            $("#post").append(posthtml);
-          } else {
-            console.log("Issue in retrieving...");
-          }
-        },
-        error: function (xhr, textStatus, errorThrown) {
-          console.log("Error in Operation");
-        },
-      });
-
-      $.ajax({
-        url: `http://localhost:8000/api/subreddits/subreddit/`,
-        type: "GET",
-        contentType: "application/json",
-        dataType: "json",
-        success: function (data, textStatus, xhr) {
-          console.log(data);
-          console.log(textStatus);
-          if (data != null) {
-            data.subreddit.map(d => {
-              $("#subTable").append(
-
-                `<tr>
+        $.ajax({
+          url: `http://localhost:8000/api/subreddits/subreddit/`,
+          type: "GET",
+          contentType: "application/json",
+          dataType: "json",
+          success: function (data, textStatus, xhr) {
+            console.log(data);
+            console.log(textStatus);
+            if (data != null) {
+              data.subreddit.map((d) => {
+                $("#subTable").append(
+                  `<tr>
                     <td><a href="viewSubreddit.html?subreddit_id=${d.id}">${d.name}</a></td>
                     
                     </tr>`
-              );
-            })
+                );
+              });
+            } else {
+              console.log("Issue in retrieving...");
+            }
+          },
+          error: function (xhr, textStatus, err) {
+            console.log(err);
+          },
+        });
 
-          } else {
-            console.log("Issue in retrieving...");
-          }
-        },
-        error: function (xhr, textStatus, err) {
-          console.log(err);
-        },
-      });
+        $("#create").click(function () {
+          var subredditName = $("#createname").val();
+          var subredditDescription = $("#createdescription").val();
+          const obj = {
+            name: subredditName,
+            description: subredditDescription,
+          };
+          const data = JSON.stringify(obj);
+          $.ajax({
+            url: "http://localhost:8000/api/subreddits/createSubreddit/",
+            type: "POST",
+            data: data,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data, textStatus, xhr) {
+              alert("Created successfully!!!!");
+            },
+            error: function (xhr, textStatus, errorThrown) {
+              console.log("Error in Operation");
+            },
+          });
+          return false;
+        });
 
-      $('#create').click(function () {
-                var subredditName = $('#createname').val();
-                var subredditDescription = $('#createdescription').val();
-                const obj = { name: subredditName, description: subredditDescription };
-                const data = JSON.stringify(obj);
-                $.ajax({
-                    url: 'http://localhost:8000/api/subreddits/createSubreddit/',
-                    type: 'POST',
-                    data: data,
-                    contentType: 'application/json; charset=utf-8',
-                    dataType: 'json',
-                    success: function (data, textStatus, xhr) {
-                        alert('Created successfully!!!!');
-                    },
-                    error: function (xhr, textStatus, errorThrown) {
-                        console.log('Error in Operation');
-                    },
-                });
-                return false;
-            });
+        return false;
+      }); //End of document.ready
+    </script>
+  </head>
 
-      return false;
-    }); //End of document.ready
-  </script>
-</head>
+  <body>
+    <div class="row justify-content-center" style="margin-top: 20px">
+      <h3>View post</h3>
 
-<body>
-  <div class="row justify-content-center" style="margin-top: 20px;">
-    <h3>View post</h3>
+      <div id="post" class="col-6"></div>
 
-    <div id="post" class="col-6"></div>
-
-    <div class="col-2 ">
-      <table id="subTable">
-        <tr>
-          <th>SubredditName</th>
-        </tr>
-
-
-      </table>
-      <button class="createSubreddit" onclick="toggleForm()">Create Subreddit</button>
+      <div class="col-2">
+        <table id="subTable">
+          <tr>
+            <th>SubredditName</th>
+          </tr>
+        </table>
+        <button class="createSubreddit" onclick="toggleForm()">
+          Create Subreddit
+        </button>
+      </div>
     </div>
 
-  </div>
-
-
-
-  <!-- Overlay Form -->
-  <div class="overlay-form">
-    <div class="close-btn" onclick="toggleForm()">×</div>
-    <h1>Create a new Subreddit</h1>
-    <div class="form-element">
-      <label for="fullname">Subreddit Name</label>
-      <input type="text" id="createname">
+    <!-- Overlay Form -->
+    <div class="overlay-form">
+      <div class="close-btn" onclick="toggleForm()">×</div>
+      <h1>Create a new Subreddit</h1>
+      <div class="form-element">
+        <label for="fullname">Subreddit Name</label>
+        <input type="text" id="createname" />
+      </div>
+      <div class="form-element">
+        <label for="email">Description</label>
+        <input type="email" id="createdescription" />
+      </div>
+      <div id="createSubredditOverlay">
+        <button type="submit" id="create">Create Subreddit</button>
+      </div>
     </div>
-    <div class="form-element">
-      <label for="email">Description</label>
-      <input type="email" id="createdescription">
-    </div>
-    <div id="createSubredditOverlay">
-      <button type="submit" id="create">Create Subreddit</button>
-    </div>
-  </div>
-  
-</body>
-
+  </body>
 </html>

@@ -33,29 +33,29 @@
                     dataType: "json",
                     success: function (data, textStatus, xhr) {
                         if (data != null) {
-                            try {
-                                let b64DecodeUnicode = str =>
-                                    decodeURIComponent(
-                                        Array.prototype.map.call(atob(str), c =>
-                                            '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
-                                        ).join(''))
+                            // try {
+                            //     let b64DecodeUnicode = str =>
+                            //         decodeURIComponent(
+                            //             Array.prototype.map.call(atob(str), c =>
+                            //                 '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
+                            //             ).join(''))
 
-                                let parseJwt = jwtToken =>
-                                    JSON.parse(
-                                        b64DecodeUnicode(
-                                            jwtToken.split('.')[1].replace('-', '+').replace('_', '/')
-                                        )
-                                    )
-                                //var decodedToken = parseJwt(data.jwtToken);
-                                console.log(decodedToken.user + "decodedTOken")
-                            } catch {
-                                console.log("Error decoding token")
-                            }
+                            //     let parseJwt = jwtToken =>
+                            //         JSON.parse(
+                            //             b64DecodeUnicode(
+                            //                 jwtToken.split('.')[1].replace('-', '+').replace('_', '/')
+                            //             )
+                            //         )
+                            //     //var decodedToken = parseJwt(data.jwtToken);
+                            //     console.log(decodedToken.user + "decodedTOken")
+                            // } catch {
+                            //     console.log("Error decoding token")
+                            // }
                             
                             localStorage.setItem('token', data.jwtToken);
-                            var decodedToken = jwt_decode(data.jwtToken);
-                            localStorage.setItem('userInfo', decodedToken);
-                            console.log(decodedToken)
+                            // var decodedToken = jwt_decode(data.jwtToken);
+                            // localStorage.setItem('userInfo', decodedToken);
+                            // console.log(decodedToken)
                             window.location.assign("http://localhost:3001/viewpost.html");
                         } else {
                             console.log("Error");
