@@ -79,6 +79,7 @@
               success: function (data, textStatus, xhr) {
                 alert("Created without image successfully!!!!");
                 window.location.assign("http://localhost:3001/viewpost.html");
+                location.reload();
               },
               error: function (xhr, textStatus, errorThrown) {
                 alert("Error in Operation");
