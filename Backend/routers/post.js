@@ -77,6 +77,40 @@ router.post('/createpost', async (req, res) => {
   }
 }) // End of create post
 
+// Create post without image
+
+router.post('/postText', (req, res) => {
+  var title = req.body.title
+  var body = req.body.body
+  var author_id = req.body.author_id
+  var type = req.body.type
+  var subreddit_id = req.body.subreddit_id
+
+  console.log(req.body)
+  const createCommentQuery = `
+  INSERT INTO posts (type, title, body, author_id, subreddit_id, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, NOW() at time zone 'SGT', NOW() at time zone 'SGT') RETURNING id;;
+      `
+  connection.query(
+    createCommentQuery,
+    [type, title, body, author_id, subreddit_id],
+    (error, results) => {
+      if (error) {
+        console.log(error)
+        res.status(500).json({ error: 'Error while posting' })
+      } else {
+        console.log(results)
+        if (results.rowCount === 1) {
+          res.status(200).json({ message: 'Successfully posted' })
+        } else {
+          res.status(404).json({ error: `Unable to create post` })
+        }
+      }
+    }
+  )
+})
+
+// End of create post without image
+
 router.get('/viewPost/:id', function (req, res, next) {
   const postid2 = req.params.id
   const findPost = {
@@ -84,6 +118,31 @@ router.get('/viewPost/:id', function (req, res, next) {
   }
   console.log(postid2)
   connection.query(findPost, [postid2], (error, results) => {
+    if (error) {
+      console.log(error)
+      res.status(500).json({
+        Error: 'Something went wrong while finding post',
+      })
+    } else {
+      if (results.rows.length === 0) {
+        res.status(404).json({
+          error: `Post does not exist`,
+        })
+      } else {
+        res.status(200).json({
+          comment: results.rows,
+        })
+      }
+    }
+  })
+})
+// view post by author id
+router.get('/viewOwnPost/:author_id', function (req, res, next) {
+  const authorid = req.params.author_id
+  const findPost = {
+    text: 'SELECT posts.*, users.username, subreddits.name FROM posts INNER JOIN users ON posts.author_id = users.id INNER JOIN subreddits ON posts.subreddit_id = subreddits.id WHERE author_id = $1',
+  }
+  connection.query(findPost, [authorid], (error, results) => {
     if (error) {
       console.log(error)
       res.status(500).json({
@@ -197,7 +256,6 @@ router.get('/post/:id', function (req, res, next) {
 router.get('/subredditPost/:subreddit_id', function (req, res, next) {
   var subredditid = req.params.subreddit_id
   const getposts = {
-    
     text: 'SELECT posts.*, subreddits.name, subreddits.description FROM posts INNER JOIN subreddits ON posts.subreddit_id = subreddits.id WHERE subreddit_id = $1',
   }
   connection.query(getposts, [subredditid], (error, results) => {

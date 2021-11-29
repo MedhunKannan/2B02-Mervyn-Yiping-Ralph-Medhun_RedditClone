@@ -29,12 +29,13 @@ router.get('/viewComment/:post_id', function (req, res, next) {
   })
 })
 
-// View Post
-router.get('/post', function (req, res, next) {
+// View Post By ID
+router.get('/post/:id', function (req, res, next) {
+  var id = req.params.id
   const getpost = {
-    text: 'SELECT posts.*, users.username, subreddits.name FROM posts INNER JOIN users ON posts.author_id = users.id INNER JOIN subreddits ON posts.subreddit_id = subreddits.id ',
+    text: 'SELECT posts.*, users.username, subreddits.name FROM posts INNER JOIN users ON posts.author_id = users.id INNER JOIN subreddits ON posts.subreddit_id = subreddits.id WHERE posts.id = $1',
   }
-  connection.query(getpost, (error, results) => {
+  connection.query(getpost, [id], (error, results) => {
     if (error) {
       console.log(error)
       res.status(500).json({
@@ -43,7 +44,7 @@ router.get('/post', function (req, res, next) {
     } else {
       if (results.rows.length === 0) {
         res.status(404).json({
-          error: `Unable to retrieve post`,
+          error: `Unable to find post`,
         })
       } else {
         res.json({
@@ -58,7 +59,7 @@ router.get('/post', function (req, res, next) {
 router.post('/createComment', (req, res) => {
   var body = req.body.body
   var author_id = req.body.author_id
-  var post_id = req.body.post_id
+  var post_id = req.body.post_id;
   console.log(req.body)
   const createCommentQuery = `
   INSERT INTO comments(body, author_id, post_id, created_at, updated_at)

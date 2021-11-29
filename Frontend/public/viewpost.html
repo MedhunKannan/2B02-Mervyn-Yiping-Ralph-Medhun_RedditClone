@@ -6,6 +6,10 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script
+      src="https://kit.fontawesome.com/b07a8739ee.js"
+      crossorigin="anonymous"
+    ></script>
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -24,6 +28,7 @@
     />
     <link rel="stylesheet" href="css/viewpost.css" />
     <script src="./js/form.js"></script>
+    <link href="css/nav.css" rel="stylesheet" />
     <script>
       var url = "http://localhost:8000/api";
       $(document).ready(function () {
@@ -54,7 +59,7 @@
           url: url + `/post/post`,
           type: "GET",
           data: data,
-          contentType: "application/json; charset=utf-8",
+          contentType: "application/jsonpost; charset=utf-8",
           dataType: "json",
           success: function (data, textStatus, xhr) {
             if (data != null) {
@@ -64,38 +69,36 @@
                 if (d.cloudinary_url != null) {
                   posthtml += `
 
-                      <div class="card text-center">
-  <div class="card-header">
-    Featured
-  </div>
-  <div class="card-body">
-    <h5 class="card-title"><a href="viewComment.html?id=${d.id}">${d.title}</a></h5>
-    <h5 class="name">Subreddit: <a href="viewSubreddit.html?subreddit_id=${d.subreddit_id}">${d.name}</a></h5>
-    <h6>Posted by: ${d.username}</h6>
-    <p class="card-body"><${d.body}/></p>
-    <p class="card-content"><img src= "${d.cloudinary_url}" style= "width:450px; height:450px;"/></p>
-  </div>
-  <div class="card-footer text-muted">
-    Posted at: ${d.created_at}
-  </div>
-</div>
+                  <div class="card text-center">
+                          <div class="card-header"> Featured </div>
+                      <div class="card-body">
+                        <h5 class="card-title"><a href="viewComment.html?id=${d.id}">${d.title}</a></h5>
+                        <h5 class="name">Subreddit: <a href="viewSubreddit.html?subreddit_id=${d.subreddit_id}">${d.name}</a></h5>
+                        <h6>Posted by: ${d.username}</h6>
+                        <p class="card-body"><${d.body}/></p>
+                        <p class="card-content"><img src= "${d.cloudinary_url}" style= "width:450px; height:450px;"/></p>
+                      </div>
+                      <div class="card-footer text-muted">
+                        Posted at: ${d.created_at}
+                      </div>
+                  </div>
                       `;
                 } else {
                   posthtml += `
                 <div class="card text-center">
-  <div class="card-header">
-    Featured
-  </div>
-  <div class="card-body">
-    <h5 class="card-title">${d.title}</h5>
-    <h5 class="name">Subreddit: <a href="viewSubreddit.html?subreddit_id=${d.subreddit_id}">${d.name}</a></h5>
-    <h6>Posted by: ${d.username}</h6>
-    <p class="card-body"><${d.body}/></p>
-  </div>
-  <div class="card-footer text-muted">
-    Posted at: ${d.created_at}
-  </div>
-</div>`;
+                  <div class="card-header">
+                    Featured
+                  </div>
+                  <div class="card-body">
+                    <h5 class="card-title">${d.title}</h5>
+                    <h5 class="name">Subreddit: <a href="viewSubreddit.html?subreddit_id=${d.subreddit_id}">${d.name}</a></h5>
+                    <h6>Posted by: ${d.username}</h6>
+                    <p class="card-body"><${d.body}/></p>
+                  </div>
+                  <div class="card-footer text-muted">
+                    Posted at: ${d.created_at}
+                  </div>
+                </div>`;
                 }
               });
               $("#post").append(posthtml);
@@ -106,6 +109,28 @@
           error: function (xhr, textStatus, errorThrown) {
             console.log("Error in Operation");
           },
+        });
+
+        $("#delete").click(function () {
+          var deletepostid = $("#delete").val();
+          var data = "";
+          alert("hello");
+          alert(deletepostid);
+          $.ajax({
+            url: url + `/post/deletepost/${deletepostid}`,
+            type: "DELETE",
+            data: data,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data, textStatus, xhr) {
+              alert("Deleted successfully!");
+            },
+            error: function (xhr, textStatus, errorThrown) {
+              console.log("Error in Operation");
+            },
+          });
+          return false;
+          alert("Hello");
         });
 
         $.ajax({
@@ -123,80 +148,109 @@
                     <td><a href="viewSubreddit.html?subreddit_id=${d.id}">${d.name}</a></td>
                     
                     </tr>`
-              );
-            })
-
-          } else {
-            console.log("Issue in retrieving...");
-          }
-        },
-        error: function (xhr, textStatus, err) {
-          console.log(err);
-        },
-      });
-
-      $('#create').click(function () {
-        var subredditName = $('#createname').val();
-        var subredditDescription = $('#createdescription').val();
-        const obj = { name: subredditName, description: subredditDescription };
-        const data = JSON.stringify(obj);
-        $.ajax({
-          url: 'http://localhost:8000/api/subreddits/createSubreddit/',
-          type: 'POST',
-          data: data,
-          contentType: 'application/json; charset=utf-8',
-          dataType: 'json',
-          success: function (data, textStatus, xhr) {
-            alert('Created successfully!!!!');
+                );
+              });
+            } else {
+              console.log("Issue in retrieving...");
+            }
           },
-          error: function (xhr, textStatus, errorThrown) {
-            console.log('Error in Operation');
+          error: function (xhr, textStatus, err) {
+            console.log(err);
           },
         });
+
+        $("#create").click(function () {
+          var subredditName = $("#createname").val();
+          var subredditDescription = $("#createdescription").val();
+          const obj = {
+            name: subredditName,
+            description: subredditDescription,
+          };
+          const data = JSON.stringify(obj);
+          $.ajax({
+            url: "http://localhost:8000/api/subreddits/createSubreddit/",
+            type: "POST",
+            data: data,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data, textStatus, xhr) {
+              alert("Created successfully!!!!");
+            },
+            error: function (xhr, textStatus, errorThrown) {
+              console.log("Error in Operation");
+            },
+          });
+          return false;
+        });
+
         return false;
-      });
+      }); //End of document.ready
+    </script>
+  </head>
 
-      return false;
-    }); //End of document.ready
-  </script>
-</head>
+  <body>
+    <div class="row justify-content-center" style="margin-top: 20px">
+      <h3 id="header">View post</h3>
 
-<body>
-  <div class="row justify-content-center" style="margin-top: 20px;">
-    <h3>View post</h3>
+      <div id="post" class="col-6"></div>
 
-    <div id="post" class="col-6"></div>
+      <div class="col-2">
+        <table id="subTable">
+          <tr>
+            <th>SubredditName</th>
+          </tr>
+        </table>
+        <button class="createSubreddit" onclick="toggleForm()">
+          Create Subreddit
+        </button>
+      </div>
 
-    <div class="col-2 ">
-      <table id="subTable">
-        <tr>
-          <th>SubredditName</th>
-        </tr>
+      <!-- Nav bar-->
+      <!-- <ul>
+        <li><a href="default.asp">Home</a></li>
+        <li><a href="news.asp">News</a></li>
+        <li><a href="contact.asp">Contact</a></li>
+        <li><a href="about.asp">About</a></li>
+      </ul> -->
 
-
-      </table>
-      <button class="createSubreddit" onclick="toggleForm()">Create Subreddit</button>
-      
+      <!-- Overlay Form -->
+      <div class="overlay-form">
+        <div class="close-btn" onclick="toggleForm()">×</div>
+        <h1>Create a new Subreddit</h1>
+        <div class="form-element">
+          <label for="fullname">Subreddit Name</label>
+          <input type="text" id="createname" />
+        </div>
+        <div class="form-element">
+          <label for="email">Description</label>
+          <input type="email" id="createdescription" />
+        </div>
+        <div id="createSubredditOverlay">
+          <button type="submit" id="create">Create Subreddit</button>
+        </div>
+      </div>
     </div>
-
-    <!-- Overlay Form -->
-    <div class="overlay-form">
-      <div class="close-btn" onclick="toggleForm()">×</div>
-      <h1>Create a new Subreddit</h1>
-      <div class="form-element">
-        <label for="fullname">Subreddit Name</label>
-        <input type="text" id="createname" />
-      </div>
-      <div class="form-element">
-        <label for="email">Description</label>
-        <input type="email" id="createdescription" />
-      </div>
-      <div id="createSubredditOverlay">
-        <button type="submit" id="create">Create Subreddit</button>
-      </div>
-    </div>
-  </div>
-
-</body>
-
+  </body>
 </html>
+
+<script>
+  $(".btn").click(function () {
+    $("button").removeClass("selected");
+    $(this).addClass("selected");
+  });
+</script>
+<style>
+  .btn {
+    width: 100%;
+    border-style: solid;
+    background-color: #ffffff;
+    color: #0077c0;
+    text-align: left;
+    padding-left: 20 px;
+    padding-top: 24 px;
+    padding-bottom: 24 px;
+  }
+  .selected {
+    color: #c4c4c4;
+  }
+</style>

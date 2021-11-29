@@ -1,36 +1,147 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Reddit clone</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script
+      src="https://kit.fontawesome.com/b07a8739ee.js"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="css/comment.css" />
 
-<head>
-  <meta charset="utf-8" />
-  <title>Reddit clone</title>
-  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous" />
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="css/post.css" />
-
-  <script>
-    var url = "http://localhost:8000/api";
-    $(document).ready(function () {
+    <script>
+      var url = "http://localhost:8000/api";
       var urlParams = new URLSearchParams(window.location.search);
-      var id = urlParams.get("id");
-      var data = "";
-      $.ajax({
-        url: url + `/comments/viewComment/${id}`,
-        type: "GET",
-        data: data,
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (data, textStatus, xhr) {
-          if (data != null) {
-            data.comment.map((d) => {
-              $("#comment").append(
-                `
+      $(document).ready(function () {
+        // Get User ID from Local Storage
+        var jwt = localStorage.getItem("token");
+        let b64DecodeUnicode = (str) =>
+          decodeURIComponent(
+            Array.prototype.map
+              .call(
+                atob(str),
+                (c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2)
+              )
+              .join("")
+          );
+
+        let parseJwt = (jwtToken) =>
+          JSON.parse(
+            b64DecodeUnicode(
+              jwtToken.split(".")[1].replace("-", "+").replace("_", "/")
+            )
+          );
+        var decodedToken = parseJwt(jwt);
+        var userid = decodedToken.user;
+
+        // Store Post ID from URL
+        var id = urlParams.get("id");
+        if (id == null) {
+          id = localStorage.getItem("postID");
+        }
+
+        // document.getElementById("postID").value = id;
+        var data = "";
+        var posthtml = "";
+        var edithtml = "";
+        // View Post By ID Ajax
+        $.ajax({
+          url: url + `/comments/post/${id}`,
+          type: "GET",
+          data: data,
+          contentType: "application/json; charset=utf-8",
+          dataType: "json",
+          success: function (data, textStatus, xhr) {
+            if (data != null) {
+              posthtml += `
+                  `;
+              edithtml += `
+                  `;
+              if (data.post[0].cloudinary_url != null) {
+                posthtml += `
+                      <div class="card text-center">
+                          <div class="card-header">
+                            Featured
+                          </div>
+                          <div class="card-body">
+                            <h5 class="card-title">${data.post[0].title}</h5>
+                            <h5 class="name">Subreddit: <a href="viewSubreddit.html?subreddit_id=${data.post[0].subreddit_id}">${data.post[0].name}</a></h5>
+                            <h6>Posted by: ${data.post[0].username}</h6>
+                            <p class="card-body"><${data.post[0].body}/></p>
+                            <p class="card-content"><img src= "${data.post[0].cloudinary_url}" style= "width:450px; height:450px;"/></p>
+                          </div>
+                          <div class="card-footer text-muted">
+                            Posted at: ${data.post[0].created_at}
+                          </div>
+                      </div>
+                      `;
+                edithtml += `
+                      <button id="edit" style="position: absolute; top: 0; left: 0">
+                          <a href = "http://localhost:3001/editpost.html?post_id=${id}"<i class="far fa-edit"></i></a>
+                      </button>`;
+              } else {
+                posthtml += `
+                <div class="card text-center">
+                  <div class="card-header">
+                    Featured
+                  </div>
+                  <div class="card-body">
+                    <h5 class="card-title">${data.post[0].title}</h5>
+                    <h5 class="name">Subreddit: <a href="viewSubreddit.html?subreddit_id=${data.post[0].subreddit_id}">${data.post[0].name}</a></h5>
+                    <h6>Posted by: ${data.post[0].username}</h6>
+                    <p class="card-body"><${data.post[0].body}/></p>
+                  </div>
+                  <div class="card-footer text-muted">
+                    Posted at: ${data.post[0].created_at}
+                  </div>
+                </div>`;
+                edithtml += `
+                      <button id="edit" style="position: absolute; top: 0; left: 0">
+                          <a href = "http://localhost:3001/editpost.html?post_id=${id}"<i class="far fa-edit"></i></a>
+                      </button>`;
+              }
+              $("#post").append(posthtml);
+              $("#DeleteandEdit").append(edithtml);
+            } else {
+              console.log("Issue in retrieving...");
+            }
+          },
+          error: function (xhr, textStatus, errorThrown) {
+            console.log("Error in Operation");
+          },
+        });
+
+        // View Comments Ajax
+        $.ajax({
+          url: url + `/comments/viewComment/${id}`,
+          type: "GET",
+          data: data,
+          contentType: "application/json; charset=utf-8",
+          dataType: "json",
+          success: function (data, textStatus, xhr) {
+            if (data != null) {
+              data.comment.map((d) => {
+                $("#comment").append(
+                  `
                   <div class = "row">
                     <div class ="col-4">
                         ${d.body}
@@ -43,31 +154,31 @@
                     </div>
                   </div>
                   `
-              );
-            });
-          } else {
-            console.log("Issue in retrieving...");
-          }
-        },
-        error: function (xhr, textStatus, errorThrown) {
-          console.log("Error in Operation");
-        },
-      });
-      return false;
+                );
+              });
+            } else {
+              console.log("Issue in retrieving...");
+            }
+          },
+          error: function (xhr, textStatus, errorThrown) {
+            console.log("Error in Operation");
+          },
+        });
 
-      //Create Comment Ajax
-      $("#create").click(function () {
+        //Create Comment Ajax
+        $("#create").click(function () {
           var commentBody = $("#createbody").val();
-          var commentAuthor = $("#createauthor").val();
-          var commentPost = urlParams.get("post_id");
+          var commentPost = urlParams.get("id");
+          var postId = urlParams.get("id");
+          localStorage.setItem("postID", postId);
           const obj = {
             body: commentBody,
-            author_id: commentAuthor,
+            author_id: userid,
             post_id: commentPost,
           };
           const data = JSON.stringify(obj);
           $.ajax({
-            url: "http://localhost:8000/api/comments/createComment/",
+            url: `http://localhost:8000/api/comments/createComment`,
             type: "POST",
             data: data,
             contentType: "application/json; charset=utf-8",
@@ -79,17 +190,69 @@
               console.log("Error in Operation");
             },
           });
+          location.reload();
           return false;
         });
-    }); //End of document.ready
-  </script>
-</head>
 
-<body>
-  <div class="col-6">
+        $("#getAuthorid").click(function () {
+          $.ajax({
+            url: url + `/post/viewPost/${id}`,
+            type: "GET",
+            data: data,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data, textStatus, xhr) {
+              if (data != null) {
+                console.log(data);
+              } else {
+                console.log("Issue in retrieving...");
+              }
+            },
+            error: function (xhr, textStatus, errorThrown) {
+              console.log("Error in Operation");
+            },
+          });
+        });
 
+        $("#delete").click(function () {
+          var data = "";
+          // if (postUserid == userid) {
+          $.ajax({
+            url: url + `/post/deletepost/${id}`,
+            type: "DELETE",
+            data: data,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data, textStatus, xhr) {
+              alert("Deleted successfully!");
+              window.location.assign("http://localhost:3001/viewpost.html");
+            },
+            error: function (xhr, textStatus, errorThrown) {
+              console.log("Error in Operation");
+            },
+          });
+          return false;
+          // } else {
+          //   alert("you are not authorised to delete this post");
+          //   $("#warning").html("You are not authorised to delete this post!");
+          // }
+        });
+      }); //End of document.ready
+    </script>
+  </head>
+
+  <body>
+    <p><span id="warning" style="color: red"></span></p>
     <!-- View Post -->
     <h3>View Post</h3>
+    <div id="DeleteandEdit">
+      <button id="delete" style="position: absolute; top: 0; right: 0">
+        <i class="far fa-trash-alt"></i>
+      </button>
+      <button id="edit" style="position: absolute; top: 0; left: 0">
+        <i class="far fa-edit"></i>
+      </button>
+    </div>
     <div id="post"></div>
 
     <!-- Create new Comment -->
@@ -97,17 +260,12 @@
       <h3>Create new comment</h3>
       <label for="commentBody">Comment Content: </label>
       <input type="text" id="createbody" name="createbody" /><br /><br />
-      <label for="author">Author ID: </label>
-      <input type="number" id="createauthor" name="createauthor" /><br /><br />
-      <input type="submit" value="create" id="create" />
+      <input type="hidden" id="postID" />
     </form>
+    <button id="create">Create</button>
 
     <!-- View Comments -->
     <h3>Comments</h3>
     <div id="comment"></div>
-
-  </div>
-  <!-- End of div class row  -->
-</body>
-
+  </body>
 </html>
