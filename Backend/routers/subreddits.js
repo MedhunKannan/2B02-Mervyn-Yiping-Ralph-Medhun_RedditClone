@@ -35,8 +35,8 @@ router.post('/createSubreddit', (req, res) => {
 
 
 //Search for specific Subreddit
-router.get('/searchSubreddit/:name', function (req, res, next) {
-  const subredditName = req.params.name
+router.get('/searchSubreddit/', function (req, res, next) {
+  const subredditName = req.body.name
   const searchSubredditNameQuery = {
     text: 'SELECT * FROM subreddits WHERE name = $1;',
     values: [subredditName],
@@ -55,6 +55,7 @@ router.get('/searchSubreddit/:name', function (req, res, next) {
         })
       } else {
         res.json({
+            id: results.rows[0].id,
           name: results.rows[0].name,
           description: results.rows[0].description,
           created_at: results.rows[0].created_at,
