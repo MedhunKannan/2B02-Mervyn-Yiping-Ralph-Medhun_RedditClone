@@ -1,5 +1,6 @@
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,80 +9,83 @@
     <script src="https://kit.fontawesome.com/b07a8739ee.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="./css/vote.css">
     <title>Comments</title>
-  </head>
+</head>
 
-  <body>
+<body>
     <script>
-      $(document).ready(function () {
-        //Create Upvote Ajax
-        $("#upvote").click(function () {
-          var upvoteUser = $("#upvoteuser").val();
-          var upvotePost = $("#upvotepost").val();
-          const obj = {
-            user_id: upvoteUser,
-          };
-          const data = JSON.stringify(obj);
-          $.ajax({
-            url: `http://localhost:8000/api/post_votes/createUpvote/${upvotePost}`,
-            type: "POST",
-            data: data,
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (data, textStatus, xhr) {
-              alert("Upvoted successfully!!!!");
-            },
-            error: function (xhr, textStatus, errorThrown) {
-              console.log("Error in Operation");
-            },
-          });
-          return false;
+        $(document).ready(function () {
+
+            //Create Upvote Ajax
+            $("#upvote").click(function () {
+                var upvoteUser = $("#upvoteuser").val();
+                var upvotePost = $("#upvotepost").val();
+                const obj = {
+                    user_id: upvoteUser
+                };
+                const data = JSON.stringify(obj);
+                $.ajax({
+                    url: `http://localhost:8000/api/post_votes/createUpvote/${upvotePost}`,
+                    type: "POST",
+                    data: data,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (data, textStatus, xhr) {
+                        alert("Upvoted successfully!!!!");
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        console.log("Error in Operation");
+                    },
+                });
+                return false;
+            });
+
+            //Create Downvote Ajax
+            $("#downvote").click(function () {
+                var downvoteUser = $("#downvoteuser").val();
+                var downvotePost = $("#downvotepost").val();
+                const obj = {
+                    user_id: downvoteUser
+                };
+                const data = JSON.stringify(obj);
+                $.ajax({
+                    url: `http://localhost:8000/api/post_votes/createDownvote/${downvotePost}`,
+                    type: "POST",
+                    data: data,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (data, textStatus, xhr) {
+                        alert("Downvote successfully!!!!");
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        console.log("Error in Operation");
+                    },
+                });
+                return false;
+            });
+
+            //Delete Vote Ajax
+            $("#deletevote").click(function () {
+                var deletevoteUser = $("#deletevoteuser").val();
+                var deletevotePost = $("#deletevotepost").val();
+                const data = JSON.stringify(obj);
+                $.ajax({
+                    url: `http://localhost:8000/api/post_votes/deleteVote/${deletevoteUser}/${deletevotePost}`,
+                    type: "DELETE",
+                    data: data,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (data, textStatus, xhr) {
+                        alert("Deleted successfully!!!!");
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        console.log("Error in Operation");
+                    },
+                });
+                return false;
+            });
+
         });
 
-        //Create Downvote Ajax
-        $("#downvote").click(function () {
-          var downvoteUser = $("#downvoteuser").val();
-          var downvotePost = $("#downvotepost").val();
-          const obj = {
-            user_id: downvoteUser,
-          };
-          const data = JSON.stringify(obj);
-          $.ajax({
-            url: `http://localhost:8000/api/post_votes/createDownvote/${downvotePost}`,
-            type: "POST",
-            data: data,
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (data, textStatus, xhr) {
-              alert("Downvote successfully!!!!");
-            },
-            error: function (xhr, textStatus, errorThrown) {
-              console.log("Error in Operation");
-            },
-          });
-          return false;
-        });
-
-        //Delete Vote Ajax
-        $("#deletevote").click(function () {
-          var deletevoteUser = $("#deletevoteuser").val();
-          var deletevotePost = $("#deletevotepost").val();
-          const data = JSON.stringify(obj);
-          $.ajax({
-            url: `http://localhost:8000/api/post_votes/deleteVote/${deletevoteUser}/${deletevotePost}`,
-            type: "DELETE",
-            data: data,
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (data, textStatus, xhr) {
-              alert("Deleted successfully!!!!");
-            },
-            error: function (xhr, textStatus, errorThrown) {
-              console.log("Error in Operation");
-            },
-          });
-          return false;
-        });
-      });
     </script>
 
     <!-- Create Upvote -->

@@ -36,18 +36,17 @@
           var type = $("#type").val();
           var postTitle = $("#title").val();
           var postContent = $("#body").val();
-          var authorid = window.localStorage.getItem("userInfo");
-          alert(authorid);
           var subredditid = $("#subreddit").val();
           var file = document.getElementById("fileInput").files[0];
           let webFormdata = new FormData();
           webFormdata.append("type", type);
           webFormdata.append("title", postTitle);
           webFormdata.append("body", postContent);
-          webFormdata.append("author_id", authorid);
+          webFormdata.append("author_id", userid);
           webFormdata.append("subreddit_id", subredditid);
           webFormdata.append("photo", file, "testfile");
           e.preventDefault();
+
           $.ajax({
             url: url + "/post/createpost",
             type: "POST",

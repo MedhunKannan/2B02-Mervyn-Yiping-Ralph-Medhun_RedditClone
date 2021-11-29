@@ -11,14 +11,32 @@
   <body>
     <script>
       $(document).ready(function () {
+        var jwt = localStorage.getItem("token");
+        let b64DecodeUnicode = (str) =>
+          decodeURIComponent(
+            Array.prototype.map
+              .call(
+                atob(str),
+                (c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2)
+              )
+              .join("")
+          );
+
+        let parseJwt = (jwtToken) =>
+          JSON.parse(
+            b64DecodeUnicode(
+              jwtToken.split(".")[1].replace("-", "+").replace("_", "/")
+            )
+          );
+        var decodedToken = parseJwt(jwt);
+        var userid = decodedToken.user;
         //Create Comment Ajax
         $("#create").click(function () {
           var commentBody = $("#createbody").val();
-          var commentAuthor = $("#createauthor").val();
           var commentPost = $("#createpost").val();
           const obj = {
             body: commentBody,
-            author_id: commentAuthor,
+            author_id: userid,
             post_id: commentPost,
           };
           const data = JSON.stringify(obj);
@@ -117,8 +135,6 @@
       <h3>Create new comment</h3>
       <label for="commentBody">Comment Content: </label>
       <input type="text" id="createbody" name="createbody" /><br /><br />
-      <label for="author">Author ID: </label>
-      <input type="number" id="createauthor" name="createauthor" /><br /><br />
       <label for="post">Post ID: </label>
       <input type="number" id="createpost" name="createpost" /><br /><br />
       <input type="submit" value="create" id="create" />
