@@ -37,12 +37,12 @@ router.post('/createSubreddit', (req, res) => {
 //Search for specific Subreddit
 router.get('/searchSubreddit/:name', function (req, res, next) {
   const subredditName = req.params.name
-  const searchBookQuery = {
+  const searchSubredditNameQuery = {
     text: 'SELECT * FROM subreddits WHERE name = $1;',
     values: [subredditName],
   }
-  console.log(searchBookQuery)
-  connection.query(searchBookQuery, (error, results) => {
+  console.log(searchSubredditNameQuery)
+  connection.query(searchSubredditNameQuery, (error, results) => {
     if (error) {
       console.log(error)
       res.status(500).json({
@@ -51,7 +51,7 @@ router.get('/searchSubreddit/:name', function (req, res, next) {
     } else {
       if (results.rows.length === 0) {
         res.status(404).json({
-          error: `Subreddit ${subreddit} not found`,
+          error: `Subreddit ${subredditName} not found`,
         })
       } else {
         res.json({
@@ -138,7 +138,35 @@ router.get('/subreddit', function (req, res, next) {
   })
 })
 
-
+//Search for specific Subreddit based on ID
+router.get('/searchSubredditID/:subreddit_id', function (req, res, next) {
+    const subredditID = req.params.subreddit_id
+    const searchSubredditIDQuery = {
+      text: 'SELECT * FROM subreddits WHERE id = $1;',
+      values: [subredditID],
+    }
+    console.log(searchSubredditIDQuery)
+    connection.query(searchSubredditIDQuery, (error, results) => {
+      if (error) {
+        console.log(error)
+        res.status(500).json({
+          Error: 'Something went wrong while looking for the subreddit',
+        })
+      } else {
+        if (results.rows.length === 0) {
+          res.status(404).json({
+            error: `Subreddit ID ${subredditID} not found`,
+          })
+        } else {
+          res.json({
+            name: results.rows[0].name,
+            description: results.rows[0].description,
+            created_at: results.rows[0].created_at,
+          })
+        }
+      }
+    })
+  })
 
 
 module.exports = router

@@ -1,0 +1,82 @@
+/* 
+:root {
+    --borderColor:rgb(107, 105, 105);
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100vh;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.voteContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    border: 1px solid var(--borderColor);
+    border-radius: 50%;
+    transition: 0.2s;
+}
+
+.voteContainer div {
+    font-size: 12px;
+    margin: 1px;
+}
+
+.voteContainer:hover div {
+    margin: 5px 15px;
+}
+
+.voteContainer:hover {
+    border: none;
+    width: 60px;
+    height: 100px;
+    border-radius: 50px;
+}
+
+.voteContainer div:hover {
+    font-size: 23px;
+}
+
+.voteContainer div:first-child:hover {
+    padding: 12px 19px;
+    border-radius: 50px 50px 0 0;
+}
+
+.voteContainer div:last-child:hover {
+    padding: 12px 19px;
+    border-radius: 0 0 50px 50px;
+    background: linear-gradient(145deg, #cacaca);
+    box-shadow: 4px 4px 8px #bebebe,
+    -4px -4px 8px #ffffff;
+    color: rgb(107, 105, 105);
+}
+
+.voteContainer div:first-child:hover {
+    background: linear-gradient(145deg, #cacaca);
+    box-shadow: 4px 4px 8px #bebebe,
+    -4px -4px 8px #ffffff;
+    color: rgb(107, 105, 105);
+}
+
+.voteContainer div:last-child:hover {
+    padding: 12px 19px;
+    border-radius: 0 0 50px 50px;
+    background: linear-gradient(145deg, #cacaca);
+    box-shadow: 4px 4px 8px #bebebe,
+    -4px -4px 8px #ffffff;
+    color: rgb(107, 105, 105);
+}
+
+*/

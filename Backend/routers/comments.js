@@ -7,7 +7,6 @@ router.use(cors())
 router.get('/viewComment/:post_id', function (req, res, next) {
   const postid = req.params.post_id
   const findCommentQuery = {
-    // text: 'SELECT * FROM comments WHERE post_id = $1'
     text: 'SELECT comments.*, users.username FROM comments INNER JOIN users ON comments.author_id = users.id WHERE comments.post_id = $1',
   }
   connection.query(findCommentQuery, [postid], (error, results) => {
@@ -24,6 +23,31 @@ router.get('/viewComment/:post_id', function (req, res, next) {
       } else {
         res.status(200).json({
           comment: results.rows,
+        })
+      }
+    }
+  })
+})
+
+// View Post
+router.get('/post', function (req, res, next) {
+  const getpost = {
+    text: 'SELECT posts.*, users.username, subreddits.name FROM posts INNER JOIN users ON posts.author_id = users.id INNER JOIN subreddits ON posts.subreddit_id = subreddits.id ',
+  }
+  connection.query(getpost, (error, results) => {
+    if (error) {
+      console.log(error)
+      res.status(500).json({
+        Error: 'Something went wrong while retrieving post',
+      })
+    } else {
+      if (results.rows.length === 0) {
+        res.status(404).json({
+          error: `Unable to retrieve post`,
+        })
+      } else {
+        res.json({
+          post: results.rows,
         })
       }
     }
