@@ -1,0 +1,19 @@
+#editform {
+  background-color: #f2f2f2;
+  border-radius: 5px;
+  padding: 20px;
+  width: 100%;
+  margin-left: 50%;
+  margin-right: 50%;
+  height: 450px;
+}
+
+#editformbutton {
+  background-color: #ff5700;
+  color: white;
+  border: none;
+  width: 100px;
+  height: 30px;
+  border-radius: 20px;
+  float: right;
+}
