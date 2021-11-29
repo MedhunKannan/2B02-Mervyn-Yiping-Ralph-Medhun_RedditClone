@@ -26,12 +26,26 @@
 
     <script>
       var url = "http://localhost:8000/api";
-      
       $(document).ready(function () {
+        var jwt = localStorage.getItem("token");
+        let b64DecodeUnicode = (str) =>
+          decodeURIComponent(
+            Array.prototype.map
+              .call(
+                atob(str),
+                (c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2)
+              )
+              .join("")
+          );
 
-        var urlParams = new URLSearchParams(window.location.search)
-        var subredditid = urlParams.get('subreddit_id')
-
+        let parseJwt = (jwtToken) =>
+          JSON.parse(
+            b64DecodeUnicode(
+              jwtToken.split(".")[1].replace("-", "+").replace("_", "/")
+            )
+          );
+        var decodedToken = parseJwt(jwt);
+        var userid = decodedToken.user;
         $("#post").click(function (e) {
           var type = $("#type").val();
           var postTitle = $("#title").val();
@@ -67,7 +81,7 @@
         });
 
         $.ajax({
-          url: url + "/subreddits/searchSubredditID/" + subredditid,
+          url: url + "/subreddits/subreddit",
           type: "GET",
           contentType: "application/json",
           dataType: "json",
@@ -75,18 +89,18 @@
             console.log(data);
             console.log(textStatus);
             if (data != null) {
-              
+              for (var i = 0; i < data.subreddit.length; i++) {
                 // Display records top down
                 // alert("Hello world");
                 
                 $("#subreddit").append(
                   $("<option>", {
-                    value: subredditid,
-                    text: data.name,
+                    value: data.subreddit[i].id,
+                    text: data.subreddit[i].name,
                   })
                 );
                 // $("#Category").append(new Option(data[i].catname, data[i].category_id));
-              
+              }
             } else {
               console.log("Issue in retrieving...");
             }
