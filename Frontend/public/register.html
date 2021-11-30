@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<html>
 
 <head>
   <meta charset="utf-8" />
@@ -31,9 +30,15 @@
           contentType: "application/json; charset=utf-8",
           dataType: "json",
           success: function (data) {
+            if (data != null) {
             alert("Successfully registered!");
             window.location.assign("http://localhost:3001/login.html");
-          },
+          }
+        },
+          error: function (xhr, textStatus, errorThrown) {
+                alert("Error in Operation");
+                $("#warning").html("All fields need to be filled!");
+              },
         });
         return false;
       });
@@ -61,6 +66,7 @@
         <div class="clearfix">
           <label class="pull-left checkbox-inline"><input type="checkbox"> Remember me</label>
         </div>
+        <p><span id="warning" style="color: red;"></span></p>
       </form>
 
     </div>

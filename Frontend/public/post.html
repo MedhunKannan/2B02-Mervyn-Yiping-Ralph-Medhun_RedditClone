@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<!-- <html> -->
   <head>
     <meta charset="utf-8" />
     <title>Reddit clone</title>
@@ -83,6 +83,7 @@
               },
               error: function (xhr, textStatus, errorThrown) {
                 alert("Error in Operation");
+                $("#warning").html("Please choose a type of post!");
               },
             });
           } else {
@@ -112,8 +113,8 @@
               },
             });
 
-            e.preventDefault();
-          }
+            //e.preventDefault();
+        }
 
           return false;
         });
@@ -191,8 +192,9 @@
             name="fileInput"
             multiple
           />
-          <div id="warning"></div>
+
           <input type="submit" id="post" value="Post" />
+          <p><span id="warning" style="color: red;"></span></p>
         </form>
       </div>
     </div>
