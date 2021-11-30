@@ -39,12 +39,31 @@
               }
             },
             error: function (xhr, textStatus, errorThrown) {
-              alert("Error in Operation");
-              $("#warning").html("All fields need to be filled!");
+              console.log("Error in Operation");
+              $("#warning").html("User already exists!");
             },
 
 
           });
+          $.ajax({
+            url: url + "/users/register",
+            type: "POST",
+            data: data,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+              if (data != null) {
+                alert("Successfully registered!");
+                window.location.assign("http://localhost:3001/login.html");
+              } else {
+                console.log("Error");
+              }
+            },
+            error: function (xhr, textStatus, errorThrown) {
+              console.log("Error in Operation");
+              $("#warning").html("User already exists!");
+            },
+          })
           return false;
         }
         else {
@@ -58,22 +77,27 @@
 
 <body>
   <div class="row" id="box1">
-    <div class="login-form">
-      <form action="">
-        <h2 class="text-center">Register</h2>
-        <div class="form-group">
-          <label for="username">Username</label>
-          <input type="text" class="form-control" id="username" placeholder="Username" required="required">
+        <div class="login-box">
+          <h2>Register</h2>
+          <form>
+            <div class="user-box">
+              <input type="text" id="username" name="" required="">
+              <label>Username</label>
+            </div>
+            <div class="user-box">
+              <input type="password" id="pwd" name="" required="">
+              <label>Password</label>
+            </div>
+            <p><span id="warning" style="color: red;"></span></p>
+            <a href="#" id="register">
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              Submit
+            </a>
+          </form>
         </div>
-        <div class="form-group">
-          <label for="pwd">Password</label>
-          <input type="password" class="form-control" id="pwd" placeholder="Password" required="required">
-        </div>
-        <p><span id="warning" style="color: red;"></span></p>
-        <div class="form-group">
-          <button type="submit" class="btn btn-secondary btn-block" id="register">Register</button>
-        </div>
-        <p><span id="warning" style="color: red;"></span></p>
       </form>
 
     </div>
