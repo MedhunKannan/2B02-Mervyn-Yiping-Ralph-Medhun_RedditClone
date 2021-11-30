@@ -58,16 +58,16 @@
           var postContent = $("#body").val();
           var subredditid = $("#subreddit").val();
           var file = document.getElementById("fileInput").files[0];
-          if(postContent == ""){
-            $("#warning").html("Please enter a post body!");
-            
-          }else if(postTitle == ""){
-            $("#warning").html("Please enter a post title!");
-          }else if(type == "Type"){
-            $("#warning").html("Please enter a post body!");
-          } else if(subredditid == "Sub-reddit"){
-            $("#warning").html("Please enter a post body!");
-          }else{
+          if(postContent == "" && postTitle != "" && type != "Type" &&  subredditid != "Sub-reddit"){ // if post content is null 
+            $("#warning").html("Please enter a post body !");
+          }else if(postContent != "" && postTitle == "" && type != "Type" &&  subredditid != "Sub-reddit"){ // if post title is null
+            $("#warning").html("Please enter a post title !");
+          }else if(postContent != "" && postTitle != "" && type == "Type" &&  subredditid != "Sub-reddit"){ // if post type is null 
+            $("#warning").html("Please choose a post type !");
+          } else if(postContent != "" && postTitle != "" && type != "Type" &&  subredditid == "Sub-reddit"){ // if subreddit id is null 
+            $("#warning").html("Please choose a subreddit !");
+          }
+          else{
           // if no image
           if (file == null) {
             const obj = {
@@ -90,9 +90,9 @@
                 window.location.assign("http://localhost:3001/viewpost.html");
                 location.reload();
               },
-              error: function (xhr, textStatus, errorThrown) {
+              error: function (xhr, textStatus, errorThrown) { // if more than 1 input fields are not entered 
                 // alert("Error in Operation");
-                  $("#warning").html("Error while posting!");
+                  $("#warning").html("Please make sure all input fields are filled !");
               },
             });
           } else {
