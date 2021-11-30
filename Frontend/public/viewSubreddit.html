@@ -102,7 +102,7 @@
                       <div class = "card">
 
                     <div>
-                       Title: ${d.title}
+                        <a href="viewComment.html?id=${d.id}">${d.title}</a>
                     </div>
                     <div>
                         <img src= "${d.cloudinary_url}"/>
@@ -121,7 +121,7 @@
                 postshtml += `
                       <div class = "card">
                       <div>
-                       Title: ${d.title}
+                        <a href="viewComment.html?id=${d.id}">${d.title}</a>
                     </div>
                     <div>
                        Content: ${d.body}
