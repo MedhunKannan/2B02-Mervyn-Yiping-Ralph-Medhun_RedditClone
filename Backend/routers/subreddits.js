@@ -67,18 +67,18 @@ router.get('/searchSubreddit/', function (req, res, next) {
 
 
 //Update Subreddit description
-router.put('/updateSubreddit', (req, res) => {
+router.put('/updateSubreddit/:subreddit_id', (req, res) => {
   var subredditDescription = req.body.description
-  var subredditName = req.body.name
+  var subredditID = req.params.subreddit_id
   const updateSubredditQuery = `
         UPDATE subreddits
         SET description = $1
-        WHERE name = $2;
+        WHERE id = $2;
         `
 
   connection.query(
     updateSubredditQuery,
-    [subredditDescription, subredditName],
+    [subredditDescription, subredditID],
     (error, results) => {
       if (error) {
         console.log(error)
@@ -90,7 +90,7 @@ router.put('/updateSubreddit', (req, res) => {
         } else {
           res
             .status(404)
-            .json({ error: `Subreddit ${subredditName} not found` })
+            .json({ error: `Subreddit ${subredditID} not found` })
         }
       }
     }
