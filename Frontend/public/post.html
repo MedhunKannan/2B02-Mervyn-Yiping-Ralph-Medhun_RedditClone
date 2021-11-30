@@ -58,7 +58,16 @@
           var postContent = $("#body").val();
           var subredditid = $("#subreddit").val();
           var file = document.getElementById("fileInput").files[0];
-
+          if(postContent == ""){
+            $("#warning").html("Please enter a post body!");
+            
+          }else if(postTitle == ""){
+            $("#warning").html("Please enter a post title!");
+          }else if(type == "Type"){
+            $("#warning").html("Please enter a post body!");
+          } else if(subredditid == "Sub-reddit"){
+            $("#warning").html("Please enter a post body!");
+          }else{
           // if no image
           if (file == null) {
             const obj = {
@@ -82,8 +91,8 @@
                 location.reload();
               },
               error: function (xhr, textStatus, errorThrown) {
-                alert("Error in Operation");
-                $("#warning").html("Please choose a type of post!");
+                // alert("Error in Operation");
+                  $("#warning").html("Error while posting!");
               },
             });
           } else {
@@ -115,6 +124,7 @@
 
             //e.preventDefault();
         }
+      }
 
           return false;
         });
