@@ -23,24 +23,33 @@
           password: password,
         };
         const data = JSON.stringify(obj);
-        $.ajax({
-          url: url + "/users/register",
-          type: "POST",
-          data: data,
-          contentType: "application/json; charset=utf-8",
-          dataType: "json",
-          success: function (data) {
-            if (data != null) {
-            alert("Successfully registered!");
-            window.location.assign("http://localhost:3001/login.html");
-          }
-        },
-          error: function (xhr, textStatus, errorThrown) {
-                alert("Error in Operation");
-                $("#warning").html("All fields need to be filled!");
-              },
-        });
-        return false;
+        if (username != "" && password != "") {
+          $.ajax({
+            url: url + "/users/register",
+            type: "POST",
+            data: data,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+              if (data != null) {
+                alert("Successfully registered!");
+                window.location.assign("http://localhost:3001/login.html");
+              } else {
+                console.log("Error");
+              }
+            },
+            error: function (xhr, textStatus, errorThrown) {
+              alert("Error in Operation");
+              $("#warning").html("All fields need to be filled!");
+            },
+
+
+          });
+          return false;
+        }
+        else {
+          alert("Fields cannot be empty")
+        }
       });
     }); //End of document.ready
   </script>
@@ -62,9 +71,6 @@
         <p><span id="warning" style="color: red;"></span></p>
         <div class="form-group">
           <button type="submit" class="btn btn-secondary btn-block" id="register">Register</button>
-        </div>
-        <div class="clearfix">
-          <label class="pull-left checkbox-inline"><input type="checkbox"> Remember me</label>
         </div>
         <p><span id="warning" style="color: red;"></span></p>
       </form>
