@@ -10,7 +10,6 @@
       src="https://kit.fontawesome.com/b07a8739ee.js"
       crossorigin="anonymous"
     ></script>
-
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -59,6 +58,7 @@
           var postContent = $("#body").val();
           var subredditid = $("#subreddit").val();
           var file = document.getElementById("fileInput").files[0];
+
           // if no image
           if (file == null) {
             const obj = {
@@ -107,7 +107,8 @@
                 window.location.assign("http://localhost:3001/viewpost.html");
               },
               error: function (xhr, textStatus, errorThrown) {
-                alert("Error in Operation");
+                console.log("Error in Operation");
+                $("#warning").html("Please choose a type of post!");
               },
             });
 
@@ -129,7 +130,7 @@
               for (var i = 0; i < data.subreddit.length; i++) {
                 // Display records top down
                 // alert("Hello world");
-                
+
                 $("#subreddit").append(
                   $("<option>", {
                     value: data.subreddit[i].id,
@@ -190,7 +191,7 @@
             name="fileInput"
             multiple
           />
-
+          <div id="warning"></div>
           <input type="submit" id="post" value="Post" />
         </form>
       </div>
