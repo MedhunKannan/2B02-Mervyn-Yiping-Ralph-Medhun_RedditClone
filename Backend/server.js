@@ -15,8 +15,9 @@ app.use(express.urlencoded({ extended: true }))
 // Web Server
 // app.use(express.static(path.join(__dirname, 'public')))
 
-const cors = require('cors')
-app.use(cors())
+var cors = require("cors");
+const router = express.Router();
+router.use("*", cors());
 
 
 

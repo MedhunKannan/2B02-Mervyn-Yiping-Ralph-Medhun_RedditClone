@@ -5,6 +5,9 @@ var hostname = "localhost";
 var port = 3001;
 
 var app = express();
+var cors = require("cors");
+const router = express.Router();
+router.use("*", cors());
 
 app.use(function (req, res, next) {
   console.log(req.url);
