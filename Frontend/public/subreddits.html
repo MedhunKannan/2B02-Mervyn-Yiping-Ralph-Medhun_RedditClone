@@ -25,7 +25,7 @@
           };
           const data = JSON.stringify(obj);
           $.ajax({
-            url: "http://localhost:8000/api/subreddits/createSubreddit/",
+            url: "https://infinite-bayou-99619.herokuapp.com/api/subreddits/createSubreddit/",
             type: "POST",
             data: data,
             contentType: "application/json; charset=utf-8",
@@ -46,7 +46,7 @@
           const obj = { name: name };
           const data = JSON.stringify(obj);
           $.ajax({
-            url: `http://localhost:8000/api/subreddits/searchSubreddit/${name}`,
+            url: `https://infinite-bayou-99619.herokuapp.com/api/subreddits/searchSubreddit/${name}`,
             type: "GET",
             data: data,
             contentType: "application/json; charset=utf-8",
@@ -90,7 +90,7 @@
           const obj = { name: name, description: description };
           const data = JSON.stringify(obj);
           $.ajax({
-            url: "http://localhost:8000/api/subreddits/updateSubreddit",
+            url: "https://infinite-bayou-99619.herokuapp.com/api/subreddits/updateSubreddit",
             type: "PUT",
             data: data,
             contentType: "application/json; charset=utf-8",
@@ -111,7 +111,7 @@
           const obj = { name: name };
           const data = JSON.stringify(obj);
           $.ajax({
-            url: "http://localhost:8000/api/subreddits/deleteSubreddit",
+            url: "https://infinite-bayou-99619.herokuapp.com/api/subreddits/deleteSubreddit",
             type: "DELETE",
             data: data,
             contentType: "application/json; charset=utf-8",
@@ -128,7 +128,7 @@
 
         //Retrieve all subreddits ajax
         $.ajax({
-          url: `http://localhost:8000/api/subreddits/subreddit/`,
+          url: `https://infinite-bayou-99619.herokuapp.com/api/subreddits/subreddit/`,
           type: "GET",
           contentType: "application/json",
           dataType: "json",

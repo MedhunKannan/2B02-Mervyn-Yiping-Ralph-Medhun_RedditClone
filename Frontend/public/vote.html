@@ -62,7 +62,7 @@
           }
           const data = JSON.stringify(obj);
           $.ajax({
-            url: `http://localhost:8000/api/post_votes/createUpvote/${upvotePost}`,
+            url: `https://infinite-bayou-99619.herokuapp.com/api/post_votes/createUpvote/${upvotePost}`,
             type: "POST",
             data: data,
             contentType: "application/json; charset=utf-8",
@@ -91,7 +91,7 @@
           }
           const data = JSON.stringify(obj);
           $.ajax({
-            url: `http://localhost:8000/api/post_votes/createDownvote/${downvotePost}`,
+            url: `https://infinite-bayou-99619.herokuapp.com/api/post_votes/createDownvote/${downvotePost}`,
             type: "POST",
             data: data,
             contentType: "application/json; charset=utf-8",
@@ -112,7 +112,7 @@
           var deletevotePost = $("#deletevotepost").val();
           const data = JSON.stringify(obj);
           $.ajax({
-            url: `http://localhost:8000/api/post_votes/deleteVote/${deletevoteUser}/${deletevotePost}`,
+            url: `https://infinite-bayou-99619.herokuapp.com/api/post_votes/deleteVote/${deletevoteUser}/${deletevotePost}`,
             type: "DELETE",
             data: data,
             contentType: "application/json; charset=utf-8",

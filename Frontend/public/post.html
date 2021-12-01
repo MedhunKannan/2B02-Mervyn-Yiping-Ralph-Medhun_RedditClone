@@ -32,7 +32,7 @@
       var cors = require('cors')
       const router = express.Router()
       router.use(cors())
-      var url = "http://localhost:8000/api";
+      var url = "https://infinite-bayou-99619.herokuapp.com/api";
       $(document).ready(function () {
         // to decode jwt token
         var jwt = localStorage.getItem("token");
@@ -90,7 +90,7 @@
               dataType: "json",
               success: function (data, textStatus, xhr) {
                 alert("Created without image successfully!!!!");
-                window.location.assign("http://localhost:3001/viewpost.html");
+                window.location.assign("https://sheltered-harbor-89747.herokuapp.com/viewpost.html");
                 location.reload();
               },
               error: function (xhr, textStatus, errorThrown) { // if more than 1 input fields are not entered 
@@ -117,7 +117,7 @@
               cache: false,
               success: function (data, textStatus, xhr) {
                 alert("Created with image successfully!!!!");
-                window.location.assign("http://localhost:3001/viewpost.html");
+                window.location.assign("https://sheltered-harbor-89747.herokuapp.com/viewpost.html");
               },
               error: function (xhr, textStatus, errorThrown) {
                 console.log("Error in Operation");

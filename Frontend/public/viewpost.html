@@ -33,7 +33,7 @@
       var cors = require("cors");
       const router = express.Router();
       router.use(cors());
-      var url = "http://localhost:8000/api";
+      var url = "https://infinite-bayou-99619.herokuapp.com/api";
       $(document).ready(function () {
         var jwt = localStorage.getItem("token");
         let b64DecodeUnicode = (str) =>
@@ -138,7 +138,7 @@
         });
 
         $.ajax({
-          url: `http://localhost:8000/api/subreddits/subreddit/`,
+          url: `https://infinite-bayou-99619.herokuapp.com/api/subreddits/subreddit/`,
           type: "GET",
           contentType: "application/json",
           dataType: "json",
@@ -165,7 +165,7 @@
         $("#Logout").click(function () {
           alert("Logged out!");
           window.localStorage.clear();
-          window.location.assign("http://localhost:3001/login.html");
+          window.location.assign("https://sheltered-harbor-89747.herokuapp.com/login.html");
         });
 
         $("#create").click(function () {
@@ -184,7 +184,7 @@
             $("#warning").html("Please make sure all input fields are filled!");
           } else {
             $.ajax({
-              url: "http://localhost:8000/api/subreddits/createSubreddit/",
+              url: "https://infinite-bayou-99619.herokuapp.com/api/subreddits/createSubreddit/",
               type: "POST",
               data: data,
               contentType: "application/json; charset=utf-8",

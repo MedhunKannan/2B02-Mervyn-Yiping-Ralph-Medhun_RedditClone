@@ -28,7 +28,7 @@
       var cors = require("cors");
       const router = express.Router();
       router.use(cors());
-      var url = "http://localhost:8000/api";
+      var url = "https://infinite-bayou-99619.herokuapp.com/api";
       $(document).ready(function () {
         var urlParams = new URLSearchParams(window.location.search);
         var id = urlParams.get("post_id");
@@ -93,7 +93,7 @@
                     dataType: "json",
                     success: function (data, textStatus, xhr) {
                       window.location.assign(
-                        "http://localhost:3001/viewpost.html"
+                        "https://sheltered-harbor-89747.herokuapp.com/viewpost.html"
                       );
                     },
                     error: function (xhr, textStatus, errorThrown) {

@@ -15,7 +15,7 @@
     var cors = require('cors')
     const router = express.Router()
     router.use(cors())
-    var url = "http://localhost:8000/api";
+    var url = "https://infinite-bayou-99619.herokuapp.com/api";
     $(document).ready(function () {
       $("#register").click(function () {
         //var type = $("#type").val();
@@ -36,7 +36,7 @@
             dataType: "json",
             success: function (data) {
               if (data != null) {
-                window.location.assign("http://localhost:3001/login.html");
+                window.location.assign("https://sheltered-harbor-89747.herokuapp.com/login.html");
               } else {
                 console.log("Error");
               }

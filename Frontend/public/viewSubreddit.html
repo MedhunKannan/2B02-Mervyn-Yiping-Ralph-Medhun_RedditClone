@@ -42,7 +42,7 @@
       var createhtml = "";
       var edithtml = "";
       $.ajax({
-        url: `http://localhost:8000/api/subreddits/searchSubredditID/${subredditid}`,
+        url: `https://infinite-bayou-99619.herokuapp.com/api/subreddits/searchSubredditID/${subredditid}`,
         type: "GET",
         contentType: "application/json",
         dataType: "json",
@@ -78,7 +78,7 @@
       });
 
       $.ajax({
-        url: `http://localhost:8000/api/subreddits/searchSubredditID/${subredditid}`,
+        url: `https://infinite-bayou-99619.herokuapp.com/api/subreddits/searchSubredditID/${subredditid}`,
         type: "GET",
         contentType: "application/json",
         dataType: "json",
@@ -104,7 +104,7 @@
       });
 
       $.ajax({
-        url: `http://localhost:8000/api/post/subredditPost/${subredditid}`,
+        url: `https://infinite-bayou-99619.herokuapp.com/api/post/subredditPost/${subredditid}`,
         type: "GET",
         contentType: "application/json",
         dataType: "json",
@@ -170,7 +170,7 @@
         } else
           $.ajax({
             url:
-              "http://localhost:8000/api/subreddits/updateSubreddit/" +
+              "https://infinite-bayou-99619.herokuapp.com/api/subreddits/updateSubreddit/" +
               subredditid,
             type: "PUT",
             data: data,

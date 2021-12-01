@@ -44,7 +44,7 @@
           };
           const data = JSON.stringify(obj);
           $.ajax({
-            url: "http://localhost:8000/api/comments/createComment/",
+            url: "https://infinite-bayou-99619.herokuapp.com/api/comments/createComment/",
             type: "POST",
             data: data,
             contentType: "application/json; charset=utf-8",
@@ -66,7 +66,7 @@
           const obj = { body: updateBody };
           const data = JSON.stringify(obj);
           $.ajax({
-            url: `http://localhost:8000/api/comments/editComment/${updateId}`,
+            url: `https://infinite-bayou-99619.herokuapp.com/api/comments/editComment/${updateId}`,
             type: "PUT",
             data: data,
             contentType: "application/json; charset=utf-8",
@@ -87,7 +87,7 @@
           const obj = { id: deleteId };
           const data = JSON.stringify(obj);
           $.ajax({
-            url: `http://localhost:8000/api/comments/deleteComment/${deleteId}`,
+            url: `https://infinite-bayou-99619.herokuapp.com/api/comments/deleteComment/${deleteId}`,
             type: "DELETE",
             data: data,
             contentType: "application/json; charset=utf-8",
@@ -104,7 +104,7 @@
 
         $("#viewComments").click(function () {
           $.ajax({
-            url: `http://localhost:8000/api/comments/comment/`,
+            url: `https://infinite-bayou-99619.herokuapp.com/api/comments/comment/`,
             type: "GET",
             contentType: "application/json",
             dataType: "json",
