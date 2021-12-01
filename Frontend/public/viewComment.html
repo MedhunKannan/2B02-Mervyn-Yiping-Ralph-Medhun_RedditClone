@@ -29,10 +29,20 @@
     <link rel="stylesheet" href="css/comment.css" />
 
     <script>
-      
       var url = "https://infinite-bayou-99619.herokuapp.com/api";
       var urlParams = new URLSearchParams(window.location.search);
       $(document).ready(function () {
+        $.ajax({
+          url: "",
+          headers: {
+            "Access-Control-Allow-Origin":
+              "http://The web site allowed to access",
+          },
+          data: data,
+          type: "dataType",
+          /* etc */
+          success: function (jsondata) {},
+        });
         // Get User ID from Local Storage
         var jwt = localStorage.getItem("token");
         let b64DecodeUnicode = (str) =>
@@ -230,7 +240,9 @@
             dataType: "json",
             success: function (data, textStatus, xhr) {
               alert("Deleted successfully!");
-              window.location.assign("https://sheltered-harbor-89747.herokuapp.com/viewpost.html");
+              window.location.assign(
+                "https://sheltered-harbor-89747.herokuapp.com/viewpost.html"
+              );
             },
             error: function (xhr, textStatus, errorThrown) {
               console.log("Error in Operation");

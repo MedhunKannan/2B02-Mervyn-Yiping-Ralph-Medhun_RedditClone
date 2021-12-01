@@ -10,8 +10,19 @@
 
   <body>
     <script>
-     
       $(document).ready(function () {
+        $.ajax({
+          url: "",
+          headers: {
+            "Access-Control-Allow-Origin":
+              "http://The web site allowed to access",
+          },
+          data: data,
+          type: "dataType",
+          /* etc */
+          success: function (jsondata) {},
+        });
+
         var jwt = localStorage.getItem("token");
         let b64DecodeUnicode = (str) =>
           decodeURIComponent(

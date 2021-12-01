@@ -31,8 +31,18 @@
   </head>
 
   <script>
-    
     $(document).ready(function () {
+      $.ajax({
+        url: "",
+        headers: {
+          "Access-Control-Allow-Origin":
+            "http://The web site allowed to access",
+        },
+        data: data,
+        type: "dataType",
+        /* etc */
+        success: function (jsondata) {},
+      });
       var urlParams = new URLSearchParams(window.location.search);
       var subredditid = urlParams.get("subreddit_id");
       var postshtml = "";

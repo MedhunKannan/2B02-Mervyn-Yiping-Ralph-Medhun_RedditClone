@@ -11,8 +11,18 @@
 
   <body>
     <script>
-      
       $(document).ready(function () {
+        $.ajax({
+          url: "",
+          headers: {
+            "Access-Control-Allow-Origin":
+              "http://The web site allowed to access",
+          },
+          data: data,
+          type: "dataType",
+          /* etc */
+          success: function (jsondata) {},
+        });
         //Create Subreddit Ajax
         $("#create").click(function () {
           var subredditName = $("#createname").val();

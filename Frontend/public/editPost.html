@@ -25,9 +25,19 @@
     <link rel="stylesheet" href="css/editpost.css" />
 
     <script>
-      
       var url = "https://infinite-bayou-99619.herokuapp.com/api";
       $(document).ready(function () {
+        $.ajax({
+          url: "",
+          headers: {
+            "Access-Control-Allow-Origin":
+              "http://The web site allowed to access",
+          },
+          data: data,
+          type: "dataType",
+          /* etc */
+          success: function (jsondata) {},
+        });
         var urlParams = new URLSearchParams(window.location.search);
         var id = urlParams.get("post_id");
         var data = "";
