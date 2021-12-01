@@ -30,9 +30,7 @@
     <script src="./js/form.js"></script>
     <link href="css/nav.css" rel="stylesheet" />
     <script>
-      var cors = require("cors");
-      const router = express.Router();
-      router.use(cors());
+      
       var url = "https://infinite-bayou-99619.herokuapp.com/api";
       $(document).ready(function () {
         var jwt = localStorage.getItem("token");

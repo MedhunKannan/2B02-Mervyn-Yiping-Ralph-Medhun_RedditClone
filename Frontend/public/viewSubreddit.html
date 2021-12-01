@@ -31,9 +31,7 @@
   </head>
 
   <script>
-    var cors = require("cors");
-    const router = express.Router();
-    router.use(cors());
+    
     $(document).ready(function () {
       var urlParams = new URLSearchParams(window.location.search);
       var subredditid = urlParams.get("subreddit_id");
