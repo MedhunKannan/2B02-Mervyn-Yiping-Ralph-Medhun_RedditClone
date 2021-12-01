@@ -23,16 +23,16 @@
           password: password,
         };
         const data = JSON.stringify(obj);
+        const data1 = "";
         if (username != "" && password != "") {
           $.ajax({
-            url: url + "/users/register",
-            type: "POST",
-            data: data,
+            url: url + "/users/getusername",
+            type: "GET",
+            data: data1,
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (data) {
               if (data != null) {
-                alert("Successfully registered!");
                 window.location.assign("http://localhost:3001/login.html");
               } else {
                 console.log("Error");
@@ -40,30 +40,9 @@
             },
             error: function (xhr, textStatus, errorThrown) {
               console.log("Error in Operation");
-              $("#warning").html("User already exists!");
-            },
-
-
-          });
-          $.ajax({
-            url: url + "/users/register",
-            type: "POST",
-            data: data,
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (data) {
-              if (data != null) {
-                alert("Successfully registered!");
-                window.location.assign("http://localhost:3001/login.html");
-              } else {
-                console.log("Error");
-              }
-            },
-            error: function (xhr, textStatus, errorThrown) {
-              console.log("Error in Operation");
-              $("#warning").html("User already exists!");
             },
           })
+          
           return false;
         }
         else {
@@ -88,7 +67,7 @@
               <input type="password" id="pwd" name="" required="">
               <label>Password</label>
             </div>
-            <p><span id="warning" style="color: red;"></span></p>
+            <p><span id="warning" style="color: red; font-size: 18px;"></span></p>
             <a href="#" id="register">
               <span></span>
               <span></span>

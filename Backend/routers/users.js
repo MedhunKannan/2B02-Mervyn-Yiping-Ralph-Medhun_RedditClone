@@ -157,14 +157,29 @@ router.get('/getusername/:id', function (req, res, next) {
   })
 })
 
-router.post('/logout', function(req, res) {
-  logout.logoutUser(req, res, function(err, data) {
-    if (err) {
-      res.json({ 'error': data.error, 'message': data.message });
+router.get('/getusername', function (req, res, next) {
+  const userid = req.params.id
+  const getUsernameQuery = {
+    text: 'SELECT username FROM users',
+  }
+  connection.query(getUsernameQuery, (error, results) => {
+    if (error) {
+      console.log(error)
+      res.status(500).json({
+        Error: 'Something went wrong while finding username',
+      })
     } else {
-      res.json({ 'success': data.success, 'message': data.message });
+      if (results.rows.length === 0) {
+        res.status(404).json({
+          error: `username not found`,
+        })
+      } else {
+        res.status(200).json({
+          comment: results.rows,
+        })
+      }
     }
-  });
-});
+  })
+})
 
 module.exports = router

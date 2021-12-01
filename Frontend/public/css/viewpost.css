@@ -99,15 +99,24 @@ body {
   transform: translate(-50%, -50%);
 }
 #createSubreddit {
-  border-radius: 5px;
-  background-color: white;
+  background-color: #ff5700;
+  color: white;
+  border: none;
+  width: 150px;
+  height: 30px;
+  border-radius: 20px;
+  margin-top: 5%;
 }
 
 #create {
-  border-radius: 5px;
-  margin-left: 85px;
-  background-color: #000;
+  background-color: #ff5700;
   color: white;
+  border: none;
+  width: 150px;
+  height: 30px;
+  border-radius: 20px;
+  margin-top: 5%;
+  margin-left: 85px;
 }
 
 body.activeForm .overlay-form {
