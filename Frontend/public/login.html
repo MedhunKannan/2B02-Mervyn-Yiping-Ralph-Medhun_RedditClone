@@ -19,7 +19,7 @@
             var data = "";
             $.ajax({
                 url: '',
-                headers: {  'Access-Control-Allow-Origin': 'https://infinite-bayou-99619.herokuapp.com/' },
+                headers: {  'Access-Control-Allow-Origin': 'https://adesbackend.herokuapp.com/' },
                 data: data,
                 type: 'dataType',
                 /* etc */
@@ -37,7 +37,7 @@
                 console.log(data);
                 $.ajax({
                     type: 'POST',
-                    url: 'https://infinite-bayou-99619.herokuapp.com/api/users/login',
+                    url: 'https://adesbackend.herokuapp.com/api/users/login',
                     data: data,
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
