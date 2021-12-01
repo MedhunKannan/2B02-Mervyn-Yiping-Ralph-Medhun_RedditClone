@@ -37,7 +37,7 @@
         url: "",
         headers: {
           "Access-Control-Allow-Origin":
-            "https://infinite-bayou-99619.herokuapp.com/",
+            "https://adesbackend.herokuapp.com/",
         },
         data: data,
         type: "dataType",
@@ -51,7 +51,7 @@
       var createhtml = "";
       var edithtml = "";
       $.ajax({
-        url: `https://infinite-bayou-99619.herokuapp.com/api/subreddits/searchSubredditID/${subredditid}`,
+        url: `https://adesbackend.herokuapp.com/api/subreddits/searchSubredditID/${subredditid}`,
         type: "GET",
         contentType: "application/json",
         dataType: "json",
@@ -87,7 +87,7 @@
       });
 
       $.ajax({
-        url: `https://infinite-bayou-99619.herokuapp.com/api/subreddits/searchSubredditID/${subredditid}`,
+        url: `https://adesbackend.herokuapp.com/api/subreddits/searchSubredditID/${subredditid}`,
         type: "GET",
         contentType: "application/json",
         dataType: "json",
@@ -113,7 +113,7 @@
       });
 
       $.ajax({
-        url: `https://infinite-bayou-99619.herokuapp.com/api/post/subredditPost/${subredditid}`,
+        url: `https://adesbackend.herokuapp.com/api/post/subredditPost/${subredditid}`,
         type: "GET",
         contentType: "application/json",
         dataType: "json",
@@ -179,7 +179,7 @@
         } else
           $.ajax({
             url:
-              "https://infinite-bayou-99619.herokuapp.com/api/subreddits/updateSubreddit/" +
+              "https://adesbackend.herokuapp.com/api/subreddits/updateSubreddit/" +
               subredditid,
             type: "PUT",
             data: data,

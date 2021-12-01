@@ -29,7 +29,7 @@
     <link rel="stylesheet" href="css/comment.css" />
 
     <script>
-      var url = "https://infinite-bayou-99619.herokuapp.com/api";
+      var url = "https://adesbackend.herokuapp.com/api";
       var urlParams = new URLSearchParams(window.location.search);
       $(document).ready(function () {
         var data = "";
@@ -37,7 +37,7 @@
           url: "",
           headers: {
             "Access-Control-Allow-Origin":
-              "https://infinite-bayou-99619.herokuapp.com/",
+              "https://adesbackend.herokuapp.com/",
           },
           data: data,
           type: "dataType",
@@ -108,7 +108,7 @@
                       `;
                 edithtml += `
                       <button id="edit" style="position: absolute; top: 0; left: 0">
-                          <a href = "https://sheltered-harbor-89747.herokuapp.com/editpost.html?post_id=${id}"<i class="far fa-edit"></i></a>
+                          <a href = "https://adesfrontend.herokuapp.com/editpost.html?post_id=${id}"<i class="far fa-edit"></i></a>
                       </button>`;
               } else {
                 posthtml += `
@@ -128,7 +128,7 @@
                 </div>`;
                 edithtml += `
                       <button id="edit" style="position: absolute; top: 0; left: 0">
-                          <a href = "https://sheltered-harbor-89747.herokuapp.com/editpost.html?post_id=${id}"<i class="far fa-edit"></i></a>
+                          <a href = "https://adesfrontend.herokuapp.com/editpost.html?post_id=${id}"<i class="far fa-edit"></i></a>
                       </button>`;
               }
               $("#post").append(posthtml);
@@ -193,7 +193,7 @@
             $("#warning").html("Please enter a comment!");
           } else {
             $.ajax({
-              url: `https://infinite-bayou-99619.herokuapp.com/api/comments/createComment`,
+              url: `https://adesbackend.herokuapp.com/api/comments/createComment`,
               type: "POST",
               data: data,
               contentType: "application/json; charset=utf-8",
@@ -242,7 +242,7 @@
             success: function (data, textStatus, xhr) {
               alert("Deleted successfully!");
               window.location.assign(
-                "https://sheltered-harbor-89747.herokuapp.com/viewpost.html"
+                "https://adesfrontend.herokuapp.com/viewpost.html"
               );
             },
             error: function (xhr, textStatus, errorThrown) {

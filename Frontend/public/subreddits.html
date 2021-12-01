@@ -17,7 +17,7 @@
           url: "",
           headers: {
             "Access-Control-Allow-Origin":
-              "https://infinite-bayou-99619.herokuapp.com/",
+              "https://adesbackend.herokuapp.com/",
           },
           data: data,
           type: "dataType",
@@ -34,7 +34,7 @@
           };
           const data = JSON.stringify(obj);
           $.ajax({
-            url: "https://infinite-bayou-99619.herokuapp.com/api/subreddits/createSubreddit/",
+            url: "https://adesbackend.herokuapp.com/api/subreddits/createSubreddit/",
             type: "POST",
             data: data,
             contentType: "application/json; charset=utf-8",
@@ -55,7 +55,7 @@
           const obj = { name: name };
           const data = JSON.stringify(obj);
           $.ajax({
-            url: `https://infinite-bayou-99619.herokuapp.com/api/subreddits/searchSubreddit/${name}`,
+            url: `https://adesbackend.herokuapp.com/api/subreddits/searchSubreddit/${name}`,
             type: "GET",
             data: data,
             contentType: "application/json; charset=utf-8",
@@ -99,7 +99,7 @@
           const obj = { name: name, description: description };
           const data = JSON.stringify(obj);
           $.ajax({
-            url: "https://infinite-bayou-99619.herokuapp.com/api/subreddits/updateSubreddit",
+            url: "https://adesbackend.herokuapp.com/api/subreddits/updateSubreddit",
             type: "PUT",
             data: data,
             contentType: "application/json; charset=utf-8",
@@ -120,7 +120,7 @@
           const obj = { name: name };
           const data = JSON.stringify(obj);
           $.ajax({
-            url: "https://infinite-bayou-99619.herokuapp.com/api/subreddits/deleteSubreddit",
+            url: "https://adesbackend.herokuapp.com/api/subreddits/deleteSubreddit",
             type: "DELETE",
             data: data,
             contentType: "application/json; charset=utf-8",
@@ -137,7 +137,7 @@
 
         //Retrieve all subreddits ajax
         $.ajax({
-          url: `https://infinite-bayou-99619.herokuapp.com/api/subreddits/subreddit/`,
+          url: `https://adesbackend.herokuapp.com/api/subreddits/subreddit/`,
           type: "GET",
           contentType: "application/json",
           dataType: "json",

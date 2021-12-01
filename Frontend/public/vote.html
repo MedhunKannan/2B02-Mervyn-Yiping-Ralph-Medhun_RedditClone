@@ -21,7 +21,7 @@
           url: "",
           headers: {
             "Access-Control-Allow-Origin":
-              "https://infinite-bayou-99619.herokuapp.com/",
+              "https://adesbackend.herokuapp.com/",
           },
           data: data,
           type: "dataType",
@@ -71,7 +71,7 @@
           }
           const data = JSON.stringify(obj);
           $.ajax({
-            url: `https://infinite-bayou-99619.herokuapp.com/api/post_votes/createUpvote/${upvotePost}`,
+            url: `https://adesbackend.herokuapp.com/api/post_votes/createUpvote/${upvotePost}`,
             type: "POST",
             data: data,
             contentType: "application/json; charset=utf-8",
@@ -100,7 +100,7 @@
           }
           const data = JSON.stringify(obj);
           $.ajax({
-            url: `https://infinite-bayou-99619.herokuapp.com/api/post_votes/createDownvote/${downvotePost}`,
+            url: `https://adesbackend.herokuapp.com/api/post_votes/createDownvote/${downvotePost}`,
             type: "POST",
             data: data,
             contentType: "application/json; charset=utf-8",
@@ -121,7 +121,7 @@
           var deletevotePost = $("#deletevotepost").val();
           const data = JSON.stringify(obj);
           $.ajax({
-            url: `https://infinite-bayou-99619.herokuapp.com/api/post_votes/deleteVote/${deletevoteUser}/${deletevotePost}`,
+            url: `https://adesbackend.herokuapp.com/api/post_votes/deleteVote/${deletevoteUser}/${deletevotePost}`,
             type: "DELETE",
             data: data,
             contentType: "application/json; charset=utf-8",

@@ -30,12 +30,12 @@
 
     <script>
       
-      var url = "https://infinite-bayou-99619.herokuapp.com/api";
+      var url = "https://adesbackend.herokuapp.com/api";
       $(document).ready(function () {
         var data = "";
         $.ajax({
           url: '',
-          headers: {  'Access-Control-Allow-Origin': 'https://infinite-bayou-99619.herokuapp.com/' },
+          headers: {  'Access-Control-Allow-Origin': 'https://adesbackend.herokuapp.com/' },
           data: data,
           type: 'dataType',
           /* etc */
@@ -99,7 +99,7 @@
               dataType: "json",
               success: function (data, textStatus, xhr) {
                 alert("Created without image successfully!!!!");
-                window.location.assign("https://sheltered-harbor-89747.herokuapp.com/viewpost.html");
+                window.location.assign("https://adesfrontend.herokuapp.com/viewpost.html");
                 location.reload();
               },
               error: function (xhr, textStatus, errorThrown) { // if more than 1 input fields are not entered 
@@ -126,7 +126,7 @@
               cache: false,
               success: function (data, textStatus, xhr) {
                 alert("Created with image successfully!!!!");
-                window.location.assign("https://sheltered-harbor-89747.herokuapp.com/viewpost.html");
+                window.location.assign("https://adesfrontend.herokuapp.com/viewpost.html");
               },
               error: function (xhr, textStatus, errorThrown) {
                 console.log("Error in Operation");
