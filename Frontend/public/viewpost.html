@@ -72,10 +72,10 @@
                   <div class="card text-center">
                           <div class="card-header"> Featured </div>
                       <div class="card-body">
-                        <h5 class="card-title"><a href="viewComment.html?id=${d.id}">${d.title}</a></h5>
-                        <h5 class="name">Subreddit: <a href="viewSubreddit.html?subreddit_id=${d.subreddit_id}">${d.name}</a></h5>
-                        <h6>Posted by: ${d.username}</h6>
-                        <p class="card-body" style ="padding:5%;">${d.body}</p>
+                        <h5 class="card-title" style ="font-family: 'Montserrat'; font-size: 16px;"><a href="viewComment.html?id=${d.id}">${d.title}</a></h5>
+                        <h5 class="name" style ="font-family: 'Montserrat'; font-size: 16px;">Subreddit: <a href="viewSubreddit.html?subreddit_id=${d.subreddit_id}">${d.name}</a></h5>
+                        <h6 style =" font-family: 'Montserrat'; font-size: 12px;">Posted by: ${d.username}</h6>
+                        <p class="card-body" style =" font-family: 'Montserrat'; font-size: 16px;">${d.body}</p>
                         <p class="card-content"><a href="viewComment.html?id=${d.id}"><img src= "${d.cloudinary_url}" style= "width:450px; height:450px;"/></p></a>
                       </div>
                       <div class="card-footer text-muted">
@@ -92,7 +92,7 @@
                   </div>
                   <div class="card-body">
                     <h5 class="card-title"><a href="viewComment.html?id=${d.id}">${d.title}</a></h5>
-                    <h5 class="name">Subreddit: <a href="viewSubreddit.html?subreddit_id=${d.subreddit_id}">${d.name}</a></h5>
+                    <h5 class="name" style =" font-family: 'Montserrat';">Subreddit: <a href="viewSubreddit.html?subreddit_id=${d.subreddit_id}">${d.name}</a></h5>
                     <h6>Posted by: ${d.username}</h6>
                     <p class="card-body">${d.body}</p>
                   </div>
@@ -159,13 +159,11 @@
           },
         });
 
-        
         $("#Logout").click(function () {
-          alert("Logged out!")
-        window.localStorage.clear();
-        window.location.assign("http://localhost:3001/login.html");
+          alert("Logged out!");
+          window.localStorage.clear();
+          window.location.assign("http://localhost:3001/login.html");
         });
-
 
         $("#create").click(function () {
           var subredditName = $("#createname").val();
@@ -209,12 +207,24 @@
   </head>
 
   <body>
-
     <ul>
       <!-- <li id="Logout" value="Log Out" style="float:right" /> -->
-      <li><a id="Logout" value="Log Out">Logout</a></li>
-      <li><a href="post.html" value="Create">Create Post</a></li>
-
+      <li>
+        <a
+          id="Logout"
+          value="Log Out"
+          style="font-family: Georgia, 'Times New Roman', Times, serif"
+          >Logout</a
+        >
+      </li>
+      <li>
+        <a
+          href="post.html"
+          value="Create"
+          style="font-family: Georgia, 'Times New Roman', Times, serif"
+          >Create Post</a
+        >
+      </li>
     </ul>
     <div class="row justify-content-center" style="margin-top: 20px">
       <div id="post" class="col-6"></div>
@@ -222,10 +232,16 @@
       <div class="col-2">
         <table id="subTable">
           <tr>
-            <th>SubredditName</th>
+            <th style="font-family: 'Times New Roman', Times, serif">
+              SubredditName
+            </th>
           </tr>
         </table>
-        <button class="createSubreddit" id = "createSubreddit"onclick="toggleForm()">
+        <button
+          class="createSubreddit"
+          id="createSubreddit"
+          onclick="toggleForm()"
+        >
           Create Subreddit
         </button>
       </div>
