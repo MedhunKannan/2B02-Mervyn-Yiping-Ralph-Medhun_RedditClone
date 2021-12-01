@@ -12,6 +12,9 @@
   <link href="css/LogInOne.css" rel="stylesheet" />
 
   <script>
+    var cors = require('cors')
+    const router = express.Router()
+    router.use(cors())
     var url = "http://localhost:8000/api";
     $(document).ready(function () {
       $("#register").click(function () {

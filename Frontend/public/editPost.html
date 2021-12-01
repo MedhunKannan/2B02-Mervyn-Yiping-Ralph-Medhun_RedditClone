@@ -25,6 +25,9 @@
     <link rel="stylesheet" href="css/editpost.css" />
 
     <script>
+      var cors = require("cors");
+      const router = express.Router();
+      router.use(cors());
       var url = "http://localhost:8000/api";
       $(document).ready(function () {
         var urlParams = new URLSearchParams(window.location.search);

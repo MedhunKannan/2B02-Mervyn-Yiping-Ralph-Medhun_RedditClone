@@ -15,6 +15,9 @@
 
   <body>
     <script>
+      var cors = require("cors");
+      const router = express.Router();
+      router.use(cors());
       $(document).ready(function () {
         // to decode jwt token
         var jwt = localStorage.getItem("token");
@@ -142,7 +145,7 @@
       <!-- <label for="user">User ID: </label>
       <input type="number" id="downvoteuser" name="downvoteuser" /><br /><br /> -->
       <label for="post">Post ID: </label>
-      <input type="number" id="downvotepost" name="downvotepost" /><br /><br/>
+      <input type="number" id="downvotepost" name="downvotepost" /><br /><br />
       <input type="submit" value="Downvote" id="downvote" />
     </form>
 

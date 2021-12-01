@@ -29,6 +29,9 @@
     <link rel="stylesheet" href="css/post.css" />
 
     <script>
+      var cors = require('cors')
+      const router = express.Router()
+      router.use(cors())
       var url = "http://localhost:8000/api";
       $(document).ready(function () {
         // to decode jwt token

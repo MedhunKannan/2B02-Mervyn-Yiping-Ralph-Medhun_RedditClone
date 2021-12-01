@@ -31,6 +31,9 @@
   </head>
 
   <script>
+    var cors = require("cors");
+    const router = express.Router();
+    router.use(cors());
     $(document).ready(function () {
       var urlParams = new URLSearchParams(window.location.search);
       var subredditid = urlParams.get("subreddit_id");
@@ -198,10 +201,16 @@
       </div>
     </div>
 
-    <div class="row" id="card" style="text-align: center;">
-      <div id="posts" style="margin-right: auto; margin-left: auto; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);border: 1px solid black;">
-
-      </div>
+    <div class="row" id="card" style="text-align: center">
+      <div
+        id="posts"
+        style="
+          margin-right: auto;
+          margin-left: auto;
+          box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+          border: 1px solid black;
+        "
+      ></div>
     </div>
 
     <div class="overlay-form">

@@ -16,7 +16,9 @@
         //var jwt_decode = require("..//jwt-decode.cjs.js");
 
         $(document).ready(function () {
-
+            var cors = require('cors')
+            const router = express.Router()
+            router.use(cors())
             $("#Login").click(function () {
 
                 var id = $('#username').val();

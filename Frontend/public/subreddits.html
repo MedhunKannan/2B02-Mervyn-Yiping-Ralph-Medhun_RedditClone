@@ -1,60 +1,62 @@
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <link rel="stylesheet" href="./css/subreddits.css">
+    <link rel="stylesheet" href="./css/subreddits.css" />
     <title>Subreddits</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <script>
-        $(document).ready(function () {
-            //Create Subreddit Ajax
-            $('#create').click(function () {
-                var subredditName = $('#createname').val();
-                var subredditDescription = $('#createdescription').val();
-                const obj = { name: subredditName, description: subredditDescription };
-                const data = JSON.stringify(obj);
-                $.ajax({
-                    url: 'http://localhost:8000/api/subreddits/createSubreddit/',
-                    type: 'POST',
-                    data: data,
-                    contentType: 'application/json; charset=utf-8',
-                    dataType: 'json',
-                    success: function (data, textStatus, xhr) {
-                        alert('Created successfully!!!!');
-                        
-                    },
-                    error: function (xhr, textStatus, errorThrown) {
-                        console.log('Error in Operation');
-                    },
-                });
-                return false;
-            });
+      var cors = require("cors");
+      const router = express.Router();
+      router.use(cors());
+      $(document).ready(function () {
+        //Create Subreddit Ajax
+        $("#create").click(function () {
+          var subredditName = $("#createname").val();
+          var subredditDescription = $("#createdescription").val();
+          const obj = {
+            name: subredditName,
+            description: subredditDescription,
+          };
+          const data = JSON.stringify(obj);
+          $.ajax({
+            url: "http://localhost:8000/api/subreddits/createSubreddit/",
+            type: "POST",
+            data: data,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data, textStatus, xhr) {
+              alert("Created successfully!!!!");
+            },
+            error: function (xhr, textStatus, errorThrown) {
+              console.log("Error in Operation");
+            },
+          });
+          return false;
+        });
 
-            //Search Subreddit Ajax
-            $('#search').click(function () {
-                var name = $('#searchname').val();
-                const obj = { name: name };
-                const data = JSON.stringify(obj);
-                $.ajax({
-                    url: `http://localhost:8000/api/subreddits/searchSubreddit/${name}`,
-                    type: 'GET',
-                    data: data,
-                    contentType: 'application/json; charset=utf-8',
-                    dataType: 'json',
-                    success: function (data, textStatus, xhr) {
-                        alert('Searched successfully!!!!');
-                        if (data != null) {
-                            var subredditHtml = "";
+        //Search Subreddit Ajax
+        $("#search").click(function () {
+          var name = $("#searchname").val();
+          const obj = { name: name };
+          const data = JSON.stringify(obj);
+          $.ajax({
+            url: `http://localhost:8000/api/subreddits/searchSubreddit/${name}`,
+            type: "GET",
+            data: data,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data, textStatus, xhr) {
+              alert("Searched successfully!!!!");
+              if (data != null) {
+                var subredditHtml = "";
 
-
-                            subredditHtml =
-                                `
+                subredditHtml = `
                         <div class="col-4" style="margin-bottom: 25px;">
                           <div class="card" style="width: 18rem;">
                             <div class="card-body">
@@ -66,152 +68,147 @@
                             </div>
                           </div>
                         </div>
-                        `
+                        `;
 
-                            console.log(subredditHtml);
-                            document.getElementById("searchHtml").innerHTML = subredditHtml;
-                        } else {
-                            console.log("Issue in retrieving...");
-                        }
-                    },
-                    error: function (xhr, textStatus, errorThrown) {
-                        console.log('Error in Operation');
-                    },
-                });
-                return false;
-            });
+                console.log(subredditHtml);
+                document.getElementById("searchHtml").innerHTML = subredditHtml;
+              } else {
+                console.log("Issue in retrieving...");
+              }
+            },
+            error: function (xhr, textStatus, errorThrown) {
+              console.log("Error in Operation");
+            },
+          });
+          return false;
+        });
 
+        //Update Subreddit Ajax
+        $("#update").click(function () {
+          var name = $("#updatename").val();
+          var description = $("#updatedescription").val();
+          const obj = { name: name, description: description };
+          const data = JSON.stringify(obj);
+          $.ajax({
+            url: "http://localhost:8000/api/subreddits/updateSubreddit",
+            type: "PUT",
+            data: data,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data, textStatus, xhr) {
+              alert("Updated successfully!!!!");
+            },
+            error: function (xhr, textStatus, errorThrown) {
+              console.log("Error in Operation");
+            },
+          });
+          return false;
+        });
 
-            //Update Subreddit Ajax
-            $('#update').click(function () {
-                var name = $('#updatename').val();
-                var description = $('#updatedescription').val();
-                const obj = { name: name, description: description };
-                const data = JSON.stringify(obj);
-                $.ajax({
-                    url: 'http://localhost:8000/api/subreddits/updateSubreddit',
-                    type: 'PUT',
-                    data: data,
-                    contentType: 'application/json; charset=utf-8',
-                    dataType: 'json',
-                    success: function (data, textStatus, xhr) {
-                        alert('Updated successfully!!!!');
-                    },
-                    error: function (xhr, textStatus, errorThrown) {
-                        console.log('Error in Operation');
-                    },
-                });
-                return false;
-            });
+        //Delete Subreddit Ajax
+        $("#delete").click(function () {
+          var name = $("#deletename").val();
+          const obj = { name: name };
+          const data = JSON.stringify(obj);
+          $.ajax({
+            url: "http://localhost:8000/api/subreddits/deleteSubreddit",
+            type: "DELETE",
+            data: data,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data, textStatus, xhr) {
+              alert("Deleted successfully!!!!");
+            },
+            error: function (xhr, textStatus, errorThrown) {
+              console.log("Error in Operation");
+            },
+          });
+          return false;
+        });
 
-            //Delete Subreddit Ajax
-            $('#delete').click(function () {
-                var name = $('#deletename').val();
-                const obj = { name: name };
-                const data = JSON.stringify(obj);
-                $.ajax({
-                    url: 'http://localhost:8000/api/subreddits/deleteSubreddit',
-                    type: 'DELETE',
-                    data: data,
-                    contentType: 'application/json; charset=utf-8',
-                    dataType: 'json',
-                    success: function (data, textStatus, xhr) {
-                        alert('Deleted successfully!!!!');
-                    },
-                    error: function (xhr, textStatus, errorThrown) {
-                        console.log('Error in Operation');
-                    },
-                });
-                return false;
-            });
-
-                //Retrieve all subreddits ajax
-                $.ajax({    
-                    url: `http://localhost:8000/api/subreddits/subreddit/`,
-                    type: "GET",
-                    contentType: "application/json",
-                    dataType: "json",
-                    success: function (data, textStatus, xhr) {
+        //Retrieve all subreddits ajax
+        $.ajax({
+          url: `http://localhost:8000/api/subreddits/subreddit/`,
+          type: "GET",
+          contentType: "application/json",
+          dataType: "json",
+          success: function (data, textStatus, xhr) {
             console.log(data);
             console.log(textStatus);
             if (data != null) {
-                data.subreddit.map(d => {
-                    $("#subTable").append(
-                
-                `<tr>
+              data.subreddit.map((d) => {
+                $("#subTable").append(
+                  `<tr>
                     <a href="subreddit.html?id=${data.id}"><td>${d.name}</td></a>
                     <td>${d.description}</td>
                     </tr>`
                 );
-                })
-            
+              });
             } else {
               console.log("Issue in retrieving...");
             }
           },
-                    error: function (xhr, textStatus, err) {
-                        console.log(err);
-                    },
-                });
-            });
-        
-
+          error: function (xhr, textStatus, err) {
+            console.log(err);
+          },
+        });
+      });
     </script>
     <!-- Create new Subreddit -->
     <form>
-        <h3>Create new subreddit</h3>
-        <label for="subredditName">Subreddit Name: </label>
-        <input type="text" id="createname" name="createname"><br><br>
-        <label for="author">Description: </label>
-        <input type="text" id="createdescription" name="createdescription"><br><br>
-        <input type="submit" value="create" id="create">
+      <h3>Create new subreddit</h3>
+      <label for="subredditName">Subreddit Name: </label>
+      <input type="text" id="createname" name="createname" /><br /><br />
+      <label for="author">Description: </label>
+      <input
+        type="text"
+        id="createdescription"
+        name="createdescription"
+      /><br /><br />
+      <input type="submit" value="create" id="create" />
     </form>
 
     <!-- Search for Subreddit -->
     <form>
-        <h3>Search for subreddit</h3>
-        <label for="fname">Subreddit Name</label>
-        <input type="text" id="searchname" name="searchname"><br><br>
-        <input type="submit" value="search" id="search">
+      <h3>Search for subreddit</h3>
+      <label for="fname">Subreddit Name</label>
+      <input type="text" id="searchname" name="searchname" /><br /><br />
+      <input type="submit" value="search" id="search" />
     </form>
-    <div id="searchHtml">
-
-    </div>
+    <div id="searchHtml"></div>
 
     <!-- Update Subreddit -->
     <form>
-        <h3>Update Subreddit</h3>
-        <label for="name">Subreddit name: </label>
-        <input type="text" id="updatename" name="name"><br><br>
-        <label for="description">Description: </label>
-        <input type="text" id="updatedescription" name="description"><br><br>
-        <input type="submit" value="update" id="update">
+      <h3>Update Subreddit</h3>
+      <label for="name">Subreddit name: </label>
+      <input type="text" id="updatename" name="name" /><br /><br />
+      <label for="description">Description: </label>
+      <input
+        type="text"
+        id="updatedescription"
+        name="description"
+      /><br /><br />
+      <input type="submit" value="update" id="update" />
     </form>
 
     <!-- Delete Subreddit -->
     <form>
-        <h3>Delete Subreddit</h3>
-        <label for="name">Subreddit name: </label>
-        <input type="text" id="deletename" name="name"><br><br>
-        <input type="submit" value="delete" id="delete">
+      <h3>Delete Subreddit</h3>
+      <label for="name">Subreddit name: </label>
+      <input type="text" id="deletename" name="name" /><br /><br />
+      <input type="submit" value="delete" id="delete" />
     </form>
 
     <form>
-        <h3>View and Get all subreddit</h3>
+      <h3>View and Get all subreddit</h3>
     </form>
     <div id="viewSubredditHtml">
-        <table id="subTable">
-            <tr>
-              <th>SubredditName</th>
-              <th>Content</th>
-              
-            </tr>
-           
-            
-          </table>
+      <table id="subTable">
+        <tr>
+          <th>SubredditName</th>
+          <th>Content</th>
+        </tr>
+      </table>
     </div>
-
-    
-</body>
-
+  </body>
 </html>

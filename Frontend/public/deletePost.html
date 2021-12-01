@@ -25,6 +25,9 @@
     <link rel="stylesheet" href="css/post.css" />
 
     <script>
+      var cors = require("cors");
+      const router = express.Router();
+      router.use(cors());
       var url = "http://localhost:8000/api";
       $(document).ready(function () {
         // edit post dropdown list
@@ -61,7 +64,7 @@
         $("#delete").click(function () {
           var deletepostid = $("#deletepostid").val();
           var data = "";
-              
+
           $.ajax({
             url: url + `/post/deletepost/${deletepostid}`,
             type: "DELETE",

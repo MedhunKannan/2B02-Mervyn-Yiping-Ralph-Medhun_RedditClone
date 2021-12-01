@@ -10,6 +10,9 @@
 
   <body>
     <script>
+      var cors = require("cors");
+      const router = express.Router();
+      router.use(cors());
       $(document).ready(function () {
         var jwt = localStorage.getItem("token");
         let b64DecodeUnicode = (str) =>
