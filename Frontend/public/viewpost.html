@@ -158,6 +158,14 @@
           },
         });
 
+        
+        $("#Logout").click(function () {
+          alert("Logged out!")
+        window.localStorage.clear();
+        window.location.assign("http://localhost:3001/login.html");
+        });
+
+
         $("#create").click(function () {
           var subredditName = $("#createname").val();
           var subredditDescription = $("#createdescription").val();
@@ -194,13 +202,16 @@
           }
           return false;
         });
-
         return false;
       }); //End of document.ready
     </script>
   </head>
 
   <body>
+
+    <ul>
+      <input type="button" id="Logout" value="Log Out" />
+    </ul>
     <div class="row justify-content-center" style="margin-top: 20px">
       <div id="post" class="col-6"></div>
 
