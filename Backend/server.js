@@ -33,7 +33,4 @@ app.use(express.Router())
 // TODO: Error Handler
 
 // Listen to port
-app.listen(port, hostname, function (error) {
-  console.log(error)
-  console.log(`BackEnd Server hosted at http://${hostname}:${port}`)
-})
+app.listen (process.env.PORT || 8000, function () {});
