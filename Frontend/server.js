@@ -25,6 +25,4 @@ app.use(function (req, res, next) {
 // app.use(serveStatic(__dirname+"/public"));
 app.use(express.static(__dirname + "/public"));
 
-app.listen(port, hostname, function () {
-  console.log(`FrontEnd Server hosted at http://${hostname}:${port}`);
-});
+app.listen(process.env.PORT || 3001);
