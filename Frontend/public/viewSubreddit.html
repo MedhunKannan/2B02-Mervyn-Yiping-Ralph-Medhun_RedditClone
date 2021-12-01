@@ -114,7 +114,7 @@
 
               if (d.cloudinary_url != null) {
                 postshtml += `
-                <div class="card text-center">
+                <div>
                           <div class="card-header"> Featured </div>
                       <div class="card-body">
                         <h5 class="card-title"><a href="viewComment.html?id=${d.id}">${d.title}</a></h5>
@@ -198,8 +198,10 @@
       </div>
     </div>
 
-    <div class="row justify-content-center" id="row">
-      <div id="posts" class="col-6"></div>
+    <div class="row" id="card" style="text-align: center;">
+      <div id="posts" style="margin-right: auto; margin-left: auto; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);border: 1px solid black;">
+
+      </div>
     </div>
 
     <div class="overlay-form">
