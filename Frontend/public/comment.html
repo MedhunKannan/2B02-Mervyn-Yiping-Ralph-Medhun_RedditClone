@@ -16,7 +16,7 @@
           url: "",
           headers: {
             "Access-Control-Allow-Origin":
-              "https://infinite-bayou-99619.herokuapp.com/",
+              "https://adesbackend.herokuapp.com/",
           },
           data: data,
           type: "dataType",
@@ -54,7 +54,7 @@
           };
           const data = JSON.stringify(obj);
           $.ajax({
-            url: "https://infinite-bayou-99619.herokuapp.com/api/comments/createComment/",
+            url: "https://adesbackend.herokuapp.com/api/comments/createComment/",
             type: "POST",
             data: data,
             contentType: "application/json; charset=utf-8",
@@ -76,7 +76,7 @@
           const obj = { body: updateBody };
           const data = JSON.stringify(obj);
           $.ajax({
-            url: `https://infinite-bayou-99619.herokuapp.com/api/comments/editComment/${updateId}`,
+            url: `https://adesbackend.herokuapp.com/api/comments/editComment/${updateId}`,
             type: "PUT",
             data: data,
             contentType: "application/json; charset=utf-8",
@@ -97,7 +97,7 @@
           const obj = { id: deleteId };
           const data = JSON.stringify(obj);
           $.ajax({
-            url: `https://infinite-bayou-99619.herokuapp.com/api/comments/deleteComment/${deleteId}`,
+            url: `https://adesbackend.herokuapp.com/api/comments/deleteComment/${deleteId}`,
             type: "DELETE",
             data: data,
             contentType: "application/json; charset=utf-8",
@@ -114,7 +114,7 @@
 
         $("#viewComments").click(function () {
           $.ajax({
-            url: `https://infinite-bayou-99619.herokuapp.com/api/comments/comment/`,
+            url: `https://adesbackend.herokuapp.com/api/comments/comment/`,
             type: "GET",
             contentType: "application/json",
             dataType: "json",

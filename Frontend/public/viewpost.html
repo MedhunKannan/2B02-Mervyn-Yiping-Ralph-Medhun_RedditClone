@@ -30,7 +30,7 @@
     <script src="./js/form.js"></script>
     <link href="css/nav.css" rel="stylesheet" />
     <script>
-      var url = "https://infinite-bayou-99619.herokuapp.com/api";
+      var url = "https://adesbackend.herokuapp.com/api";
       $(document).ready(function () {
         var data = "";
 
@@ -38,7 +38,7 @@
           url: "",
           headers: {
             "Access-Control-Allow-Origin":
-              "https://infinite-bayou-99619.herokuapp.com/",
+              "https://adesbackend.herokuapp.com/",
           },
           data: data,
           type: "dataType",
@@ -148,7 +148,7 @@
         });
 
         $.ajax({
-          url: `https://infinite-bayou-99619.herokuapp.com/api/subreddits/subreddit/`,
+          url: `https://adesbackend.herokuapp.com/api/subreddits/subreddit/`,
           type: "GET",
           contentType: "application/json",
           dataType: "json",
@@ -196,7 +196,7 @@
             $("#warning").html("Please make sure all input fields are filled!");
           } else {
             $.ajax({
-              url: "https://infinite-bayou-99619.herokuapp.com/api/subreddits/createSubreddit/",
+              url: "https://adesbackend.herokuapp.com/api/subreddits/createSubreddit/",
               type: "POST",
               data: data,
               contentType: "application/json; charset=utf-8",
