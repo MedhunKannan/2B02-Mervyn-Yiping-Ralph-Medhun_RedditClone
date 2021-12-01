@@ -33,10 +33,11 @@
         const obj = {
           username: username,
           password: password,
-          
+
         };
         const data = JSON.stringify(obj);
         const data1 = "";
+        alert(username + password);
         if (username != "" && password != "") {
           $.ajax({
             url: url + "/users/register",
