@@ -272,7 +272,7 @@ router.get('/subredditPost/:subreddit_id', function (req, res, next) {
       } else {
         res.json({
           post: results.rows,
-        })
+        })console.log(results.rows);
       }
     }
   })
