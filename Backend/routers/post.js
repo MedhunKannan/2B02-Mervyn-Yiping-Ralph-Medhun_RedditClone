@@ -256,7 +256,7 @@ router.get('/post/:id', function (req, res, next) {
 router.get('/subredditPost/:subreddit_id', function (req, res, next) {
   var subredditid = req.params.subreddit_id
   const getposts = {
-    text: 'SELECT posts.*, subreddits.name, subreddits.description FROM posts INNER JOIN subreddits ON posts.subreddit_id = subreddits.id WHERE subreddit_id = $1',
+    text: 'SELECT posts.*, users.username, subreddits.name, subreddits.description FROM posts INNER JOIN subreddits ON posts.subreddit_id = subreddits.id WHERE subreddit_id = $1 INNER JOIN users ON posts.author_id = users.id ',
   }
   connection.query(getposts, [subredditid], (error, results) => {
     if (error) {
