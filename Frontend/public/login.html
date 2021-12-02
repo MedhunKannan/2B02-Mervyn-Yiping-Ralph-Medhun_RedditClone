@@ -38,7 +38,7 @@
                 // var data = "{\"username\":\"" + id + "\", \"password\":\"" + pwd + "\"}";
                 const obj = { username: id, password: pwd };
                 const data = JSON.stringify(obj);
-                console.log(data);
+                
                 $.ajax({
                     type: 'POST',
                     url: 'https://adesbackend.herokuapp.com/api/users/login',
